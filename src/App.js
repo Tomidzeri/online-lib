@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "./services/Login";
+import Signup from "./services/Signup";
+import Layout from "./layout/layout";
 
 function App() {
+  const storedToken = localStorage.getItem("token");
+  const [token, setToken] = useState(storedToken || "");
+
+  const handleSetToken = (newToken) => {
+    localStorage.setItem("token", newToken);
+    setToken(newToken);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login setToken={handleSetToken} />} />
+        <Route path="/signup" element={<Signup setToken={setToken} />} />
+        <Route
+          path="/dashboard"
+          element={<Layout token={token} setToken={setToken} />}
+        />
+        <Route path="/" element={<Login setToken={setToken} />} />
+      </Routes>
+    </Router>
   );
 }
 
