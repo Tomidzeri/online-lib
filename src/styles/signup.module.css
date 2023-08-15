@@ -1,0 +1,36 @@
+.signup_form {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 1px 1px rgb(163, 161, 161);
+  padding: 3rem;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.signup_form h2 {
+  text-align: center;
+  padding: 15px;
+}
+
+.signup_form input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.signup_form button {
+  background-color: #04aa6d;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.signup_form button:hover {
+  opacity: 0.8;
+}

@@ -39,7 +39,7 @@ function Login({ setToken }) {
       <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
       <button onClick={handleLogin}>Login</button>
       <p>
-        Don't have an account? <button onClick={() => navigate('/signup')}>Create new account.</button>
+        Don't have an account? <button onClick={() => navigate('/signup')}>Create new.</button>
       </p>
     </div>
   );

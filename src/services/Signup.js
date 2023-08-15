@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import libraryAPI from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 
+import classes from '../styles/signup.module.css';
+
 function Signup({ setToken }) {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -36,7 +38,7 @@ function Signup({ setToken }) {
   };
 
   return (
-    <div>
+    <div className={classes.signup_form}>
       <h2>Signup Page</h2>
       <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
       <input type="text" placeholder="Surname" value={surname} onChange={e => setSurname(e.target.value)} />
