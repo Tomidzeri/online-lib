@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import libraryAPI from '../utils/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import classes from '../styles/signup.module.css';
 
@@ -38,8 +38,9 @@ function Signup({ setToken }) {
   };
 
   return (
-    <div className={classes.signup_form}>
-      <h2>Signup Page</h2>
+    <div className={classes.signup_container}>
+      <div className={classes.signup_form}>
+        <h2>Signup Page</h2>
       <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
       <input type="text" placeholder="Surname" value={surname} onChange={e => setSurname(e.target.value)} />
       <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
@@ -47,6 +48,10 @@ function Signup({ setToken }) {
       <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
       <input type="password" placeholder="Confirm Password" value={passwordConfirmation} onChange={e => setPasswordConfirmation(e.target.value)} />
       <button onClick={handleSignup}>Signup</button>
+        <div className={classes.back_to_login}>
+          <Link to="/login">Back to Login</Link>
+        </div>
+      </div>
     </div>
   );
 }

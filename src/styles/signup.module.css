@@ -34,3 +34,12 @@
 .signup_form button:hover {
   opacity: 0.7;
 }
+
+.back_to_login {
+  text-align: center;
+}
+
+.back_to_login a {
+  text-decoration: none;
+  color: black;
+}
