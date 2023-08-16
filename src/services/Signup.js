@@ -31,7 +31,7 @@ function Signup({ setToken }) {
 
       const { token } = response.data.data;
       setToken(token);
-      navigate('/dashboard');
+      navigate('/login');
     } catch (error) {
       console.error('Signup error:', error);
     }

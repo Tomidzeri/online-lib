@@ -17,7 +17,6 @@
 }
 
 .navbar {
-  width: 8%;
   top: 70px;
   left: 0;
   margin-left: 0;
@@ -60,6 +59,7 @@
 .navList.hidden {
   opacity: 0;
 }
+
  .rightIcon {
   visibility: visible; 
   transition: opacity 0.3s;
