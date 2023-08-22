@@ -28,6 +28,7 @@
   flex-direction: column;
   height: 100vh;
   position: fixed;
+  transition: width 0.3s ease;
 }
 
 .navbar:hover {

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logout from "../services/Logout";
 import layoutStyles from "../styles/layout.module.css";
-
 import rightIcon from "../svg/right.svg";
 
 function Navbar({ token, setToken }) {
@@ -23,16 +22,22 @@ function Navbar({ token, setToken }) {
           {!isHovered && <img src={rightIcon} alt="Right Icon" />}
         </div>
         <ul className={`${layoutStyles.navList} ${isHovered ? "" : layoutStyles.hidden}`}>
-          {token ? (
+          {token && (
             <>
               <li>
                 <Link to="/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/users">Ucenici</Link>
+              </li>
+              <li>
+                <Link to="/users">Bibliotekari</Link>
               </li>
               <li className={layoutStyles.logoutButton}>
                 <Logout token={token} setToken={setToken} />
               </li>
             </>
-          ) : null}
+          )}
         </ul>
       </div>
     </nav>

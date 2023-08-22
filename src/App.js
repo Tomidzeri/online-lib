@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-
 import Login from "./services/Login";
 import PrivateRoute from "./services/PrivateRoute";
-
 import Signup from "./services/Signup";
 import Layout from "./layout/layout";
+import Profile from "./components/Profile";
+
 function App() {
   const storedToken = localStorage.getItem("token");
   const [token, setToken] = useState(storedToken || "");
@@ -21,17 +21,28 @@ function App() {
       <Routes>
         <Route
           path="/login"
-          element={<PrivateRoute element={<Login setToken={handleSetToken} />} authenticated={!token} />}
+          element={
+            <PrivateRoute
+              element={<Login setToken={handleSetToken} />}
+              authenticated={!token}
+            />
+          }
         />
         <Route
           path="/signup"
-          element={<PrivateRoute element={<Signup setToken={handleSetToken} />} authenticated={!token} />}
+          element={
+            <PrivateRoute
+              element={<Signup setToken={handleSetToken} />}
+              authenticated={!token}
+            />
+          }
         />
+        <Route path="/profile" element={<Profile />} />
         <Route
-          path="/dashboard"
+          path="/dashboard/*"
           element={<Layout token={token} setToken={setToken} />}
         />
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
   );

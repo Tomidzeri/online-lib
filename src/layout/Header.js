@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 import classes from "../styles/layout.module.css";
 
 function Header() {
@@ -8,6 +7,9 @@ function Header() {
     <header className={classes.header}>
       <Link to="/dashboard" className={classes.link}>
         <h1>Online Biblioteka</h1>
+      </Link>
+      <Link to="/profile" className={classes.link}>
+        Profile
       </Link>
     </header>
   );

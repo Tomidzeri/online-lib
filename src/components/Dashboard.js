@@ -1,17 +1,12 @@
-import AdminDashboard from './AdminDashboard'
-import LibrarianDashboard from './LibrarianDashboard'
-import StudentsDashboard from './StudentsDashboard'
-function Dashboard({ userRole }) {
+import React from "react";
+
+function Dashboard() {
   return (
     <div>
-      <h1>Dashboard</h1>
-      {userRole === 1 && <AdminDashboard />}
-      {userRole === 2 && <StudentsDashboard />}
-      {userRole === 3 && <LibrarianDashboard />}
+      <h2>Dashboard</h2>
+      {/* Display Activities and Statistics here */}
     </div>
   );
 }
 
 export default Dashboard;
-
-

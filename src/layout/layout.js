@@ -1,17 +1,15 @@
-import React from 'react';
-import Header from './Header';
-import MainContent from './MainContent';
-import Footer from './Footer';
-import Navbar from '../layout/Navbar';
+import React from "react";
+import Navbar from "./Navbar";
+import Header from "./Header";
+import MainContent from "./MainContent";
+import Footer from "./Footer";
 
-function Layout({ token, setToken }) { 
-  const storedRoleId = localStorage.getItem("role_id");
-
+function Layout({ token, setToken, userRole }) {
   return (
     <>
       <Navbar token={token} setToken={setToken} />
       <Header />
-      <MainContent roleId={storedRoleId} />
+      <MainContent userRole={userRole} />
       <Footer />
     </>
   );
