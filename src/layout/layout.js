@@ -1,18 +1,31 @@
 import React from "react";
-import Navbar from "./Navbar";
 import Header from "./Header";
-import MainContent from "./MainContent";
+import Sidebar from "./Sidebar";
 import Footer from "./Footer";
+import Librarians from "../pages/Librerians";
+import Students from "../pages/Students";
+import Books from "../pages/Books";
+import Settings from "../pages/Settings";
 
-function Layout({ token, setToken, userRole }) {
+const Layout = ({ children, userProfile }) => {
+  const currentPath = window.location.pathname;
+
   return (
     <>
-      <Navbar token={token} setToken={setToken} />
       <Header />
-      <MainContent userRole={userRole} />
+      <Sidebar />
+      <div>
+      {currentPath === "/librerians" && <Librarians userProfile={userProfile} />}
+        {currentPath === "/students" && <Students userProfile={userProfile} />}
+        {currentPath === "/books" && <Books />}
+        {currentPath === "/settings" && <Settings />}
+        {!["/librerians", "/students", "/books", "/settings"].includes(
+          currentPath
+        ) && children}
+      </div>
       <Footer />
     </>
   );
-}
+};
 
 export default Layout;

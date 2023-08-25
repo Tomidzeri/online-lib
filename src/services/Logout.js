@@ -2,10 +2,12 @@ import React from 'react';
 import libraryAPI from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 
-function Logout({ token, setToken }) {
+function Logout() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
     try {
       await libraryAPI.post(
         '/logout',
@@ -13,14 +15,11 @@ function Logout({ token, setToken }) {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': `${token}`,
           },
         }
       );
 
       localStorage.removeItem('token');
-      setToken('');
 
       navigate('/login');
 

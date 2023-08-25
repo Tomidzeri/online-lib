@@ -1,13 +1,15 @@
-import React from 'react';
+import React from "react";
+import classes from "./footer.module.css";
 
-import classes from "../styles/layout.module.css";
-
-function Footer() {
+const Footer = () => {
   return (
     <footer className={classes.footer}>
-      <p>&copy; 2023 Your Website Name. All Rights Reserved.</p>
+      <p>
+        &copy; {new Date().getFullYear()} Your Company Name. All rights
+        reserved.
+      </p>
     </footer>
   );
-}
+};
 
 export default Footer;

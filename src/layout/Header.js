@@ -1,18 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import classes from "../styles/layout.module.css";
+import classes from "./header.module.css";
+import Logout from "../services/Logout";
 
-function Header() {
+const Header = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const closeDropdown = () => {
+    setShowDropdown(false);
+  };
+
   return (
     <header className={classes.header}>
-      <Link to="/dashboard" className={classes.link}>
+      <Link to="/" className={classes.title_link}>
         <h1>Online Biblioteka</h1>
       </Link>
-      <Link to="/profile" className={classes.link}>
-        Profile
-      </Link>
+      <div className={classes.dropdown}>
+        <button className={classes.profileLink} onClick={toggleDropdown}>
+          Profile
+        </button>
+        <div
+          className={`${classes.dropdownContent} ${
+            showDropdown ? classes.show : ""
+          }`}
+        >
+          <Link to="/profile" onClick={closeDropdown}>
+            View Profile
+          </Link>
+          <Logout onSuccess={closeDropdown} />
+        </div>
+      </div>
     </header>
   );
-}
+};
 
 export default Header;
