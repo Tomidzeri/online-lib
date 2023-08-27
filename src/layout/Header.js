@@ -16,7 +16,7 @@ const Header = () => {
 
   return (
     <header className={classes.header}>
-      <Link to="/" className={classes.title_link}>
+      <Link to="/dashboard" className={classes.title_link}>
         <h1>Online Biblioteka</h1>
       </Link>
       <div className={classes.dropdown}>

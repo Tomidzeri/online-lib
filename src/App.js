@@ -30,7 +30,7 @@ function App() {
           element={
             <PrivateRoute
               element={<Login setToken={handleSetToken} />}
-              authenticated={!token}
+              authenticated={!!token}
             />
           }
         />
@@ -39,7 +39,7 @@ function App() {
           element={
             <PrivateRoute
               element={<Signup setToken={handleSetToken} />}
-              authenticated={!token}
+              authenticated={!!token}
             />
           }
         />
