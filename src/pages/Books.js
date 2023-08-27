@@ -2,37 +2,56 @@ import React, { useState, useEffect } from "react";
 import libraryAPI from "../utils/api";
 import classes from "./UserList.css";
 
+// const Books = () => {
+//   const [books, setBooks] = useState([]);
+//   const [isLoading, setIsLoading] = useState(true); // Added loading state
+
+//   const fetchBooks = async () => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const response = await libraryAPI.get("/books", {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         }
+//       });
+//       const fetchedBooks = response.data.data;
+//       setBooks(fetchedBooks);
+//       setIsLoading(false);
+//       console.log(fetchedBooks);
+//     } catch (error) {
+//       console.error("Error fetching books:", error);
+//       setIsLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchBooks();
+//   }, []);
+
 const Books = () => {
-  const [books, setBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Added loading state
-  const token = localStorage.getItem("token");
+  const [books, setBooks] = useState([
+    {
+      id: 1,
+      title: "Dummy Book 1",
+      author: "John Doe",
+      category: "Fiction",
+    },
+    {
+      id: 2,
+      title: "Dummy Book 2",
+      author: "Jane Smith",
+      category: "Mystery",
+    },
+  ]);
+
+  const [isLoading, setIsLoading] = useState(false); 
 
   useEffect(() => {
-    // Exit early if token is not available
-    if (!token) {
+    setIsLoading(true);
+    setTimeout(() => {
       setIsLoading(false);
-      return;
-    }
-
-    const fetchBooks = async () => {
-      try {
-        const response = await libraryAPI.get("/books", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const fetchedBooks = response.data.data;
-        setBooks(fetchedBooks);
-        setIsLoading(false); // Data has been fetched, loading is done
-      } catch (error) {
-        console.error("Error fetching books:", error);
-        setIsLoading(false); // Loading is done even if there's an error
-      }
-    };
-
-    fetchBooks();
-  }, [token]);
+    }, 1000); 
+  }, []);
 
   return (
     <div className={classes.users}>
@@ -49,16 +68,14 @@ const Books = () => {
             </tr>
           </thead>
           <tbody>
-          {books
-            .filter((item) => item.id > 0)
-            .map((book) => (
-              <tr key={book.id}>
-                <td>{book.title}</td>
-                <td>{book.author}</td>
-                <td>{book.category}</td>
+            {books.map((item, index) => (
+              <tr key={index}>
+                <td>{item.title}</td>
+                <td>{item.author}</td>
+                <td>{item.category}</td>
               </tr>
             ))}
-        </tbody>
+          </tbody>
         </table>
       )}
     </div>
