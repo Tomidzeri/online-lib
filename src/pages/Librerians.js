@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import libraryAPI from "../utils/api";
-import classes from "./UserList.css";
+import classes from "./users.module.css";
+import UserAddForm from "../components/UI/forms/UserAddForm";
 
 const Librarians = ({ userProfile }) => {
   const [librarians, setLibrarians] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const fetchLibrarians = async () => {
       try {
         const token = localStorage.getItem("token");
-        console.log(token);
         const response = await libraryAPI.get("/users", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          body: {
+          params: {
             role: "Bibliotekar",
           },
         });
-        const responseData = await response.data;
-        console.log(responseData);
+
         const librarianList = response.data.data;
         setLibrarians(librarianList);
       } catch (error) {
@@ -33,6 +33,12 @@ const Librarians = ({ userProfile }) => {
   return (
     <div className={classes.users}>
       <h2>Librarians</h2>
+      <button className={classes.addButton} onClick={() => setShowForm(true)}>
+        Novi Bibliotekar
+      </button>
+      {showForm && (
+        <UserAddForm role="Bibliotekar" onClose={() => setShowForm(false)} />
+      )}
       <table>
         <thead>
           <tr>

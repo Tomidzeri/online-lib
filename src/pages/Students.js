@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import libraryAPI from "../utils/api";
 import classes from "./users.module.css";
+import UserAddForm from "../components/UI/forms/UserAddForm";
 
 const Students = ({ userProfile }) => {
   const [students, setStudents] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -13,7 +15,7 @@ const Students = ({ userProfile }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          body: {
+          params: {
             role_id: 2,
           },
         });
@@ -31,6 +33,12 @@ const Students = ({ userProfile }) => {
   return (
     <div className={classes.users}>
       <h2>Students</h2>
+      <button className={classes.addButton} onClick={() => setShowForm(true)}>
+        Novi Ucenik
+      </button>
+      {showForm && (
+        <UserAddForm role="Ucenik" onClose={() => setShowForm(false)} />
+      )}
       <table>
         <thead>
           <tr>

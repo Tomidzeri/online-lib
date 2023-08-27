@@ -15,7 +15,9 @@ import Settings from "./pages/Settings";
 
 function App() {
   const storedToken = sessionStorage.getItem("token");
+  const storedUserRole = localStorage.getItem("userRole"); // Retrieve user's role
   const [token, setToken] = useState(storedToken || "");
+  const [userRole, setUserRole] = useState(storedUserRole || ""); // Initialize user's role
 
   const handleSetToken = (newToken, newUserId) => {
     sessionStorage.setItem("token", newToken);
@@ -63,7 +65,7 @@ function App() {
                   element={
                     <PrivateRoute
                       element={<Profile />}
-                      authenticated={!!token}
+                      role={userRole} // Pass the user's role here
                     />
                   }
                 />

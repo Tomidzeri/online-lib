@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import libraryAPI from "../utils/api";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import classes from "../styles/form.module.css";
 
 function Login() {
@@ -18,8 +18,9 @@ function Login() {
         device,
       });
 
-      const { token } = response.data.data;
+      const { token, role } = response.data.data; 
       localStorage.setItem("token", token);
+      localStorage.setItem("userRole", role);
 
       navigate("/dashboard");
 
