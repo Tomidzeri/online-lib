@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
-import Librarians from "../pages/Librerians";
+import Librarians from "../pages/Librarians";
 import Students from "../pages/Students";
 import Books from "../pages/Books";
 import Settings from "../pages/Settings";
@@ -15,11 +15,13 @@ const Layout = ({ children, userProfile }) => {
       <Header />
       <Sidebar />
       <div>
-      {currentPath === "/librerians" && <Librarians userProfile={userProfile} />}
+        {currentPath === "/librarians" && (
+          <Librarians userProfile={userProfile} />
+        )}
         {currentPath === "/students" && <Students userProfile={userProfile} />}
         {currentPath === "/books" && <Books />}
         {currentPath === "/settings" && <Settings />}
-        {!["/librerians", "/students", "/books", "/settings"].includes(
+        {!["/librarians", "/students", "/books", "/settings"].includes(
           currentPath
         ) && children}
       </div>

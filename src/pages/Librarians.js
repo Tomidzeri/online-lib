@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import libraryAPI from "../utils/api";
 import classes from "./users.module.css";
-import UserAddForm from "../components/UI/forms/UserAddForm";
+import { Link } from "react-router-dom";
+import UserActionsDropdown from "../components/UI/UserActionsDropdown";
 
 const Librarians = ({ userProfile }) => {
   const [librarians, setLibrarians] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     const fetchLibrarians = async () => {
@@ -28,17 +29,21 @@ const Librarians = ({ userProfile }) => {
     };
 
     fetchLibrarians();
-  }, []);
+  }, [selectedUser]); // remove dependancy if problems occur    
+
+   const handleDeleteUser = (userId) => {
+     const updatedLibrarians = librarians.filter((user) => user.id !== userId);
+     setLibrarians(updatedLibrarians);
+     setSelectedUser(null); 
+   };
 
   return (
     <div className={classes.users}>
       <h2>Librarians</h2>
-      <button className={classes.addButton} onClick={() => setShowForm(true)}>
+      <Link to="/useraddform?role=Bibliotekar" className={classes.addButton}>
         Novi Bibliotekar
-      </button>
-      {showForm && (
-        <UserAddForm role="Bibliotekar" onClose={() => setShowForm(false)} />
-      )}
+      </Link>
+
       <table>
         <thead>
           <tr>
@@ -47,6 +52,7 @@ const Librarians = ({ userProfile }) => {
             <th>Email</th>
             <th>User Role</th>
             <th>Last Logged</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -59,6 +65,13 @@ const Librarians = ({ userProfile }) => {
                 <td>{librarian.email}</td>
                 <td>{librarian.role}</td>
                 <td>{librarian.lastLoggedTime}</td>
+                <td>
+                  {/* Actions */}
+                  <UserActionsDropdown
+                    user={librarian}
+                    onDelete={() => handleDeleteUser(librarian.id)}
+                  />
+                </td>
               </tr>
             ))}
         </tbody>

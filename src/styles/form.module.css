@@ -18,7 +18,7 @@
 .form h2,
 p {
   font-weight: bold;
-  color: white;
+  color: rgb(0, 0, 0);
   text-align: center;
   padding: 15px;
 }

@@ -1,10 +1,29 @@
 import React, { useState } from "react";
 import libraryAPI from "../../../utils/api";
 import "./UserAddForm.css";
+import { useLocation } from "react-router-dom";
 
-const UserAddForm = ({ role, onClose }) => {
+const UserAddForm = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const role = searchParams.get("role");
+  const getRoleId = () => {
+    switch (role) {
+      case "Bibliotekar":
+        return 1;
+      case "Učenik":
+        return 2;
+      case "Administrator":
+        console.error("Error: Cannot create administrators.");
+        return null; 
+      default:
+        console.error("Error: Role not recognized.");
+        return null; 
+    }
+  };
+
   const [formData, setFormData] = useState({
-    role_id: role === "Bibliotekar" ? 1 : role === "Ucenik" ? 2 : 3,
+    role_id: getRoleId(), 
     name: "",
     surname: "",
     jmbg: "",
@@ -32,18 +51,14 @@ const UserAddForm = ({ role, onClose }) => {
         },
       });
       console.log("User added successfully:", response.data);
-      onClose(); 
     } catch (error) {
       console.error("Error adding user:", error);
     }
   };
 
-  const handleCancel = () => {
-    onClose(); 
-  };
-
   return (
     <div className="form-container">
+      <h1>Create new user</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
@@ -78,7 +93,7 @@ const UserAddForm = ({ role, onClose }) => {
             value={formData.jmbg}
             onChange={handleInputChange}
             className="form-input"
-            pattern="[0-9]{13}" 
+            pattern="[0-9]{13}"
             required
           />
         </div>
@@ -133,11 +148,7 @@ const UserAddForm = ({ role, onClose }) => {
         <button type="submit" className="form-button">
           Submit
         </button>
-        <button
-          type="button"
-          className="cancel-button"
-          onClick={handleCancel}
-        >
+        <button type="button" className="cancel-button">
           Cancel
         </button>
       </form>
@@ -146,3 +157,5 @@ const UserAddForm = ({ role, onClose }) => {
 };
 
 export default UserAddForm;
+
+// form works, but it wont close on submit or onClose

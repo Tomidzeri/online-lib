@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <div className={classes.list}>
       <Link to="/dashboard">Dashboard</Link>
-      <Link to="/librerians">Bibliotekari</Link>
+      <Link to="/librarians">Bibliotekari</Link>
       <Link to="/students">Ucenici</Link>
       <Link to="/books">knjige</Link>
       <Link to="/settings">Settings</Link>

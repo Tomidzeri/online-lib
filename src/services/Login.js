@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import libraryAPI from "../utils/api";
 import { useNavigate } from "react-router-dom";
-import classes from "../styles/form.module.css";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -30,28 +29,7 @@ function Login() {
     }
   };
 
-  return (
-    <div className={classes.form}>
-      <h2>Login Page</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
-      <p>
-        Don't have an account?{" "}
-        <button onClick={() => navigate("/signup")}>Create new.</button>
-      </p>
-    </div>
-  );
+  return { username, password, setUsername, setPassword, handleLogin };
 }
 
 export default Login;
