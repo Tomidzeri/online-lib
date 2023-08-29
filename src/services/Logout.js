@@ -6,7 +6,7 @@ function Logout() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     console.log(token);
     try {
       await libraryAPI.post(
@@ -19,7 +19,7 @@ function Logout() {
         }
       );
 
-      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
 
       navigate('/login');
 

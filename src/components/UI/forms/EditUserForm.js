@@ -41,7 +41,7 @@ const EditUserForm = ({ onCancel, onUpdate }) => {
 
   const handleUpdate = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await libraryAPI.put(
         `/users/${userId}`, // Use the userId to specify which user to update
         editedUser,

@@ -10,7 +10,7 @@ const Profile = ({ token }) => { // Removed userId prop
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const response = await libraryAPI.get(`/users`, {
           headers: {
             Authorization: `Bearer ${token}`,

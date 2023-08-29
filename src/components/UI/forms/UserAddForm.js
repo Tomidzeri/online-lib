@@ -32,7 +32,7 @@ const UserAddForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await libraryAPI.post("/users/store", formData, {
         headers: {
           Authorization: `Bearer ${token}`,

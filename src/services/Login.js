@@ -18,8 +18,8 @@ function Login() {
       });
 
       const { token, role } = response.data.data; 
-      localStorage.setItem("token", token);
-      localStorage.setItem("userRole", role);
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("userRole", role);
 
       navigate("/dashboard");
 

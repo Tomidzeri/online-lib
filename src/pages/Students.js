@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import libraryAPI from "../utils/api";
 import classes from "./users.module.css";
 import UserActionsDropdown from "../components/UI/UserActionsDropdown";
+import Table from "../components/UI/tables/Table";
 
 const Students = ({ userProfile }) => {
   const [students, setStudents] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const response = await libraryAPI.get("/users", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -29,13 +29,27 @@ const Students = ({ userProfile }) => {
     };
 
     fetchStudents();
-  }, [selectedUser]); 
+  }, []);
 
   const handleDeleteUser = (userId) => {
     const updatedStudents = students.filter((user) => user.id !== userId);
     setStudents(updatedStudents);
-    setSelectedUser(null); 
   };
+
+  const tableHeaders = ["ID", "Name", "Email", "User Role", "Last Logged", "Actions"];
+  const tableData = students
+    .filter((item) => item.role === "Učenik")
+    .map((student) => [
+      student.id,
+      student.name,
+      student.email,
+      student.role,
+      student.lastLoggedTime,
+      <UserActionsDropdown
+        user={student}
+        onDelete={() => handleDeleteUser(student.id)}
+      />,
+    ]);
 
   return (
     <div className={classes.users}>
@@ -44,38 +58,7 @@ const Students = ({ userProfile }) => {
         Novi Učenik
       </Link>
 
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>User Role</th>
-            <th>Last Logged</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students
-            .filter((item) => item.role === "Učenik")
-            .map((student) => (
-              <tr key={student.id}>
-                <td>{student.id}</td>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
-                <td>{student.role}</td>
-                <td>{student.lastLoggedTime}</td>
-                <td>
-                  {/* Actions */}
-                  <UserActionsDropdown
-                    user={student}
-                    onDelete={() => handleDeleteUser(student.id)}
-                  />
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <Table headers={tableHeaders} data={tableData} />
     </div>
   );
 };

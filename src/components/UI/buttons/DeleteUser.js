@@ -5,7 +5,7 @@ import './DeleteUser.css';
 const DeleteUser = ({ user, onDelete }) => {
   const handleDelete = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       await libraryAPI.delete(`/users/${user.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
