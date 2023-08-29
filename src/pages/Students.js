@@ -1,42 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import libraryAPI from "../utils/api";
+import React from "react";
 import classes from "./users.module.css";
+import { Link } from "react-router-dom";
 import UserActionsDropdown from "../components/UI/UserActionsDropdown";
 import Table from "../components/UI/tables/Table";
-
+import useFetchStudents from "../queries/useFetchStudents";
 const Students = ({ userProfile }) => {
-  const [students, setStudents] = useState([]);
-
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const token = sessionStorage.getItem("token");
-        const response = await libraryAPI.get("/users", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            role: "Učenik",
-          },
-        });
-
-        const studentList = response.data.data;
-        setStudents(studentList);
-      } catch (error) {
-        console.error("Error fetching students:", error);
-      }
-    };
-
-    fetchStudents();
-  }, []);
+  const { students, setStudents } = useFetchStudents();
 
   const handleDeleteUser = (userId) => {
+    // Make an API call to delete the user
+    // Update the state to remove the deleted user from the list
     const updatedStudents = students.filter((user) => user.id !== userId);
     setStudents(updatedStudents);
   };
 
-  const tableHeaders = ["ID", "Name", "Email", "User Role", "Last Logged", "Actions"];
+  const tableHeaders = [
+    "ID",
+    "Name",
+    "Email",
+    "User Role",
+    "Last Logged",
+    "Actions",
+  ];
   const tableData = students
     .filter((item) => item.role === "Učenik")
     .map((student) => [

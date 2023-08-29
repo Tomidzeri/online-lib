@@ -18,7 +18,7 @@ const DeleteUser = ({ user, onDelete }) => {
   };
 
   return (
-    <div>
+    <div className="delete">
       <p>Are you sure you want to delete {user.name}?</p>
       <button onClick={handleDelete}>Delete user</button>
     </div>

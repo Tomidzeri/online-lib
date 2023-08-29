@@ -1,42 +1,26 @@
-import React, { useState, useEffect } from "react";
-import libraryAPI from "../utils/api";
+import React from "react";
 import classes from "./users.module.css";
 import { Link } from "react-router-dom";
 import UserActionsDropdown from "../components/UI/UserActionsDropdown";
 import Table from "../components/UI/tables/Table";
+import useFetchLibrarians from "../queries/useFetchLibrarians";
 
 const Librarians = ({ userProfile }) => {
-  const [librarians, setLibrarians] = useState([]);
-
-  useEffect(() => {
-    const fetchLibrarians = async () => {
-      try {
-        const token = sessionStorage.getItem("token");
-        const response = await libraryAPI.get("/users", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            role: "Bibliotekar",
-          },
-        });
-
-        const librarianList = response.data.data;
-        setLibrarians(librarianList);
-      } catch (error) {
-        console.error("Error fetching librarians:", error);
-      }
-    };
-
-    fetchLibrarians();
-  }, []); 
+  const { librarians, setLibrarians } = useFetchLibrarians();
 
   const handleDeleteUser = (userId) => {
     const updatedLibrarians = librarians.filter((user) => user.id !== userId);
     setLibrarians(updatedLibrarians);
   };
 
-  const tableHeaders = ["ID", "Name", "Email", "User Role", "Last Logged", "Actions"];
+  const tableHeaders = [
+    "ID",
+    "Name",
+    "Email",
+    "User Role",
+    "Last Logged",
+    "Actions",
+  ];
   const tableData = librarians
     .filter((item) => item.role === "Bibliotekar")
     .map((librarian) => [
@@ -57,7 +41,6 @@ const Librarians = ({ userProfile }) => {
       <Link to="/useraddform?role=Bibliotekar" className={classes.addButton}>
         Novi Bibliotekar
       </Link>
-
       <Table headers={tableHeaders} data={tableData} />
     </div>
   );

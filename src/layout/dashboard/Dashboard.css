@@ -1,0 +1,28 @@
+/* Dashboard.css */
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 80%; /* Use 100vh for full viewport height */
+  width: auto;
+  text-align: center;
+  background-color: white;
+}
+
+.left-pane {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  background-color: white;
+}
+
+.right-pane {
+  flex: 2;
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}

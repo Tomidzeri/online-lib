@@ -1,0 +1,14 @@
+/* Activities.css */
+
+.activities-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: white;
+  }
+  
+  .activities-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  

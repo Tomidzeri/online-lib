@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Login from "../services/Login";
-import classes from "../styles/form.module.css";
+import classes from "./form.module.css";
 
 function LoginForm() {
   const { username, password, setUsername, setPassword, handleLogin } = Login();

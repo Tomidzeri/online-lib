@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Signup from "../services/Signup";
-import classes from "../styles/form.module.css";
+import classes from "./form.module.css";
 
 function SignupForm() {
   const { 

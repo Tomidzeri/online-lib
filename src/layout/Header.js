@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import classes from "./header.module.css";
 import Logout from "../services/Logout";
 
-const Header = () => {
+const Header = ({ className }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
