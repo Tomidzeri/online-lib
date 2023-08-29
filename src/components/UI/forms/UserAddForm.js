@@ -1,29 +1,15 @@
 import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import libraryAPI from "../../../utils/api";
 import "./UserAddForm.css";
-import { useLocation } from "react-router-dom";
 
 const UserAddForm = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const role = searchParams.get("role");
-  const getRoleId = () => {
-    switch (role) {
-      case "Bibliotekar":
-        return 1;
-      case "Učenik":
-        return 2;
-      case "Administrator":
-        console.error("Error: Cannot create administrators.");
-        return null; 
-      default:
-        console.error("Error: Role not recognized.");
-        return null; 
-    }
-  };
 
   const [formData, setFormData] = useState({
-    role_id: getRoleId(), 
+    role_id: role === "Bibliotekar" ? 1 : 2,
     name: "",
     surname: "",
     jmbg: "",
@@ -32,6 +18,8 @@ const UserAddForm = () => {
     password: "",
     password_confirmation: "",
   });
+
+  console.log(role);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -148,9 +136,15 @@ const UserAddForm = () => {
         <button type="submit" className="form-button">
           Submit
         </button>
-        <button type="button" className="cancel-button">
-          Cancel
-        </button>
+        {role === "Bibliotekar" ? (
+          <Link to="/librarians" className="cancel-button">
+            Cancel
+          </Link>
+        ) : (
+          <Link to="/students" className="cancel-button">
+            Cancel
+          </Link>
+        )}
       </form>
     </div>
   );
@@ -158,4 +152,3 @@ const UserAddForm = () => {
 
 export default UserAddForm;
 
-// form works, but it wont close on submit or onClose

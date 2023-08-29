@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import libraryAPI from "../utils/api";
+// import libraryAPI from "../utils/api";
 import classes from "./UserList.css";
 
 // const Books = () => {
@@ -47,11 +47,14 @@ const Books = () => {
   const [isLoading, setIsLoading] = useState(false); 
 
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); 
-  }, []);
+    }, 1000);
+  
+    return () => {
+      clearTimeout(timer); 
+    };
+  }, [setBooks]);
 
   return (
     <div className={classes.users}>

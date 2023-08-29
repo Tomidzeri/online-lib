@@ -29,7 +29,7 @@ const Librarians = ({ userProfile }) => {
     };
 
     fetchLibrarians();
-  }, [selectedUser]); // remove dependancy if problems occur    
+  }, []); // add dependancy if problems occur    
 
    const handleDeleteUser = (userId) => {
      const updatedLibrarians = librarians.filter((user) => user.id !== userId);
