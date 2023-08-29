@@ -29,20 +29,20 @@ const UserAddForm = () => {
     }));
   };
 
-    const handleSubmit = async(event) => {
-        event.preventDefault();
-        try {
-            const token = localStorage.getItem("token");
-            const response = await libraryAPI.post("/users/store", formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            console.log("User added successfully:", response.data);
-        } catch (error) {
-            console.error("Error adding user:", error);
-        }
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      const response = await libraryAPI.post("/users/store", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("User added successfully:", response.data);
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
+  };
 
   return (
     <div className="form-container">

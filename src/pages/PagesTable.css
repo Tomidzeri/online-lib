@@ -19,18 +19,18 @@
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-  }
+}
 
-  td {
+td {
     color: rgb(0, 0, 0);
-  }
-  
-  th {
+}
+
+th {
     background-color: #f2f2f2;
-  }
-  
-  tr:hover,
-  td:hover {
+}
+
+tr:hover,
+td:hover {
     background-color: #ddd;
     color: black;
   }

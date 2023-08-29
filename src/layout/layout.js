@@ -11,9 +11,8 @@ import Settings from "../pages/Settings";
 import Dashboard from "./Dashboard"; // Import the Dashboard component
 
 const Layout = ({ children, userProfile }) => {
-        const currentPath = window.location.pathname;
+  const currentPath = window.location.pathname;
 
-<<<<<<< HEAD
   return (
     <div className="layout-container">
       <Header className="header" />
@@ -41,32 +40,5 @@ const Layout = ({ children, userProfile }) => {
     </div>
   );
 };
-=======
-        return ( <
-            >
-            <
-            Header / >
-            <
-            Sidebar / >
-            <
-            div > {
-                currentPath === "/librarians" && ( <
-                    Librarians userProfile = { userProfile }
-                    />
-                )
-            } {
-                currentPath === "/students" && < Students userProfile = { userProfile }
-                />} { currentPath === "/books" && < Books / > } { currentPath === "/settings" && < Settings / > } {
-                    !["/librarians", "/students", "/books", "/settings"].includes(
-                        currentPath
-                    ) && children
-                } <
-                /div> <
-                Footer / >
-                    <
-                    />
-            );
-        };
->>>>>>> 022d0703b8ff49cc20f4229c0b2d601a7592e3ec
 
-        export default Layout;
+export default Layout;
