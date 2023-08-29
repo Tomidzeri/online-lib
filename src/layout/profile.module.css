@@ -1,5 +1,5 @@
 .profile {
-  text-align: center;
+    text-align: center;
     position: relative;
     cursor: pointer;
     width: 200px;
@@ -7,33 +7,32 @@
     padding: 10px;
     border-radius: 4px;
     color: black;
-  }
+}
 
-  .profile p {
-    padding: 5px;
+.profile p {
     color: black;
-  }
-  
-  .profileHeader {
+}
+
+.profileHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .dropdownIcon {
+}
+
+.dropdownIcon {
     border: solid #333;
     border-width: 0 2px 2px 0;
     display: inline-block;
     padding: 3px;
     transform: rotate(45deg);
     transition: transform 0.3s;
-  }
-  
-  .open {
+}
+
+.open {
     transform: rotate(-135deg);
-  }
-  
-  .dropdown {
+}
+
+.dropdown {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -44,29 +43,28 @@
     width: 100%;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 100;
-  }
-  
-  .dropdown p {
+}
+
+.dropdown p {
     margin: 0;
     margin-bottom: 10px;
-  }
-  
-  .dropdownOptions {
+}
+
+.dropdownOptions {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-  }
-  
-  .dropdownOptions button {
+}
+
+.dropdownOptions button {
     padding: 8px 16px;
     border: none;
     background-color: #6577d2;
     color: white;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .dropdownOptions button:hover {
+}
+
+.dropdownOptions button:hover {
     background-color: #4854a0;
-  }
-  
+}

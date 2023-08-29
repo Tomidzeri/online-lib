@@ -2,6 +2,7 @@
     font-family: Arial, sans-serif;
     padding: 10px;
     margin: auto;
+<<<<<<< HEAD:src/pages/Table.css
   }
 
   h2 {
@@ -16,22 +17,43 @@
   }
   
   th, td {
+=======
+}
+
+table {
+    border-collapse: collapse;
+    width: 85%;
+    margin-left: 15%;
+    margin-top: 15px;
+}
+
+th,
+td {
+>>>>>>> 022d0703b8ff49cc20f4229c0b2d601a7592e3ec:src/pages/UserList.css
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-  }
+}
 
-  td {
+td {
     color: rgb(0, 0, 0);
-  }
-  
-  th {
+}
+
+th {
     background-color: #f2f2f2;
-  }
-  
-  tr:hover,
-  td:hover {
+}
+
+tr:hover,
+td:hover {
     background-color: #ddd;
     color: black;
+<<<<<<< HEAD:src/pages/Table.css
   }
   
+=======
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+>>>>>>> 022d0703b8ff49cc20f4229c0b2d601a7592e3ec:src/pages/UserList.css

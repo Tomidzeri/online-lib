@@ -3,39 +3,50 @@ import { Link } from "react-router-dom";
 import classes from "./header.module.css";
 import Logout from "../services/Logout";
 
+<<<<<<< HEAD
 const Header = ({ className }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+=======
+const Header = () => {
+    const [showDropdown, setShowDropdown] = useState(false);
+>>>>>>> 022d0703b8ff49cc20f4229c0b2d601a7592e3ec
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+    };
 
-  const closeDropdown = () => {
-    setShowDropdown(false);
-  };
+    const closeDropdown = () => {
+        setShowDropdown(false);
+    };
 
-  return (
-    <header className={classes.header}>
-      <Link to="/dashboard" className={classes.title_link}>
-        <h1>Online Biblioteka</h1>
-      </Link>
-      <div className={classes.dropdown}>
-        <button className={classes.profileLink} onClick={toggleDropdown}>
-          Profile
-        </button>
-        <div
-          className={`${classes.dropdownContent} ${
+    return ( <
+        header className = { classes.header } >
+        <
+        Link to = "/dashboard"
+        className = { classes.title_link } >
+        <
+        h1 > Online Biblioteka < /h1> <
+        /Link> <
+        div className = { classes.dropdown } >
+        <
+        button className = { classes.profileLink }
+        onClick = { toggleDropdown } >
+        Profile <
+        /button> <
+        div className = { `${classes.dropdownContent} ${
             showDropdown ? classes.show : ""
-          }`}
-        >
-          <Link to="/profile" onClick={closeDropdown}>
-            View Profile
-          </Link>
-          <Logout onSuccess={closeDropdown} />
-        </div>
-      </div>
-    </header>
-  );
+          }` } >
+        <
+        Link to = "/profile"
+        onClick = { closeDropdown } >
+        View Profile <
+        /Link> <
+        Logout onSuccess = { closeDropdown }
+        /> <
+        /div> <
+        /div> <
+        /header>
+    );
 };
 
 export default Header;

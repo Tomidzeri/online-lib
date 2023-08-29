@@ -1,50 +1,58 @@
 /* src/components/UI/forms/UserAddForm.css */
+
 .form-container {
-  align-self: center;
-  text-align: center;
-  width: 60%;
-  background-color: #f7f7f7;
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 5px;
-  margin: 2rem auto;
+    align-self: center;
+    text-align: center;
+    width: 35%;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    margin: 2rem auto;
+}
+
+.h2 {
+    color: #3a3939;
+    margin-bottom: 10px;
 }
 
 .form-group {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .form-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .form-input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 9px;
 }
 
 .form-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 3px;
-  cursor: pointer;
+    background-color: #37a2aa;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
 .cancel-button {
-  background-color: #ccc;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 3px;
-  cursor: pointer;
-  margin-left: 10px;
+    background-color: #ccc;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 10px;
 }
+
 
 /* Additional styling... */
