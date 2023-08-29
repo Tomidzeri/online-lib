@@ -8,26 +8,32 @@ import Books from "../pages/Books";
 import Settings from "../pages/Settings";
 
 const Layout = ({ children, userProfile }) => {
-  const currentPath = window.location.pathname;
+        const currentPath = window.location.pathname;
 
-  return (
-    <>
-      <Header />
-      <Sidebar />
-      <div>
-        {currentPath === "/librarians" && (
-          <Librarians userProfile={userProfile} />
-        )}
-        {currentPath === "/students" && <Students userProfile={userProfile} />}
-        {currentPath === "/books" && <Books />}
-        {currentPath === "/settings" && <Settings />}
-        {!["/librarians", "/students", "/books", "/settings"].includes(
-          currentPath
-        ) && children}
-      </div>
-      <Footer />
-    </>
-  );
-};
+        return ( <
+            >
+            <
+            Header / >
+            <
+            Sidebar / >
+            <
+            div > {
+                currentPath === "/librarians" && ( <
+                    Librarians userProfile = { userProfile }
+                    />
+                )
+            } {
+                currentPath === "/students" && < Students userProfile = { userProfile }
+                />} { currentPath === "/books" && < Books / > } { currentPath === "/settings" && < Settings / > } {
+                    !["/librarians", "/students", "/books", "/settings"].includes(
+                        currentPath
+                    ) && children
+                } <
+                /div> <
+                Footer / >
+                    <
+                    />
+            );
+        };
 
-export default Layout;
+        export default Layout;

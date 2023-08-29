@@ -2,35 +2,36 @@
     font-family: Arial, sans-serif;
     padding: 10px;
     margin: auto;
-  }
-  
-  table {
+}
+
+table {
     border-collapse: collapse;
     width: 85%;
     margin-left: 15%;
-    margin-top: 10px;
-  }
-  
-  th, td {
+    margin-top: 15px;
+}
+
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-  }
+}
 
-  td {
+td {
     color: rgb(0, 0, 0);
-  }
-  
-  th {
+}
+
+th {
     background-color: #f2f2f2;
-  }
-  
-  tr:hover,
-  td:hover {
+}
+
+tr:hover,
+td:hover {
     background-color: #ddd;
     color: black;
-  }
-  
-  h2 {
+}
+
+h2 {
     margin-bottom: 10px;
-  }
+}

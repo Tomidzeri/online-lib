@@ -4,38 +4,44 @@ import classes from "./header.module.css";
 import Logout from "../services/Logout";
 
 const Header = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+    };
 
-  const closeDropdown = () => {
-    setShowDropdown(false);
-  };
+    const closeDropdown = () => {
+        setShowDropdown(false);
+    };
 
-  return (
-    <header className={classes.header}>
-      <Link to="/dashboard" className={classes.title_link}>
-        <h1>Online Biblioteka</h1>
-      </Link>
-      <div className={classes.dropdown}>
-        <button className={classes.profileLink} onClick={toggleDropdown}>
-          Profile
-        </button>
-        <div
-          className={`${classes.dropdownContent} ${
+    return ( <
+        header className = { classes.header } >
+        <
+        Link to = "/dashboard"
+        className = { classes.title_link } >
+        <
+        h1 > Online Biblioteka < /h1> <
+        /Link> <
+        div className = { classes.dropdown } >
+        <
+        button className = { classes.profileLink }
+        onClick = { toggleDropdown } >
+        Profile <
+        /button> <
+        div className = { `${classes.dropdownContent} ${
             showDropdown ? classes.show : ""
-          }`}
-        >
-          <Link to="/profile" onClick={closeDropdown}>
-            View Profile
-          </Link>
-          <Logout onSuccess={closeDropdown} />
-        </div>
-      </div>
-    </header>
-  );
+          }` } >
+        <
+        Link to = "/profile"
+        onClick = { closeDropdown } >
+        View Profile <
+        /Link> <
+        Logout onSuccess = { closeDropdown }
+        /> <
+        /div> <
+        /div> <
+        /header>
+    );
 };
 
 export default Header;
