@@ -29,7 +29,7 @@ const Students = ({ userProfile }) => {
     };
 
     fetchStudents();
-  }, []); // add dependancy if problems occur
+  }, [selectedUser]); 
 
   const handleDeleteUser = (userId) => {
     const updatedStudents = students.filter((user) => user.id !== userId);

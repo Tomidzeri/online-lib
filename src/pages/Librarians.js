@@ -3,6 +3,7 @@ import libraryAPI from "../utils/api";
 import classes from "./users.module.css";
 import { Link } from "react-router-dom";
 import UserActionsDropdown from "../components/UI/UserActionsDropdown";
+import EditUserForm from "../components/UI/forms/EditUserForm";
 
 const Librarians = ({ userProfile }) => {
   const [librarians, setLibrarians] = useState([]);
@@ -29,13 +30,21 @@ const Librarians = ({ userProfile }) => {
     };
 
     fetchLibrarians();
-  }, []); // add dependancy if problems occur    
+  }, [selectedUser]); 
 
    const handleDeleteUser = (userId) => {
      const updatedLibrarians = librarians.filter((user) => user.id !== userId);
      setLibrarians(updatedLibrarians);
      setSelectedUser(null); 
    };
+
+   const handleUpdateUser = (updatedUser) => {
+    const updatedLibrarians = librarians.map((user) =>
+      user.id === updatedUser.id ? updatedUser : user
+    );
+    setLibrarians(updatedLibrarians);
+    setSelectedUser(null);
+  };
 
   return (
     <div className={classes.users}>
@@ -76,6 +85,13 @@ const Librarians = ({ userProfile }) => {
             ))}
         </tbody>
       </table>
+      {selectedUser && (
+        <EditUserForm
+          user={selectedUser}
+          onCancel={() => setSelectedUser(null)}
+          onUpdate={handleUpdateUser} 
+        />
+      )}
     </div>
   );
 };
