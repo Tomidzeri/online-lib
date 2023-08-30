@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import "./EditUserForm.css";
-import useFetchUserData from '../../../queries/useFetchUserData';
-import useUpdateUserData from '../../../queries/useUpdateUserData';
+import useFetchUserData from "../../../queries/useFetchUserData";
+import useUpdateUserData from "../../../queries/useUpdateUserData";
 
 const EditUserForm = ({ onCancel, onUpdate }) => {
   const { userId } = useParams();
@@ -29,7 +29,7 @@ const EditUserForm = ({ onCancel, onUpdate }) => {
   return (
     <div className="form-container">
       <h1>Edit User</h1>
-      {editedUser.name !== "" && (
+      {userId && (
         <form>
           <div className="form-group">
             <label>Name</label>
@@ -100,3 +100,5 @@ const EditUserForm = ({ onCancel, onUpdate }) => {
 };
 
 export default EditUserForm;
+
+// no more error while typing password

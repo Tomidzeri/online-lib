@@ -7,8 +7,8 @@ function useFetchUserData(userId) {
     surname: "",
     email: "",
     username: "",
-    password: "",
-    password_confirmation: "",
+    password: "", // Provide a default value for password
+    password_confirmation: "", // Provide a default value for password_confirmation
   });
 
   useEffect(() => {
@@ -20,7 +20,9 @@ function useFetchUserData(userId) {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser(response.data.data);
+
+        // Use the spread operator to merge fetched data with defaults
+        setUser((prevUser) => ({ ...prevUser, ...response.data.data }));
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
