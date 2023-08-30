@@ -1,4 +1,5 @@
-import Table from "../../components/UI/tables/Table";import React from "react";
+import React from "react";
+import List from "../../components/UI/lists/List"; // Import the List component
 import "./Reservations.css";
 
 const reservationsData = [
@@ -21,17 +22,22 @@ const reservationsData = [
 ];
 
 const Reservations = () => {
-  const headers = ["User", "Book", "Date"];
-  const data = reservationsData.map(reservation => [
-    reservation.user,
-    reservation.book,
-    reservation.date
-  ]);
+  const reservationListItems = reservationsData.map((reservation, index) => (
+    <li key={index} className="reservation-item">
+      <div className="reservation-header">
+        <span className="reservation-book">{reservation.book}</span>
+        <span className="reservation-date">{reservation.date}</span>
+      </div>
+      <div className="reservation-details">
+        {`Reserved by ${reservation.user}`}
+      </div>
+    </li>
+  ));
 
   return (
     <div className="reservations-container">
       <h3 className="reservations-title">Reservations (Books)</h3>
-      <Table headers={headers} data={data} />
+      <List items={reservationListItems} className="custom-list" /> {/* Use the List component here */}
       <button>Show More</button>
     </div>
   );

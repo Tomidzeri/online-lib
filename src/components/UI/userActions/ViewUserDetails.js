@@ -1,29 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import libraryAPI from "../../../utils/api";
-import './ViewUserDetails.css'; 
+import useUserDetails from '../../../queries/useUserDetails';
+import './ViewUserDetails.css';
 
 function ViewUserDetails() {
   const { userId } = useParams();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    async function fetchUserDetails() {
-      try {
-        const token = sessionStorage.getItem("token");
-        const response = await libraryAPI.get(`/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(response.data.data);
-      } catch (error) {
-        console.error("Error fetching user details:", error);
-      }
-    }
-
-    fetchUserDetails();
-  }, [userId]);
+  const user = useUserDetails(userId);
 
   if (!user) {
     return <div className="loading">Loading...</div>;

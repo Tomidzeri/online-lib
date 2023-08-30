@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import DeleteUser from "./buttons/DeleteUser";
+import DeleteUser from "./userActions/DeleteUser";
 import classes from "./UserActionsDropdown.module.css";
 
 const UserActionsDropdown = ({ user, onDelete }) => {

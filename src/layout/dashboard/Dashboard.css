@@ -1,18 +1,18 @@
-/* Dashboard.css */
-
 .dashboard-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 80%; /* Use 100vh for full viewport height */
-  width: auto;
+  height: 90%; 
+  width: 95%;
   text-align: center;
   background-color: white;
+  overflow: hidden; /* Prevent overflow from causing horizontal scroll */
+  margin-left: 5rem;
 }
 
 .left-pane {
   flex: 1;
   padding: 20px;
-  overflow-y: auto; /* Enable scrolling if content overflows */
+  overflow-y: auto;
   background-color: white;
 }
 

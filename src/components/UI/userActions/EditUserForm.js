@@ -1,34 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import libraryAPI from "../../../utils/api";
 import "./EditUserForm.css";
-import { fetchUserData } from "../../../queries/fetchUserData";
+import useFetchUserData from '../../../queries/useFetchUserData';
+import useUpdateUserData from '../../../queries/useUpdateUserData';
 
 const EditUserForm = ({ onCancel, onUpdate }) => {
   const { userId } = useParams();
-
-  const [editedUser, setEditedUser] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    username: "",
-    password: "",
-    password_confirmation: "",
-  });
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const user = await fetchUserData(userId);
-        console.log("Fetched user:", user);
-        setEditedUser(user);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUser();
-  }, [userId]);
+  const [editedUser, setEditedUser] = useFetchUserData(userId);
+  const updateUser = useUpdateUserData();
 
   const handleCancel = () => {
     onCancel();
@@ -40,24 +19,12 @@ const EditUserForm = ({ onCancel, onUpdate }) => {
   };
 
   const handleUpdate = async () => {
-    try {
-      const token = sessionStorage.getItem("token");
-      const response = await libraryAPI.put(
-        `/users/${userId}`, // Use the userId to specify which user to update
-        editedUser,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-  
-      console.log("Updated user:", response.data.data);
-      onUpdate(response.data.data);
-    } catch (error) {
-      console.error("Error updating user:", error);
+    const updatedUser = await updateUser(userId, editedUser);
+    if (updatedUser) {
+      console.log("Updated user:", updatedUser);
+      onUpdate(updatedUser);
     }
-  };  
+  };
 
   return (
     <div className="form-container">
@@ -82,15 +49,6 @@ const EditUserForm = ({ onCancel, onUpdate }) => {
               onChange={handleInputChange}
             />
           </div>
-          {/* <div className="form-group">
-            <label>JMBG</label>
-            <input
-              type="text"
-              name="jmbg"
-              value={editedUser.jmbg}
-              onChange={handleInputChange}
-            />
-          </div> */}
           <div className="form-group">
             <label>Email</label>
             <input
@@ -142,7 +100,3 @@ const EditUserForm = ({ onCancel, onUpdate }) => {
 };
 
 export default EditUserForm;
-
-// ne radi edit forma
-// prikazuje u input detalje korisnika
-// ali ih ne mijenja na submit

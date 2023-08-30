@@ -1,14 +1,42 @@
-/* Reservations.css */
-
 .reservations-container {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: white;
-  }
-  
-  .reservations-title {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
+  margin-top: 20px;
+  padding: 10px;
+  background-color: white;
+}
+
+.reservations-title {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.reservation-item {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.reservation-item {
+  border-top: 1px solid #ccc;
+  padding: 20px;
+}
+
+.reservation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.reservation-book {
+  margin-right: 10px;
+}
+
+.reservation-date {
+  color: #888;
+}
+
+.reservation-details {
+  margin-top: 5px;
+  font-size: 14px;
+}
