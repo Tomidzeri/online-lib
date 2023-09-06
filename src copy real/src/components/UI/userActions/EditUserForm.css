@@ -1,0 +1,47 @@
+.form-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #f9f9f9;
+  align-self: center;
+  text-align: center;
+  width: 60%;
+  margin: 2rem auto;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.update-button,
+.cancel-button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.update-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.cancel-button {
+  background-color: #ccc;
+  color: #fff;
+}

@@ -1,5 +1,4 @@
-/* src/components/UI/forms/UserAddForm.css */
-.form-container {
+.user-add-form-container {
   align-self: center;
   text-align: center;
   width: 60%;
@@ -37,14 +36,12 @@
   cursor: pointer;
 }
 
-.cancel-button {
-  background-color: #ccc;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 3px;
-  cursor: pointer;
-  margin-left: 10px;
+.button-container {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: flex-end; 
+  margin-top: auto; 
+  padding: 1rem;
+  margin-bottom: 2rem;
 }
 
-/* Additional styling... */

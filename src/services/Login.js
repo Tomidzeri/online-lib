@@ -17,9 +17,10 @@ function Login() {
         device,
       });
 
-      const { token, role } = response.data.data; 
+      const { token, role, id } = response.data.data; 
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("userRole", role);
+      sessionStorage.setItem("userId", id);
 
       navigate("/dashboard");
 

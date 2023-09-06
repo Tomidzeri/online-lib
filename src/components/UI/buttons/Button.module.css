@@ -1,0 +1,49 @@
+.button {
+    padding: 1rem;
+    white-space: nowrap;
+    margin-left: 5rem;
+    background-color: rgb(36, 104, 187);
+    color: white;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background-color: rgb(52, 125, 215);
+    transition: all 0.3s;
+  }
+  
+  .submit {
+    padding: 1rem;
+    white-space: nowrap;
+    margin-left: 5rem;
+    background-color: rgb(36, 104, 187);
+    color: white;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+  }
+
+  .submit:hover {
+    background-color: rgb(52, 125, 215);
+    transition: all 0.3s;
+  }
+
+  .cancel {
+    padding: 1rem;
+    white-space: nowrap;
+    margin-left: 5rem;
+    background-color: rgb(182, 60, 29);
+    color: white;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+  }
+
+  .cancel:hover {
+    background-color: rgb(232, 77, 39);
+    transition: all 0.3s;
+  }
+  
+  

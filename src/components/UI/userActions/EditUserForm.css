@@ -1,47 +1,38 @@
-.form-container {
-  border: 1px solid #ccc;
-  padding: 20px;
-  background-color: #f9f9f9;
-  align-self: center;
-  text-align: center;
-  width: 60%;
-  margin: 2rem auto;
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.form-group {
-  margin-bottom: 10px;
+.user-edit-form-container {
+  border: none;
+  align-self: left;
+  text-align: left;
+  width: 40%;
+  margin-left: 5rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: flex-end; 
+  margin-top: auto; 
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.user-edit-form-container h2 {
+  text-align: left;
 }
 
 label {
   display: block;
   font-weight: bold;
+  padding: 0.4rem;
 }
 
 input {
   width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.update-button,
-.cancel-button {
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-}
-
-.update-button {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.cancel-button {
-  background-color: #ccc;
-  color: #fff;
+  padding: 0.4rem;
+  border: 1px solid gray;
 }

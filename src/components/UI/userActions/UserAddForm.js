@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./UserAddForm.css";
 import useCreateUser from "../../../queries/useCreateUser";
 import Form from "../forms/Form";
+import Submit from "../buttons/Submit";
+import Cancel from "../buttons/Cancel";
 
 const UserAddForm = () => {
   const location = useLocation();
+  const navigate = useNavigate(); 
   const searchParams = new URLSearchParams(location.search);
   const role = searchParams.get("role");
 
@@ -27,13 +30,15 @@ const UserAddForm = () => {
     const response = await createUser(formData);
     if (response) {
       console.log("User added successfully:", response);
-      // Handle any necessary navigation or updates here
     }
   };
 
+  const cancelLink = role === "Bibliotekar" ? "/librarians" : "/students";
+
   return (
-    <div className="form-container">
-      <h3 className="h2">Create new user</h3>
+    <div className="page">
+    <div className="user-add-form-container">
+      <h3>Create new user</h3>
       <Form
         fields={[
           {
@@ -51,7 +56,7 @@ const UserAddForm = () => {
           {
             name: "jmbg",
             label: "JMBG",
-            type: "text",
+            type: "number",
             placeholder: "JMBG",
             pattern: "[0-9]{13}",
           },
@@ -80,20 +85,18 @@ const UserAddForm = () => {
             placeholder: "Password confirmation",
           },
         ]}
-        formData={formData} // Pass formData to Form component
-        setFormData={setFormData} // Pass setFormData to Form component
+        formData={formData} 
+        setFormData={setFormData} 
         onSubmit={handleSubmit}
       />
-      {role === "Bibliotekar" ? (
-        <Link to="/librarians" className="cancel-button">
-          Cancel
-        </Link>
-      ) : (
-        <Link to="/students" className="cancel-button">
-          Cancel
-        </Link>
-      )}
     </div>
+     <div className="button-container">
+     <Submit type="submit" onClick={handleSubmit}>Submit</Submit>
+     <Cancel onClick={() => navigate(cancelLink)}>
+       Cancel
+     </Cancel>
+   </div>
+ </div>
   );
 };
 
