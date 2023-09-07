@@ -1,5 +1,4 @@
 .footer {
-<<<<<<< HEAD:src/layout/styles/footer.module.css
   position: fixed;
   bottom: 0;
   left: 50%;
@@ -17,18 +16,3 @@
 .footer p {
   color: white;
 }
-=======
-    padding-bottom: 40px;
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    width: 100%;
-    transform: translateX(-50%);
-    background-color: #37a2aa;
-    /* background: linear-gradient(#333, #6577d2); */
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    height: 30px;
-}
->>>>>>> eb74f6a79c9477e4435551fb532fd862c09954af:src/layout/footer.module.css
