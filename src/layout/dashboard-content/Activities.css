@@ -1,36 +1,45 @@
 .activities-container {
-  margin-top: 20px;
-  background-color: white;
+    margin-top: 5px;
+    background-color: white;
+    margin-left: 85px;
 }
 
 .activities-title {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: #333;
+    font-size: 23px;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 .activity-item {
-  padding: 15px;
-  list-style: none;
+    padding: 15px;
+    list-style: none;
 }
 
 .activity-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 18px;
-  font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .activity-title {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .activity-date {
-  color: #888;
+    color: #888;
 }
 
 .activity-details {
-  margin-top: 5px;
-  font-size: 14px;
+    margin-top: 13px;
+    font-size: 14px;
+}
+
+.button {
+    border-radius: 2px;
+    border-color: black;
+    background-color: #37a2aa;
+    margin-top: 10px;
+    padding: 10px;
 }

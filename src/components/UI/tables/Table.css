@@ -1,27 +1,49 @@
+<<<<<<< HEAD:src/components/UI/tables/Table.css
+=======
+.users {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    margin: auto;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 36px;
+    padding-bottom: 16px;
+    text-decoration: underline;
+}
+
+>>>>>>> eb74f6a79c9477e4435551fb532fd862c09954af:src/pages/Table.css
 table {
     border-collapse: collapse;
-    width: 95%;
-    margin-left: 4.5rem;
+    width: 75%;
+    margin-left: 13.5rem;
     margin-top: 2rem;
+<<<<<<< HEAD:src/components/UI/tables/Table.css
   }
   
   thead, td {
+=======
+}
+
+th,
+td {
+>>>>>>> eb74f6a79c9477e4435551fb532fd862c09954af:src/pages/Table.css
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-  }
+}
 
-  td {
+td {
     color: rgb(0, 0, 0);
-  }
-  
-  th {
+}
+
+th {
     background-color: #f2f2f2;
-  }
-  
-  tr:hover,
-  td:hover {
+}
+
+tr:hover,
+td:hover {
     background-color: #ddd;
     color: black;
-  }
-  
+}
