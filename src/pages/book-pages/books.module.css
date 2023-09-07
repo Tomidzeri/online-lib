@@ -1,38 +1,75 @@
-.book_container {
-    font-family: Arial, sans-serif;
-    padding: 10px;
-    margin: auto;
-  }
+.books {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+   /* align-items: center;  */
+   /* text-align: center; */
+}
 
- h2 {
+.books .title {
   text-align: left;
   margin-left: 5rem;
-  } 
-  
-  table {
-    border-collapse: collapse;
-    width: 95%;
-    margin-left: 4.5rem;
-    margin-top: 2rem;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
+}
 
-  td {
-    color: rgb(0, 0, 0);
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
-  tr:hover,
-  td:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.under_header {
+  display: flex;
+  flex-direction: row;
+  padding-top: 3rem;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-left: 70rem;
+}
+
+.search_box {
+  border: transparent;
+}
+
+.search_icon {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  margin-right: 5px;
+  color: #777;
+  cursor: pointer;
+}
+
+.titleContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.books a {
+  padding: 6px;
+  margin-left: 5rem;
+  background-color: rgb(36, 104, 187);
+  color: white;
+  border-radius: 0.25rem;
+}
+
+.books a:hover {
+  background-color: rgb(52, 125, 215);
+  transition: all 0.3s;
+}
+
+
+.create_book_container {
+  align-self: center;
+  text-align: center;
+  width: 60%;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  margin: 2rem auto;
+}

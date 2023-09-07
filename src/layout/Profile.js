@@ -3,7 +3,7 @@ import libraryAPI from "../utils/api";
 import classes from "./styles/profile.module.css";
 
 
-const Profile = ({ token }) => { // Removed userId prop
+const Profile = ({ token }) => {
   const [userProfile, setUserProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,9 +18,12 @@ const Profile = ({ token }) => { // Removed userId prop
           },
         });
 
-        const userData = response.data; 
-        console.log("User Data:", userData);
-        setUserProfile(userData);
+        const userData = response.data.data; 
+        const [user] = userData.filter(item => item.username === 'bibliotekar');
+        console.log(user);
+
+        
+        setUserProfile(user);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -29,6 +32,7 @@ const Profile = ({ token }) => { // Removed userId prop
     };
 
     fetchUserProfile(); 
+
   }, [token]);
 
   return (
@@ -42,6 +46,7 @@ const Profile = ({ token }) => { // Removed userId prop
           <p>Surname: {userProfile.surname}</p>
           <p>Email: {userProfile.email}</p>
           <p>Role: {userProfile.role}</p>
+          <img src={userProfile.photoPath} alt="slika" />
         </>
       ) : (
         <p>Failed to load profile data.</p>

@@ -1,22 +1,11 @@
-.book_container {
-    font-family: Arial, sans-serif;
-    padding: 10px;
-    margin: auto;
-  }
-
- h2 {
-  text-align: left;
-  margin-left: 5rem;
-  } 
-  
-  table {
+table {
     border-collapse: collapse;
     width: 95%;
     margin-left: 4.5rem;
     margin-top: 2rem;
   }
   
-  th, td {
+  thead, td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;

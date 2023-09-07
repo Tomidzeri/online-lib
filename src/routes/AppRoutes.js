@@ -17,6 +17,7 @@ import ViewUserDetails from "../components/UI/userActions/ViewUserDetails";
 import Statistics from "../layout/dashboard-content/Statistics";
 import Activities from "../layout/dashboard-content/Activities";
 import Reservations from "../layout/dashboard-content/Reservations";
+import CreateBook from '../pages/book-pages/CreateBook';
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -63,6 +64,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
               <Route path="/students" element={<Students />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/useraddform" element={<UserAddForm />} />
+              <Route path="/create-book" element={<CreateBook />} />
               <Route
                 path="/viewuserdetails/:userId"
                 element={<ViewUserDetails />}
