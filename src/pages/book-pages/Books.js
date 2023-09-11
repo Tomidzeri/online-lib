@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import classes from './books.module.css';
-import Table from '../../components/UI/tables/Table';
+import ReusableTable from '../../components/UI/tables/Table';
 import { fetchBooks } from '../../queries/fetchBooks';
 import Button from '../../components/UI/buttons/Button';
 import SearchBox from '../../components/UI/search/SearchBox';
@@ -9,7 +8,6 @@ import Pagination from '../../components/UI/pagination/Pagination';
 
 const Books = () => {
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -17,11 +15,9 @@ const Books = () => {
     fetchBooks()
       .then((data) => {
         setBooks(data);
-        setLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching books:', error);
-        setLoading(false);
       });
   }, []);
 
@@ -35,40 +31,52 @@ const Books = () => {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const visibleTableData = filteredBooks.slice(startIndex, endIndex);
+  const tableData = filteredBooks.slice(startIndex, endIndex);
 
-  const tableHeaders = ['Title', 'Author', 'Genre', 'Price'];
+  const customTableHead = [
+    'Naziv Knjige',
+    'Autor',
+    'Kategorija',
+    'Na Raspolaganju',
+    'Rezervisano',
+    'Izdato',
+    'U prekoracenju',
+    'Ukupna Kolicina',
+  ];
 
   return (
-    <div className={classes.books}>
-      <div className={classes.header}>
-        <div className={classes.titleContent}>
-          <h2 className={classes.title}>Knjige</h2>
-          <div className={classes.under_header}>
+    <div className="main-content z-10 mt-24 ml-20">
+      <div className="w-full">
+        <div className="flex justify-between">
+          <div className="flex justify-between">
+            <h2 className="text-2xl font-bold">Books</h2>
             <Button
-              onClick={() =>
-                (window.location.href = '/create-book')
-              }
+              onClick={() => (window.location.href = '/store-book')}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
             >
-              Nova Knjiga
+              New Book
             </Button>
-            <div className={classes.search}>
-              <BsSearch className={classes.search_icon} />
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <BsSearch className="text-gray-600 text-lg" />
               <SearchBox
                 onSearch={setSearchTerm}
-                className={classes.search_box}
+                className="border border-gray-300 rounded-md p-2"
               />
             </div>
           </div>
         </div>
+
+        <ReusableTable tableHead={customTableHead} tableData={tableData} />
+        <Pagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          onPageChange={setCurrentPage}
+          itemsPerPage={ITEMS_PER_PAGE}
+          className="mt-4"
+        />
       </div>
-      <Table headers={tableHeaders} data={visibleTableData} />
-      <Pagination
-        currentPage={currentPage}
-        totalItems={totalItems}
-        onPageChange={setCurrentPage}
-        itemsPerPage={ITEMS_PER_PAGE}
-      />
     </div>
   );
 };

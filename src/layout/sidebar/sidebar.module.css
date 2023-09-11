@@ -1,14 +1,15 @@
 .list {
   background-color: #4d4a4a;
-  width: 5rem;
+  width: 5.5rem;
   height: 100vh;
   position: fixed;
   text-align: center;
   font-weight: bold;
   overflow: hidden;
-  padding-top: 6rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  z-index: 1;
 }
 
 .list:hover {
@@ -28,8 +29,7 @@
 .listContent {
   display: flex;
   flex-direction: row;
-  margin-left: 1.7rem;
-  padding-bottom: 3rem;
+  padding: 1.5rem;
 }
 
 .icon {

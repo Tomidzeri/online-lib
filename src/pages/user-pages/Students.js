@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classes from "./users.module.css";
 import UserActionsDropdown from "../../components/UI/UserActionsDropdown";
-import Table from "../../components/UI/tables/Table";
+import ReusableTable from "../../components/UI/tables/Table";
 import useFetchStudents from "../../queries/useFetchStudents";
 import Button from "../../components/UI/buttons/Button";
 import SearchBox from "../../components/UI/search/SearchBox";
@@ -71,7 +71,7 @@ const Students = ({ userProfile }) => {
           </div>
         </div>
       </div>
-      <Table headers={tableHeaders} data={visibleTableData} />
+      <ReusableTable tableHead={tableHeaders} tableData={visibleTableData} />
       <Pagination
         currentPage={currentPage}
         itemsPerPage={ITEMS_PER_PAGE}

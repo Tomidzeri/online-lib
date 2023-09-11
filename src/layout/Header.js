@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import classes from "./styles/header.module.css";
 import Logout from "../services/Logout";
 import { FaBell } from "react-icons/fa";
 import { BiCross, BiSolidUserCircle } from "react-icons/bi";
@@ -25,46 +24,33 @@ const Header = ({ className }) => {
     setShowCrossDropdown(false);
   };
 
-
   return (
-    <header className={classes.header}>
-      <div className={classes.title}>
-        <Link to="/dashboard" className={classes.titleLink}>
-          <MdLocalLibrary className={classes.libraryIconTitle} />
-          <h1>Online Biblioteka</h1>
+    <header className="bg-blue-900 p-4 flex justify-between items-center fixed top-0 left-0 w-full z-50">
+      <div className="flex">
+        <Link to="/dashboard" className="flex items-center text-white">
+          <MdLocalLibrary className="text-4xl mr-2" />
+          <h1 className="text-white text-2xl">Online Biblioteka</h1>
         </Link>
       </div>
-      <div className={classes.icons}>
-        <FaBell className={classes.icon} />
-        <div className={classes.verticalLine}></div>
-        <BiCross className={classes.icon} onClick={toggleCrossDropdown} />
-        <p className={classes.bildStudio}>bildstudio</p>
-        <div className={classes.profileDropdown}>
-          <BiSolidUserCircle
-            className={classes.profileIcon}
-            onClick={toggleProfileDropdown}
-          />
-          <div
-            className={`${classes.profileDropdownContent} ${
-              showProfileDropdown ? classes.show : ""
-            }`}
-          >
-            <Link to="/profile" onClick={closeDropdowns}>
-              View Profile
-            </Link>
+      <div className="flex items-center text-white">
+        <FaBell className="text-2xl mr-2" />
+        <div className="w-1 h-6 bg-white mx-2"></div>
+        <BiCross className="text-2xl mr-2 cursor-pointer" onClick={toggleCrossDropdown} />
+        <p className="text-white text-xl font-bold mr-2">bildstudio</p>
+        <div className="relative inline-block text-white">
+          <BiSolidUserCircle className="text-3xl cursor-pointer" onClick={toggleProfileDropdown} />
+          <div className={`absolute right-0 mt-8 bg-white text-black shadow-lg rounded py-2 w-40 text-center ${showProfileDropdown ? 'block' : 'hidden'}`}>
+            <Link to="/profile" onClick={closeDropdowns} className="block px-4 py-2 hover:font-bold hover:underline">View Profile</Link>
             <Logout onSuccess={closeDropdowns} />
           </div>
         </div>
-        <div className={classes.crossDropdown}>
-          <div
-            className={`${classes.crossDropdownContent} ${
-              showCrossDropdown ? classes.show : ""
-            }`}
-          >
+        <div className="relative inline-block">
+          <div className={`absolute right-0 mt-8 bg-white text-black shadow-lg rounded py-2 w-40 text-center ${showCrossDropdown ? 'block' : 'hidden'}`}>
             <button
               onClick={() =>
                 (window.location.href = "/useraddform?role=Bibliotekar")
               }
+              className="block px-4 py-2 hover:font-bold hover:underline"
             >
               Novi Bibliotekar
             </button>
@@ -72,6 +58,7 @@ const Header = ({ className }) => {
               onClick={() =>
                 (window.location.href = "/useraddform?role=Učenik")
               }
+              className="block px-4 py-2 hover:font-bold hover:underline"
             >
               Novi Učenik
             </button>

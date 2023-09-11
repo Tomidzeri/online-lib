@@ -6,12 +6,9 @@ import classes from "./books.module.css";
 const CreateBook = () => {
   const handleCreateBook = async (bookData) => {
     try {
-      // Call the createBook function to create a new book
       await createBook(bookData);
-      // Redirect to the books page or do any other necessary actions
     } catch (error) {
       console.error('Error creating book:', error);
-      // Handle error as needed
     }
   };
 

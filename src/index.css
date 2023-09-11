@@ -1,4 +1,8 @@
-body, h1, h2, h3, p, ul, ol, li {
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* body, h1, h2, h3, p, ul, ol, li {
   margin: 0;
   padding: 0;
 }
@@ -19,4 +23,60 @@ ul {
 
 * {
   box-sizing: border-box;
+} */
+
+@layer components {
+  .example {
+    @apply flex flex-col md:flex-row
+  }
+  .transitionOverlay {
+    @apply transition-all duration-200 ease-in-out
+  } 
+  .activityHover {
+    @apply text-[#309DF4] font-medium hover:text-[#2563EB] transitionOverlay cursor-pointer
+  }
+  .settingsDiv {
+    @apply border-b py-[22px] px-7
+  }
+  .settingsSpan {
+    @apply text-2xl font-medium text-[#374151]
+  }
+  .appColor {
+    @apply bg-[#3F51B5]
+  }
+  .registerLoginInputs {
+    @apply  bg-[#fafafa] border-[1.5px] outline-none text-black border-[#F0F0F0] py-2 px-3 rounded-md
+  }
+  .paddingApp {
+    @apply px-7 py-5
+  }
+  .errorFormColor {
+    @apply text-red-600 font-medium
+  }
+  .profileBorderLayout {
+    @apply space-x-14 text-sm border-b py-[16px] px-7
+  }
+  .buttonHoverWelcomePage {
+    @apply border-[#0d6efd] rounded-md  py-2 px-4 border text-[#0d6efd] font-medium hover:bg-[#0d6efd] hover:text-white transitionOverlay
+  }
+  .designInput {
+    @apply w-[90%] mb-2 px-2 py-2 text-base bg-white border mt-1 border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#3F51B5] transitionOverlay
+  }
+  .designLabel { 
+    @apply text-[#374151] font-medium text-sm
+  }
+}
+
+/* export const designInputBib =
+"w-[90%] mb-2 px-2 py-2 text-base bg-white border mt-1 border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#3F51B5] transitionOverlay";
+export const designLabel = `text-[#374151] font-medium text-sm` */
+
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
 }
