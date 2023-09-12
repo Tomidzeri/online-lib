@@ -1,4 +1,4 @@
-import { Card, Typography } from "@material-tailwind/react";
+import { Card } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 
 function ReusableTable({ tableHead, tableData }) {
@@ -6,21 +6,17 @@ function ReusableTable({ tableHead, tableData }) {
     <Card className="w-full rounded-lg shadow-lg block">
       <div className="overflow-none">
         <table className="w-full table-auto text-left">
-        <thead className="bg-gray-200">
+          <thead className="bg-gray-200">
             <tr>
               {tableHead.map((head) => (
-                 <th
-                 key={head}
-                 className="border-b border-blue-gray-100 p-2 sm:p-1 sticky top-0 z-10 shadow-md text-black"
-               >
-                 <Typography
-                   variant="small"
-                   color="blue-gray"
-                   className="font-small leading-none opacity-70"
-                 >
-                   {head}
-                 </Typography>
-               </th>
+                <th
+                  key={head}
+                  className="border-b border-blue-gray-100 p-2 sm:p-1 sticky top-0 z-10 shadow-md text-black"
+                >
+                  <div className="font-small leading-none opacity-70">
+                    {head}
+                  </div>
+                </th>
               ))}
             </tr>
           </thead>
@@ -42,13 +38,7 @@ function ReusableTable({ tableHead, tableData }) {
                           : `${classes} bg-blue-gray-100/50`
                       }`}
                     >
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {cellData}
-                      </Typography>
+                      <div className="font-normal">{cellData}</div>
                     </td>
                   ))}
                 </tr>
@@ -63,7 +53,8 @@ function ReusableTable({ tableHead, tableData }) {
 
 ReusableTable.propTypes = {
   tableHead: PropTypes.arrayOf(PropTypes.string).isRequired,
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number]))).isRequired,
+
 };
 
 export default ReusableTable;

@@ -4,13 +4,16 @@ import fetchAuthors from "../queries/fetchAuthors";
 import Pagination from "../components/UI/pagination/Pagination";
 import SearchBox from "../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
-import Button from "../components/UI/buttons/Button";
+// import Button from "../components/UI/buttons/Button";
+import AuthorActionsDropdown from "../components/UI/AuthorActionsDropdown";
+import useDeleteAuthor from "../queries/useDeleteAuthor";
 
 const Authors = () => {
   const [authors, setAuthors] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const ITEMS_PER_PAGE = 10; // Set items per page to 10
+  const ITEMS_PER_PAGE = 6; 
+  const deleteAuthor = useDeleteAuthor();
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -27,27 +30,21 @@ const Authors = () => {
 
   const tableHeaders = ["Naziv Autora", "Opis"];
 
-  const tableData =
-    Array.isArray(authors) && authors.length > 0
-      ? authors.map((author) => [
-          `${author.name} ${author.surname}`,
-          " Lorem ipsum odor amet, consectetuer adipiscing elit.",
-        ])
-      : [];
-
       const filteredAuthors = authors.filter((author) =>
       `${author.name} ${author.surname}`
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
     );
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
+    const handleDeleteAuthor = (authorId) => {
+      deleteAuthor(authorId);
+      const updatedAuthors = authors.filter((author) => author.id !== authorId);
+      setAuthors(updatedAuthors);
+    };
 
   const handleSearch = (value) => {
     setSearchTerm(value);
-    setCurrentPage(1); // Reset to the first page when searching
+    setCurrentPage(1); 
   };
 
   const totalItems = filteredAuthors.length;
@@ -59,7 +56,12 @@ const Authors = () => {
   .map((author) => [
     `${author.name} ${author.surname}`,
     " Lorem ipsum odor amet, consectetuer adipiscing elit.",
+    <AuthorActionsDropdown
+      author={author}
+      onDelete={() => handleDeleteAuthor(author.id)}
+    />,
   ]);
+
 
   return (
     <div className="main-content z-10 mt-24 ml-20">

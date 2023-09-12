@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import DeleteUser from "./userActions/DeleteUser";
-import classes from "./ActionsDropdown.module.css";
+import DeleteAuthor from "./authorActions/DeleteAuthor";
+import classes from "./ActionsDropdown.module.css"
 
-const UserActionsDropdown = ({ user, onDelete }) => {
+const AuthorActionsDropdown = ({ author, onDelete }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const closeDropdown = () => {
@@ -21,17 +21,17 @@ const UserActionsDropdown = ({ user, onDelete }) => {
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
           <button onClick={closeDropdown}>Close</button>
-          <Link to={`/viewuserdetails/${user.id}`} className={classes.dropdownBtn}>
+          <Link to={`/viewauthor/${author.id}`} className={classes.dropdownBtn}>
             View Details
           </Link>
-          <Link to={`/edituserform/${user.id}`} className={classes.dropdownBtn}>
+          <Link to={`/editauthor/${author.id}`} className={classes.dropdownBtn}>
             Edit
           </Link>
-          <DeleteUser user={user} onDelete={onDelete} />
+          <DeleteAuthor author={author} onDelete={onDelete} />
         </div>
       )}
     </div>
   );
 };
 
-export default UserActionsDropdown;
+export default AuthorActionsDropdown;

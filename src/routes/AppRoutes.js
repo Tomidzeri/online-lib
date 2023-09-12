@@ -20,6 +20,8 @@ import Reservations from "../layout/dashboard-content/Reservations";
 // import CreateBook from '../pages/book-pages/CreateBook';
 import StoreBook from "../pages/book-pages/StoreBook";
 import Authors from "../pages/Authors";
+import EditAuthor from "../components/UI/authorActions/EditAuthor";
+import ViewAuthorDetails from "../components/UI/authorActions/ViewAuthorDetails";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -73,6 +75,11 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
                 element={<ViewUserDetails />}
               />
               <Route path="/edituserform/:userId" element={<EditUserForm />} />
+              <Route path="/editauthor/:authorId" element={<EditAuthor />} />
+              <Route
+                path="/viewauthor/:authorId"
+                element={<ViewAuthorDetails />}
+              />
             </Routes>
           </Layout>
         }
