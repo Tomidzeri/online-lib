@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import ReusableTable from "../components/UI/tables/Table";
 import fetchAuthors from "../queries/fetchAuthors";
 import Pagination from "../components/UI/pagination/Pagination";
 import SearchBox from "../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
-// import Button from "../components/UI/buttons/Button";
+import Button from "../components/UI/buttons/Button";
 import AuthorActionsDropdown from "../components/UI/AuthorActionsDropdown";
 import useDeleteAuthor from "../queries/useDeleteAuthor";
 
@@ -79,6 +80,11 @@ const Authors = () => {
               />
             </div>
           </div>
+        </div>
+        <div className="mb-4"> 
+          <Link to="/createauthor">
+            <Button>Create Author</Button>
+          </Link>
         </div>
         <ReusableTable tableHead={tableHeaders} tableData={visibleTableData} />
         <Pagination

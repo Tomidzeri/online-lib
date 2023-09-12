@@ -22,6 +22,7 @@ import StoreBook from "../pages/book-pages/StoreBook";
 import Authors from "../pages/Authors";
 import EditAuthor from "../components/UI/authorActions/EditAuthor";
 import ViewAuthorDetails from "../components/UI/authorActions/ViewAuthorDetails";
+import CreateAuthor from "../components/UI/authorActions/CreateAuthor";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -69,6 +70,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
               <Route path="/settings" element={<Settings />} />
               <Route path="/authors" element={<Authors />} />
               <Route path="/useraddform" element={<UserAddForm />} />
+              <Route path="/createauthor" element={<CreateAuthor />} />
               <Route path="/store-book" element={<StoreBook />} />
               <Route
                 path="/viewuserdetails/:userId"
