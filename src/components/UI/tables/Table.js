@@ -6,21 +6,21 @@ function ReusableTable({ tableHead, tableData }) {
     <Card className="w-full rounded-lg shadow-lg block">
       <div className="overflow-none">
         <table className="w-full table-auto text-left">
-          <thead>
+        <thead className="bg-gray-200">
             <tr>
               {tableHead.map((head) => (
-                <th
-                  key={head}
-                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-2 sm:p-1"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    {head}
-                  </Typography>
-                </th>
+                 <th
+                 key={head}
+                 className="border-b border-blue-gray-100 p-2 sm:p-1 sticky top-0 z-10 shadow-md text-black"
+               >
+                 <Typography
+                   variant="small"
+                   color="blue-gray"
+                   className="font-small leading-none opacity-70"
+                 >
+                   {head}
+                 </Typography>
+               </th>
               ))}
             </tr>
           </thead>
@@ -36,11 +36,11 @@ function ReusableTable({ tableHead, tableData }) {
                   {rowData.map((cellData, cellIndex) => (
                     <td
                       key={cellIndex}
-                      className={
+                      className={`${
                         cellIndex % 2 === 0
                           ? classes
-                          : `${classes} bg-blue-gray-50/50`
-                      }
+                          : `${classes} bg-blue-gray-100/50`
+                      }`}
                     >
                       <Typography
                         variant="small"

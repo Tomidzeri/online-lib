@@ -4,9 +4,12 @@ import Tab from "../../components/UI/tabs/Tab";
 import Cancel from "../../components/UI/buttons/Cancel";
 import Submit from "../../components/UI/buttons/Submit";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
 
 const StoreBook = () => {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState(0);
 
   const [formData, setFormData] = useState({
     nazivKnjiga: "",
@@ -17,13 +20,11 @@ const StoreBook = () => {
     godinaIzdavanja: 2020,
     categories: [],
     genres: [],
-
     brStrana: 0,
     isbn: 4517818931991,
     pismo: "",
     povez: "",
     format: "",
-
     picture: null,
   });
 
@@ -43,7 +44,7 @@ const StoreBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await storeBook(formData); // Use the storeBook function to store the book
+      await storeBook(formData);
       console.log("Book stored successfully.");
     } catch (error) {
       console.error("Error storing book:", error);
@@ -52,13 +53,16 @@ const StoreBook = () => {
 
   return (
     <div className="container mx-auto p-4 z-10 mt-24 ml-20">
+      <h2>Nova Knjiga</h2>
       <form>
         <Tab
           labels={["Basic Info", "Specifications", "Multimedia"]}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
           className="mb-4"
         >
           {/* Basic Info Fields */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 mt-20">
             <div className="col-span-2 md:col-span-1">
               <label className="block text-gray-600">Naziv Knjige:</label>
               <input
@@ -66,16 +70,27 @@ const StoreBook = () => {
                 name="nazivKnjiga"
                 value={formData.nazivKnjiga}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
               <label className="block text-gray-600">Summary:</label>
-              <textarea
+              <ReactQuill
                 name="kratki_sadrzaj"
                 value={formData.kratki_sadrzaj}
-                onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                onChange={(value) =>
+                  setFormData({ ...formData, kratki_sadrzaj: value })
+                }
+                className="border border-gray-300 w-full rounded-md"
+                modules={{
+                  toolbar: [
+                    [{ header: "1" }, { header: "2" }],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ list: "ordered" }, { list: "bullet" }],
+                    ["link"],
+                    ["clean"],
+                  ],
+                }}
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -85,7 +100,7 @@ const StoreBook = () => {
                 name="knjigaKolicina"
                 value={formData.knjigaKolicina}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -95,7 +110,7 @@ const StoreBook = () => {
                 name="authors"
                 value={formData.authors}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -105,7 +120,7 @@ const StoreBook = () => {
                 name="izdavac"
                 value={formData.izdavac}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -115,7 +130,7 @@ const StoreBook = () => {
                 name="godinaIzdavanja"
                 value={formData.godinaIzdavanja}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -125,7 +140,7 @@ const StoreBook = () => {
                 name="categories"
                 value={formData.categories}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -135,7 +150,7 @@ const StoreBook = () => {
                 name="genres"
                 value={formData.genres}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
           </div>
@@ -148,7 +163,7 @@ const StoreBook = () => {
                 name="brStrana"
                 value={formData.brStrana}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -160,7 +175,7 @@ const StoreBook = () => {
                 name="isbn"
                 value={formData.isbn}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -170,7 +185,7 @@ const StoreBook = () => {
                 name="pismo"
                 value={formData.pismo}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -180,7 +195,7 @@ const StoreBook = () => {
                 name="povez"
                 value={formData.povez}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -190,7 +205,7 @@ const StoreBook = () => {
                 name="format"
                 value={formData.format}
                 onChange={handleChange}
-                className="border rounded-md p-2 w-full"
+                className="border border-gray-300 p-2 w-full rounded-md"
               />
             </div>
           </div>

@@ -43,6 +43,14 @@ const Sidebar = ({ className }) => {
         </Link>
       </div>
       <div className={classes.listContent}>
+        <Link to="/authors"> 
+          <FaRegAddressBook className={classes.icon} /> 
+        </Link>
+        <Link to="/authors"> 
+          <p>Authors</p> 
+        </Link>
+      </div>
+      <div className={classes.listContent}>
         <Link to="/settings">
           <BsGear className={classes.icon} />
         </Link>

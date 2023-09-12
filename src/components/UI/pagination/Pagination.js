@@ -13,7 +13,7 @@ function Pagination({ currentPage, itemsPerPage, totalItems, onPageChange }) {
   return (
     <div className="pagination-container">
       <div className="pagination-info">
-        Rows per page: 5
+        Rows per page: {itemsPerPage}
         <br />
         <span className="page-number">
           {currentPage} of {totalPages}
