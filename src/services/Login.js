@@ -20,9 +20,10 @@ function Login() {
       const { token } = response.data.data;
       sessionStorage.setItem("token", token);
 
+      console.log("Login successful. Token:", token); // Log the token here
+
       navigate("/dashboard");
 
-      console.log("Login successful. Token:", response.data.data);
     } catch (error) {
       console.error("Login error:", error);
     }

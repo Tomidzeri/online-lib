@@ -5,16 +5,21 @@ import Button from '../../components/UI/buttons/Button';
 import SearchBox from '../../components/UI/search/SearchBox';
 import { BsSearch } from 'react-icons/bs';
 import Pagination from '../../components/UI/pagination/Pagination';
+import BookActionsDropdown from '../../components/UI/BookActionsDropdown';
+import useDeleteBook from '../../queries/useDeleteBook';
 
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
+  const deleteBook = useDeleteBook();
+
   useEffect(() => {
     fetchBooks()
       .then((data) => {
         setBooks(data);
+        console.log(data);
       })
       .catch((error) => {
         console.error('Error fetching books:', error);
@@ -31,7 +36,20 @@ const Books = () => {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const tableData = filteredBooks.slice(startIndex, endIndex);
+  const tableData = filteredBooks.slice(startIndex, endIndex).map((book) => [
+    book.title,
+    book.authors.map((author) => `${author.name} ${author.surname}`).join(', '), // izbrisati nakon brisanja prve dvije knjige, jer koriste dva autora
+    book.categories.map((category) => category.name).join(', '),
+    book.samples,
+    book.rSamples,
+    book.fSamples,
+    // book.publisher,
+    // book.genres,
+    <BookActionsDropdown
+      book={book}
+      onDelete={() => handleDeleteBook(book.id)}
+    />,
+  ]);
 
   const customTableHead = [
     'Naziv Knjige',
@@ -40,9 +58,15 @@ const Books = () => {
     'Na Raspolaganju',
     'Rezervisano',
     'Izdato',
-    'U prekoracenju',
-    'Ukupna Kolicina',
+    // 'Izdavac',
+    // 'Zanr',
   ];
+
+  const handleDeleteBook = (bookId) => {
+    deleteBook(bookId);
+    const updatedBooks = books.filter((book) => book.id !== bookId);
+    setBooks(updatedBooks);
+  };
 
   return (
     <div className="main-content z-10 mt-24 ml-20">

@@ -1,16 +1,38 @@
-import libraryAPI from "../utils/api";
+import { useEffect, useState } from 'react';
+import libraryAPI from '../utils/api';
 
-export const createBook = async (bookData) => {
-  try {
-    const token = sessionStorage.getItem('token');
-    const response = await libraryAPI.get('/books/create', bookData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data.data;
-  } catch (error) {
-    console.error('Error creating book:', error);
-    throw error;
-  }
+export const useCreateBook = () => {
+  const [data, setData] = useState({
+    categories: [],
+    genres: [],
+    authors: [],
+    publishers: [],
+    scripts: [],
+    languages: [],
+    bookbinds: [],
+    formats: [],
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = sessionStorage.getItem('token');
+        const response = await libraryAPI.get('/books/create', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const responseData = response.data.data;
+        setData(responseData);
+        console.log(responseData);
+      } catch (error) {
+        console.error('Error fetching book creation data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return data;
 };
