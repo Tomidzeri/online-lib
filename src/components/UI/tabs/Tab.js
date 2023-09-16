@@ -7,7 +7,7 @@ const Tab = ({ labels, activeTab, setActiveTab, children }) => {
   };
 
   return (
-    <div className="border rounded-lg p-4">
+    <div className="border rounded-lg p-8">
       <div className="flex space-x-4">
         {labels.map((label, index) => (
           <button

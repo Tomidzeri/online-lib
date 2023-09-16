@@ -17,12 +17,13 @@ import ViewUserDetails from "../components/UI/userActions/ViewUserDetails";
 import Statistics from "../layout/dashboard-content/Statistics";
 import Activities from "../layout/dashboard-content/Activities";
 import Reservations from "../layout/dashboard-content/Reservations";
-// import CreateBook from '../pages/book-pages/CreateBook';
 import StoreBook from "../pages/book-pages/StoreBook";
 import Authors from "../pages/Authors";
 import EditAuthor from "../components/UI/authorActions/EditAuthor";
 import ViewAuthorDetails from "../components/UI/authorActions/ViewAuthorDetails";
 import CreateAuthor from "../components/UI/authorActions/CreateAuthor";
+import ViewBookDetails from "../components/UI/bookActions/ViewBookDetails";
+import EditBook from "../components/UI/bookActions/EditBook";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -81,6 +82,14 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
               <Route
                 path="/viewauthor/:authorId"
                 element={<ViewAuthorDetails />}
+              />
+              <Route
+                path="/viewbook/:bookId"
+                element={<ViewBookDetails />}
+              />
+              <Route
+                path="/editbook/:bookId"
+                element={<EditBook />}
               />
             </Routes>
           </Layout>

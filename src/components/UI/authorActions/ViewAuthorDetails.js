@@ -1,14 +1,21 @@
 import { useParams } from 'react-router-dom';
 import useAuthorDetails from "../../../queries/useAuthorDetails";
 import "../userActions/ViewUserDetails.css";
+import Button from '../buttons/Button';
+import { useNavigate } from 'react-router-dom';
 
 const ViewAuthorDetails = () => {
   const { authorId } = useParams();
   const author = useAuthorDetails(authorId);
+  const navigate = useNavigate();
 
   if (!author) {
     return <div className="loading">Loading...</div>; 
   }
+
+  const handleBackClick = () => {
+    navigate(`/authors`);
+  };
 
   return (
     <div className="user-details">
@@ -20,11 +27,11 @@ const ViewAuthorDetails = () => {
         <strong>Surname:</strong> {author.surname}
       </div>
       <div>
-        <strong>Biography:</strong> {author.biography}
+        <strong>Biography:</strong> {author.bio}
       </div>
-      <div>
-        <strong>Image:</strong> {author.image}
-      </div>
+      <Button onClick={handleBackClick}>
+        Go back
+      </Button>
     </div>
   );
 };

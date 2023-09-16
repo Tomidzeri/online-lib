@@ -1,13 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import DeleteAuthor from "./authorActions/DeleteAuthor";
 import classes from "./ActionsDropdown.module.css"
+import { useNavigate } from "react-router-dom";
 
 const AuthorActionsDropdown = ({ author, onDelete }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
 
   const closeDropdown = () => {
     setShowDropdown(false);
+  };
+
+  const handleViewDetailsClick = () => {
+    navigate(`/viewauthor/${author.id}`);
+    closeDropdown();
+  };
+
+  const handleEditClick = () => {
+    navigate(`/editauthor/${author.id}`);
+    closeDropdown();
   };
 
   return (
@@ -21,12 +32,12 @@ const AuthorActionsDropdown = ({ author, onDelete }) => {
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
           <button onClick={closeDropdown}>Close</button>
-          <Link to={`/viewauthor/${author.id}`} className={classes.dropdownBtn}>
+          <button className={classes.dropdownBtn} onClick={handleViewDetailsClick}>
             View Details
-          </Link>
-          <Link to={`/editauthor/${author.id}`} className={classes.dropdownBtn}>
+          </button>
+          <button className={classes.dropdownBtn} onClick={handleEditClick}>
             Edit
-          </Link>
+          </button>
           <DeleteAuthor author={author} onDelete={onDelete} />
         </div>
       )}

@@ -1,13 +1,24 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
 import DeleteBook from "./bookActions/DeleteBook";
 import classes from "./ActionsDropdown.module.css";
+import { useNavigate } from "react-router-dom";
 
 const BookActionsDropdown = ({ book, onDelete }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
 
   const closeDropdown = () => {
     setShowDropdown(false);
+  };
+
+  const handleViewDetailsClick = () => {
+    navigate(`/viewbook/${book.id}`);
+    closeDropdown();
+  };
+
+  const handleEditClick = () => {
+    navigate(`/editbook/${book.id}`);
+    closeDropdown();
   };
 
   return (
@@ -21,12 +32,12 @@ const BookActionsDropdown = ({ book, onDelete }) => {
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
           <button onClick={closeDropdown}>Close</button>
-          {/* <Link to={`/viewuserdetails/${user.id}`} className={classes.dropdownBtn}>
+          <button className={classes.dropdownBtn} onClick={handleViewDetailsClick}>
             View Details
-          </Link>
-          <Link to={`/edituserform/${user.id}`} className={classes.dropdownBtn}>
+          </button>
+          <button className={classes.dropdownBtn} onClick={handleEditClick}>
             Edit
-          </Link> */}
+          </button>
           <DeleteBook book={book} onDelete={onDelete} />
         </div>
       )}

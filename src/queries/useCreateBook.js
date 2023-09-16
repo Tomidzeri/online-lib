@@ -25,7 +25,6 @@ export const useCreateBook = () => {
 
         const responseData = response.data.data;
         setData(responseData);
-        console.log(responseData);
       } catch (error) {
         console.error('Error fetching book creation data:', error);
       }

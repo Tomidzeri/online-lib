@@ -1,36 +1,74 @@
-import React, { useState } from "react";
-import Tab from "../../components/UI/tabs/Tab";
-import Cancel from "../../components/UI/buttons/Cancel";
-import Submit from "../../components/UI/buttons/Submit";
+import React, { useState, useEffect } from "react";
+import Tab from "../tabs/Tab";
+import Cancel from "../buttons/Cancel";
+import Submit from "../buttons/Submit";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useCreateBook } from "../../queries/useCreateBook";
-import { useStoreBook } from "../../queries/useStoreBook";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { fetchBookData } from "../../../queries/fetchBookData";
+import updateBookData from "../../../queries/useUpdateBookData";
+import { useCreateBook } from "../../../queries/useCreateBook";
 
-const StoreBook = () => {
-  const [activeTab, setActiveTab] = useState(0);
+const EditBook = () => {
+  const { bookId } = useParams();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState(0);
 
   const [formData, setFormData] = useState({
     nazivKnjiga: "",
     kratki_sadrzaj: "",
-    knjigaKolicina: 200,
+    knjigaKolicina: 0,
     authors: "",
     izdavac: "",
-    godinaIzdavanja: 2020,
+    godinaIzdavanja: 0,
     categories: "",
     genres: "",
     jezik: "",
-    brStrana: 200,
-    isbn: 4517818931991,
+    brStrana: 0,
+    isbn: 0,
     pismo: "",
     povez: "",
     format: "",
+    photo: null,
   });
 
+  useEffect(() => {
+    const fetchAndSetBookData = async () => {
+      try {
+        const fetchedBookData = await fetchBookData(bookId);
+        setFormData({
+          nazivKnjiga: fetchedBookData.title,
+          kratki_sadrzaj: fetchedBookData.description,
+          knjigaKolicina: fetchedBookData.samples,
+          authors: fetchedBookData.authors.map((author) => author.id),
+          izdavac: fetchedBookData.publisher.id,
+          godinaIzdavanja: fetchedBookData.pDate,
+          categories: fetchedBookData.categories.map((category) => category.id),
+          genres: fetchedBookData.genres.map((genre) => genre.id),
+          jezik: fetchedBookData.language.id,
+          brStrana: fetchedBookData.pages,
+          isbn: fetchedBookData.isbn,
+          pismo: fetchedBookData.script.id,
+          povez: fetchedBookData.bookbind.id,
+          format: fetchedBookData.format.id,
+          photo: fetchedBookData.photo,
+        });
+      } catch (error) {
+        console.error("Error fetching book data:", error);
+      }
+    };
+
+    fetchAndSetBookData();
+  }, [bookId]);
+
   const handlePictureChange = (e) => {
-    //
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        photo: file,
+      });
+    }
   };
 
   const handleChange = (e) => {
@@ -52,59 +90,40 @@ const StoreBook = () => {
     formats: formatOptions,
   } = useCreateBook();
 
-  const { storeBook } = useStoreBook();
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    //   const requiredFields = [
-    //     "title",
-    //     "kratki_sadrzaj",
-    //     "knjigaKolicina",
-    //     "authors",
-    //     "publisher_id",
-    //     "godinaIzdavanja",
-    //     "categories",
-    //     "genres",
-    //     "language_id",
-    //     "brStrana",
-    //     "isbn",
-    //     "script_id",
-    //     "bookbind_id",
-    //     "format_id",
-    //   ];
-
-    //   const missingFields = requiredFields.filter((field) => !formData[field]);
-
-    //   if (missingFields.length > 0) {
-    //     console.error("Missing required fields:", missingFields);
-    //     return;
-    //   }
-
-    const bookData = {
-      nazivKnjiga: formData.title,
+    const updatedBookData = {
+      nazivKnjiga: formData.nazivKnjiga,
       kratki_sadrzaj: formData.kratki_sadrzaj,
       knjigaKolicina: formData.knjigaKolicina,
       authors: formData.authors,
-      izdavac: formData.publisher_id,
+      izdavac: formData.izdavac,
       godinaIzdavanja: formData.godinaIzdavanja,
       categories: formData.categories,
       genres: formData.genres,
-      jezik: formData.language_id,
+      jezik: formData.jezik,
       brStrana: formData.brStrana,
       isbn: formData.isbn,
-      pismo: formData.script_id,
-      povez: formData.bookbind_id,
-      format: formData.format_id,
+      pismo: formData.pismo,
+      povez: formData.povez,
+      format: formData.format,
+      photo: formData.photo,
     };
 
-    storeBook(bookData);
+    updateBookData(bookId, updatedBookData)
+      .then((response) => {
+        console.log("Book updated successfully:", response);
+        navigate(`/books/${bookId}`);
+      })
+      .catch((error) => {
+        console.error("Error updating book:", error);
+      });
   };
 
   return (
     <div className="main-content z-10 mt-24 ml-20 mr-5 flex flex-col">
       <div className="w-full">
-        <h2 className="text-3xl font-semibold mb-4">Nova Knjiga</h2>
+        <h2 className="text-3xl font-semibold mb-4">Edit Book</h2>
         <form onSubmit={handleSubmit}>
           <Tab
             labels={["Basic Info", "Specifications", "Multimedia"]}
@@ -118,8 +137,8 @@ const StoreBook = () => {
                 <label className="block text-gray-600">Naziv Knjige:</label>
                 <input
                   type="text"
-                  name="title"
-                  value={formData.title}
+                  name="nazivKnjiga"
+                  value={formData.nazivKnjiga}
                   onChange={handleChange}
                   className="border border-gray-300 p-2 w-full rounded-md"
                 />
@@ -173,8 +192,8 @@ const StoreBook = () => {
               <div className="col-span-2 md:col-span-1">
                 <label className="block text-gray-600">Publisher:</label>
                 <select
-                  name="publisher_id"
-                  value={formData.publisher_id}
+                  name="izdavac"
+                  value={formData.izdavac}
                   onChange={handleChange}
                   className="border border-gray-300 p-2 w-full rounded-md"
                 >
@@ -234,8 +253,8 @@ const StoreBook = () => {
               <div className="col-span-2 md:col-span-1">
                 <label className="block text-gray-600">Language:</label>
                 <select
-                  name="language_id"
-                  value={formData.language_id}
+                  name="jezik"
+                  value={formData.jezik}
                   onChange={handleChange}
                   className="border border-gray-300 p-2 w-full rounded-md"
                 >
@@ -272,8 +291,8 @@ const StoreBook = () => {
               <div className="col-span-2 md:col-span-1">
                 <label className="block text-gray-600">Pismo:</label>
                 <select
-                  name="script_id"
-                  value={formData.script_id}
+                  name="pismo"
+                  value={formData.pismo}
                   onChange={handleChange}
                   className="border border-gray-300 p-2 w-full rounded-md"
                 >
@@ -288,8 +307,8 @@ const StoreBook = () => {
               <div className="col-span-2 md:col-span-1">
                 <label className="block text-gray-600">Povez:</label>
                 <select
-                  name="bookbind_id"
-                  value={formData.bookbind_id}
+                  name="povez"
+                  value={formData.povez}
                   onChange={handleChange}
                   className="border border-gray-300 p-2 w-full rounded-md"
                 >
@@ -304,8 +323,8 @@ const StoreBook = () => {
               <div className="col-span-2 md:col-span-1">
                 <label className="block text-gray-600">Format:</label>
                 <select
-                  name="format_id"
-                  value={formData.format_id}
+                  name="format"
+                  value={formData.format}
                   onChange={handleChange}
                   className="border border-gray-300 p-2 w-full rounded-md"
                 >
@@ -318,27 +337,38 @@ const StoreBook = () => {
                 </select>
               </div>
             </div>
-            {/* Multimedia Fields */}
-            <div className="col-span-2 md:col-span-1">
-              <label className="block text-gray-600">Upload Picture:</label>
-              <input
-                type="file"
-                name="picture"
-                onChange={handlePictureChange}
-                className="mt-1"
-              />
+            <div>
+              {/* Multimedia Fields */}
+              <div className="col-span-2 md:col-span-1">
+                <label className="block text-gray-600">Upload Picture:</label>
+                <input
+                  type="file"
+                  name="picture"
+                  onChange={handlePictureChange}
+                  className="mt-1"
+                />
+              </div>
+              <div className="col-span-2 md:col-span-1 p-4 flex justify-center items-center">
+                {formData.photo && (
+                  <img
+                    src="https://tim2.petardev.live/img/book-cover-placeholder.png"
+                    alt="Selected"
+                    className="mt-2 max-w-sm"
+                  />
+                )}
+              </div>
             </div>
           </Tab>
         </form>
       </div>
       <div className="flex justify-end items-end mt-auto p-4 mb-8">
         <Submit type="submit" className="mr-2">
-          Submit
+          Update
         </Submit>
-        <Cancel onClick={() => navigate("/books")}>Cancel</Cancel>
+        <Cancel onClick={() => navigate(`/books`)}>Cancel</Cancel>
       </div>
     </div>
   );
 };
 
-export default StoreBook;
+export default EditBook;

@@ -25,8 +25,7 @@ const EditAuthor = () => {
         setFormData({
           name: fetchedAuthorData.name,
           surname: fetchedAuthorData.surname,
-          biography: fetchedAuthorData.biography,
-          image: fetchedAuthorData.image,
+          biography: fetchedAuthorData.bio,
         });
       } catch (error) {
         console.error("Error fetching author data:", error);
@@ -60,14 +59,8 @@ const EditAuthor = () => {
     {
       name: "biography",
       label: "Biography",
-      type: "text",
+      type: "textare",
       placeholder: "Enter biography",
-    },
-    {
-      name: "image",
-      label: "Image",
-      type: "text", 
-      placeholder: "Enter image URL",
     },
   ];
 
