@@ -1,6 +1,5 @@
 import React from "react";
 import List from "../../components/UI/lists/List";
-import "./Activities.css";
 
 const activitiesData = [
   {
@@ -41,23 +40,18 @@ const activitiesData = [
 ];
 
 const Activities = () => {
-  const activityListItems = activitiesData.map((activity, index) => (
-    <div key={index} className="activity-item">
-      <div className="activity-header">
-        <span className="activity-title">{activity.title}</span>
-        <span className="activity-date">{activity.date}</span>
-      </div>
-      <div className="activity-details">
-        {`${activity.author} ${activity.action} ${activity.target}`}
-      </div>
-    </div>
-  ));
+  const activityListData = activitiesData.map((activity, index) => ({
+    text: `${activity.title} - ${activity.author} ${activity.action} ${activity.target}, ${activity.date}`,
+    key: index,
+  }));
 
   return (
-    <div className="activities-container">
-      <h3 className="activities-title">Activities</h3>
-      <List items={activityListItems} className="custom-list" />
-      <button>Show</button>
+    <div className="mt-20 bg-white">
+      <h3 className="text-2xl text-gray-800 mb-4">Activities</h3>
+      <List items={activityListData} className="custom-list" />
+      <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+        Show
+      </button>
     </div>
   );
 };

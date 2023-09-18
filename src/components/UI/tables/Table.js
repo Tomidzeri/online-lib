@@ -1,5 +1,6 @@
 import { Card } from "@material-tailwind/react";
 import PropTypes from "prop-types";
+import React from "react";
 
 function ReusableTable({ tableHead, tableData }) {
   return (
@@ -29,18 +30,33 @@ function ReusableTable({ tableHead, tableData }) {
 
               return (
                 <tr key={index}>
-                  {rowData.map((cellData, cellIndex) => (
-                    <td
-                      key={cellIndex}
-                      className={`${
-                        cellIndex % 2 === 0
-                          ? classes
-                          : `${classes} bg-blue-gray-100/50`
-                      }`}
-                    >
-                      <div className="font-normal">{cellData}</div>
-                    </td>
-                  ))}
+                  {rowData.map((cellData, cellIndex) => {
+                    // Check if the cellData is a React element
+                    if (React.isValidElement(cellData)) {
+                      // Handle React element differently or skip it
+                      return (
+                        <td
+                          key={cellIndex}
+                          className={classes}
+                        >
+                          {cellData}
+                        </td>
+                      );
+                    }
+
+                    return (
+                      <td
+                        key={cellIndex}
+                        className={`${
+                          cellIndex % 2 === 0
+                            ? classes
+                            : `${classes} bg-blue-gray-100/50`
+                        }`}
+                      >
+                        <div className="font-normal">{cellData}</div>
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })}
@@ -53,8 +69,7 @@ function ReusableTable({ tableHead, tableData }) {
 
 ReusableTable.propTypes = {
   tableHead: PropTypes.arrayOf(PropTypes.string).isRequired,
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number]))).isRequired,
-
+  tableData: PropTypes.arrayOf(PropTypes.array).isRequired, // Removed type checking for inner arrays
 };
 
 export default ReusableTable;

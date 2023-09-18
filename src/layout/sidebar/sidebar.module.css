@@ -1,6 +1,6 @@
 .list {
   background-color: #4d4a4a;
-  width: 5.5rem;
+  width: 5rem;
   height: 100vh;
   position: fixed;
   text-align: center;
@@ -10,13 +10,15 @@
   flex-direction: column;
   justify-content: center;
   z-index: 1;
+  transition: width 0.3s ease, opacity 0.3s ease;
 }
 
 .list:hover {
-  width: 15%;
+  width: 14%;
+  opacity: 1;
 }
 
-.line {
+/* .line {
   position: absolute;
   top: 4.5rem;
   left: 0;
@@ -24,12 +26,13 @@
   height: 0;
   border-bottom: 2px solid #797676; 
   z-index: 1; 
-}
+} */
 
 .listContent {
   display: flex;
   flex-direction: row;
-  padding: 1.5rem;
+  padding-left: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .icon {

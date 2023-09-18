@@ -13,6 +13,8 @@ export const useCreateBook = () => {
     formats: [],
   });
 
+  console.log(data);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

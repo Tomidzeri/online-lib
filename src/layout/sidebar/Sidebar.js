@@ -23,7 +23,6 @@ const Sidebar = ({ className }) => {
 
   return (
     <div className={`${classes.list} ${className}`}>
-      <span className={classes.line}></span>
       <div className={classes.listContent}>
         <button onClick={navigateToDashboard}>
           <FcLibrary className={classes.icon} />

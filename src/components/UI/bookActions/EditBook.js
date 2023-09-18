@@ -32,15 +32,19 @@ const EditBook = () => {
     photo: null,
   });
 
+console.log(formData);
+
   useEffect(() => {
     const fetchAndSetBookData = async () => {
       try {
+        console.log(bookId);
         const fetchedBookData = await fetchBookData(bookId);
+        console.log(fetchedBookData);
         setFormData({
           nazivKnjiga: fetchedBookData.title,
           kratki_sadrzaj: fetchedBookData.description,
           knjigaKolicina: fetchedBookData.samples,
-          authors: fetchedBookData.authors.map((author) => author.id),
+          authors: fetchedBookData.authors[0].id,
           izdavac: fetchedBookData.publisher.id,
           godinaIzdavanja: fetchedBookData.pDate,
           categories: fetchedBookData.categories.map((category) => category.id),

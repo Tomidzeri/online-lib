@@ -2,7 +2,7 @@ import libraryAPI from "../utils/api";
 
 export const fetchBookData = async (bookId) => {
   try {
-
+    console.log(bookId);
     const token = sessionStorage.getItem("token");
     const response = await libraryAPI.get(`/books/${bookId}`, {
       headers: {

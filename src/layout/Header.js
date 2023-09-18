@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logout from "../services/Logout";
 import { FaBell } from "react-icons/fa";
 import { BiCross, BiSolidUserCircle } from "react-icons/bi";
 import { MdLocalLibrary } from "react-icons/md";
+import { useNavigation } from "./navigation";
+import "./styles/header.css";
 
-const Header = ({ className }) => {
+const Header = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showCrossDropdown, setShowCrossDropdown] = useState(false);
-  const navigate = useNavigate();
+  const { navigateToDashboard, navigateToProfile, navigateToAddUser } =
+    useNavigation();
 
   const toggleProfileDropdown = () => {
     setShowProfileDropdown(!showProfileDropdown);
@@ -25,16 +28,6 @@ const Header = ({ className }) => {
     setShowCrossDropdown(false);
   };
 
-  const navigateToDashboard = () => {
-    navigate("/dashboard");
-    closeDropdowns();
-  };
-
-  const navigateToProfile = () => {
-    navigate("/profile");
-    closeDropdowns();
-  };
-
   return (
     <header className="bg-blue-900 p-4 flex justify-between items-center fixed top-0 left-0 w-full z-50">
       <div className="flex">
@@ -47,25 +40,31 @@ const Header = ({ className }) => {
         </button>
       </div>
       <div className="flex items-center text-white">
-        <FaBell className="text-2xl mr-2" />
+        <Link to="/activities" className="text-2xl mr-2">
+          <FaBell
+            className="cursor-pointer bell-icon"
+            aria-label="Activities"
+          />
+        </Link>
         <div className="w-1 h-6 bg-white mx-2"></div>
         <BiCross
-          className="text-2xl mr-2 cursor-pointer"
+          className="text-2xl mr-2 cursor-pointer cross-icon"
           onClick={toggleCrossDropdown}
         />
         <p className="text-white text-xl font-bold mr-2">bildstudio</p>
         <div className="relative inline-block text-white">
           <BiSolidUserCircle
-            className="text-3xl cursor-pointer"
+            className="text-3xl cursor-pointer profile-icon"
             onClick={toggleProfileDropdown}
           />
           <div
-            className={`absolute right-0 mt-8 bg-white text-black shadow-lg rounded py-2 w-40 text-center ${
-              showProfileDropdown ? "block" : "hidden"
+            className={`absolute right-0 mt-4 bg-white text-black shadow-lg rounded py-2 w-40 text-center ${
+              showProfileDropdown
+                ? "dropdown-open"
+                : "dropdown-closed pointer-events-none"
             }`}
           >
             <button
-              to="/profile"
               onClick={navigateToProfile}
               className="block px-4 py-2 hover:font-bold hover:underline"
             >
@@ -76,22 +75,20 @@ const Header = ({ className }) => {
         </div>
         <div className="relative inline-block">
           <div
-            className={`absolute right-0 mt-8 bg-white text-black shadow-lg rounded py-2 w-40 text-center ${
-              showCrossDropdown ? "block" : "hidden"
+            className={`absolute right-40 mt-8 bg-white text-black shadow-lg rounded py-2 w-40 text-center ${
+              showCrossDropdown
+                ? "dropdown-open"
+                : "dropdown-closed pointer-events-none"
             }`}
           >
             <button
-              onClick={() =>
-                (window.location.href = "/useraddform?role=Bibliotekar")
-              }
+              onClick={() => navigateToAddUser("Bibliotekar")}
               className="block px-4 py-2 hover:font-bold hover:underline"
             >
               Novi Bibliotekar
             </button>
             <button
-              onClick={() =>
-                (window.location.href = "/useraddform?role=Učenik")
-              }
+              onClick={() => navigateToAddUser("Učenik")}
               className="block px-4 py-2 hover:font-bold hover:underline"
             >
               Novi Učenik
