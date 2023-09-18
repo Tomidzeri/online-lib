@@ -7,24 +7,30 @@ import { BsSearch } from "react-icons/bs";
 import Button from "../components/UI/buttons/Button";
 import AuthorActionsDropdown from "../components/UI/AuthorActionsDropdown";
 import useDeleteAuthor from "../queries/useDeleteAuthor";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Authors = () => {
   const [authors, setAuthors] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState("");
   const ITEMS_PER_PAGE = 6;
   const deleteAuthor = useDeleteAuthor();
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     fetchAuthors()
       .then((data) => {
-        console.log(data);
-        setAuthors(data.data);
+        setTimeout(() => {
+          console.log(data);
+          setAuthors(data.data);
+          setLoading(false);
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   }, []);
 
@@ -88,7 +94,17 @@ const Authors = () => {
           </div>
         </div>
 
-        <ReusableTable tableHead={tableHeaders} tableData={visibleTableData} />
+        {loading ? (
+          <div className="flex items-center justify-center h-32">
+            <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
+          </div>
+        ) : (
+          <ReusableTable
+            tableHead={tableHeaders}
+            tableData={visibleTableData}
+          />
+        )}
+
         <Pagination
           currentPage={currentPage}
           totalItems={totalItems}

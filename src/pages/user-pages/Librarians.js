@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserActionsDropdown from "../../components/UI/UserActionsDropdown";
 import ReusableTable from "../../components/UI/tables/Table";
 import useFetchLibrarians from "../../queries/useFetchLibrarians";
@@ -6,17 +6,11 @@ import Button from "../../components/UI/buttons/Button";
 import SearchBox from "../../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
 import Pagination from "../../components/UI/pagination/Pagination";
+import { AiOutlineLoading3Quarters } from "react-icons/ai"; 
 
 const Librarians = ({ userProfile }) => {
   const { librarians, setLibrarians } = useFetchLibrarians();
-
-  const handleDeleteUser = (userId) => {
-    const updatedLibrarians = librarians.filter((user) => user.id !== userId);
-    setLibrarians(updatedLibrarians);
-  };
-
   const [searchTerm, setSearchTerm] = useState("");
-
   const tableHeaders = [
     "ID",
     "Name",
@@ -25,6 +19,21 @@ const Librarians = ({ userProfile }) => {
     "Last Logged",
     "Actions",
   ];
+
+  const [loading, setLoading] = useState(true); 
+
+  useEffect(() => {
+    setLoading(true); 
+
+    setTimeout(() => {
+      setLoading(false); 
+    }, 1000); 
+  }, []);
+
+  const handleDeleteUser = (userId) => {
+    const updatedLibrarians = librarians.filter((user) => user.id !== userId);
+    setLibrarians(updatedLibrarians);
+  };
 
   const filteredLibrarians = librarians.filter((librarian) =>
     `${librarian.name} ${librarian.surname}`
@@ -40,6 +49,7 @@ const Librarians = ({ userProfile }) => {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
+
   const visibleTableData = filteredLibrarians
     .filter((item) => item.role === "Bibliotekar")
     .slice(startIndex, endIndex)
@@ -83,14 +93,25 @@ const Librarians = ({ userProfile }) => {
           </div>
         </div>
 
-        <ReusableTable tableHead={tableHeaders} tableData={visibleTableData} />
-        <Pagination
-          currentPage={currentPage}
-          totalItems={totalItems}
-          onPageChange={setCurrentPage}
-          itemsPerPage={ITEMS_PER_PAGE}
-          className="mt-4"
-        />
+        {loading ? ( 
+          <div className="flex items-center justify-center h-32">
+            <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
+          </div>
+        ) : (
+          <>
+            <ReusableTable
+              tableHead={tableHeaders}
+              tableData={visibleTableData}
+            />
+            <Pagination
+              currentPage={currentPage}
+              totalItems={totalItems}
+              onPageChange={setCurrentPage}
+              itemsPerPage={ITEMS_PER_PAGE}
+              className="mt-4"
+            />
+          </>
+        )}
       </div>
     </div>
   );

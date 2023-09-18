@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserActionsDropdown from "../../components/UI/UserActionsDropdown";
 import ReusableTable from "../../components/UI/tables/Table";
 import useFetchStudents from "../../queries/useFetchStudents";
@@ -6,16 +6,17 @@ import Button from "../../components/UI/buttons/Button";
 import SearchBox from "../../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
 import Pagination from "../../components/UI/pagination/Pagination";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Students = ({ userProfile }) => {
   const { students, setStudents } = useFetchStudents();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const handleDeleteUser = (userId) => {
     const updatedStudents = students.filter((user) => user.id !== userId);
     setStudents(updatedStudents);
   };
-
-  const [searchTerm, setSearchTerm] = useState("");
 
   const tableHeaders = [
     "ID",
@@ -25,6 +26,14 @@ const Students = ({ userProfile }) => {
     "Last Logged",
     "Actions",
   ];
+
+  useEffect(() => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   const filteredStudents = students.filter((student) =>
     `${student.name} ${student.surname}`
@@ -84,14 +93,25 @@ const Students = ({ userProfile }) => {
           </div>
         </div>
 
-        <ReusableTable tableHead={tableHeaders} tableData={visibleTableData} />
-        <Pagination
-          currentPage={currentPage}
-          totalItems={totalItems}
-          onPageChange={setCurrentPage}
-          itemsPerPage={ITEMS_PER_PAGE}
-          className="mt-4"
-        />
+        {loading ? (
+          <div className="flex items-center justify-center h-32">
+            <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
+          </div>
+        ) : (
+          <>
+            <ReusableTable
+              tableHead={tableHeaders}
+              tableData={visibleTableData}
+            />
+            <Pagination
+              currentPage={currentPage}
+              totalItems={totalItems}
+              onPageChange={setCurrentPage}
+              itemsPerPage={ITEMS_PER_PAGE}
+              className="mt-4"
+            />
+          </>
+        )}
       </div>
     </div>
   );

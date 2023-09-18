@@ -7,26 +7,34 @@ import { BsSearch } from 'react-icons/bs';
 import Pagination from '../../components/UI/pagination/Pagination';
 import BookActionsDropdown from '../../components/UI/BookActionsDropdown';
 import useDeleteBook from '../../queries/useDeleteBook';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'; 
 
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true); 
 
   const deleteBook = useDeleteBook();
 
   useEffect(() => {
+    setLoading(true); 
+
     fetchBooks()
       .then((data) => {
-        setBooks(data);
-        console.log(data);
+        setTimeout(() => {
+          setBooks(data);
+          setLoading(false); 
+          console.log(data);
+        }, 1000); 
       })
       .catch((error) => {
         console.error('Error fetching books:', error);
+        setLoading(false); 
       });
   }, []);
 
-  const ITEMS_PER_PAGE = 8; 
+  const ITEMS_PER_PAGE = 8;
 
   const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -58,7 +66,7 @@ const Books = () => {
     'Na Raspolaganju',
     'Rezervisano',
     'Izdato',
-    "Actions",
+    'Actions',
     // 'Izdavac',
     // 'Zanr',
   ];
@@ -97,7 +105,14 @@ const Books = () => {
           </div>
         </div>
 
-        <ReusableTable tableHead={customTableHead} tableData={tableData} />
+        {loading ? ( 
+          <div className="flex items-center justify-center h-32">
+            <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
+          </div>
+        ) : (
+          <ReusableTable tableHead={customTableHead} tableData={tableData} />
+        )}
+
         <Pagination
           currentPage={currentPage}
           totalItems={totalItems}
