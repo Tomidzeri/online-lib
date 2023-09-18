@@ -27,7 +27,7 @@ const useFetchStudents = () => {
     fetchStudents();
   }, []);
 
-  return { students, setStudents }; // Return both state and setter
+  return { students, setStudents }; 
 };
 
 export default useFetchStudents;

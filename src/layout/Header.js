@@ -15,12 +15,12 @@ const Header = () => {
 
   const toggleProfileDropdown = () => {
     setShowProfileDropdown(!showProfileDropdown);
-    setShowCrossDropdown(false); // Close the other dropdown if open
+    setShowCrossDropdown(false);
   };
 
   const toggleCrossDropdown = () => {
     setShowCrossDropdown(!showCrossDropdown);
-    setShowProfileDropdown(false); // Close the other dropdown if open
+    setShowProfileDropdown(false);
   };
 
   const closeDropdowns = () => {

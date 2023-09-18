@@ -1,7 +1,6 @@
 .button {
     padding: 1rem;
     white-space: nowrap;
-    margin-left: 5rem;
     background-color: rgb(36, 104, 187);
     color: white;
     border-radius: 0.25rem;
@@ -17,7 +16,6 @@
   .submit {
     padding: 1rem;
     white-space: nowrap;
-    margin-left: 5rem;
     background-color: rgb(36, 104, 187);
     color: white;
     border-radius: 0.25rem;
@@ -33,7 +31,6 @@
   .cancel {
     padding: 1rem;
     white-space: nowrap;
-    margin-left: 5rem;
     background-color: rgb(182, 60, 29);
     color: white;
     border-radius: 0.25rem;

@@ -59,14 +59,16 @@ const Librarians = ({ userProfile }) => {
   return (
     <div className="main-content z-10 mt-24 ml-20">
       <div className="w-full">
+        <div className="border-b border-gray-300 w-full pb-2 mb-2">
+          <h2 className="text-2xl font-bold text-center">Bibliotekari</h2>
+        </div>
         <div className="flex justify-between">
-          <div className="flex justify-between">
-            <h2 className="text-2xl font-bold">Bibliotekari</h2>
+          <div className="flex justify-between w-full mb-2">
             <Button
               onClick={() =>
                 (window.location.href = "/useraddform?role=Bibliotekar")
               }
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-2 rounded-md"
             >
               Novi Bibliotekar
             </Button>
@@ -76,7 +78,7 @@ const Librarians = ({ userProfile }) => {
               <BsSearch className="text-gray-600 text-lg" />
               <SearchBox
                 onSearch={setSearchTerm}
-                className="border border-gray-300 rounded-md p-2"
+                className="border border-gray-300 mb-2 px-2 py-2 rounded-md"
               />
             </div>
           </div>

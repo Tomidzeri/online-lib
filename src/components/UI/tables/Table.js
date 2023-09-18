@@ -31,14 +31,9 @@ function ReusableTable({ tableHead, tableData }) {
               return (
                 <tr key={index}>
                   {rowData.map((cellData, cellIndex) => {
-                    // Check if the cellData is a React element
                     if (React.isValidElement(cellData)) {
-                      // Handle React element differently or skip it
                       return (
-                        <td
-                          key={cellIndex}
-                          className={classes}
-                        >
+                        <td key={cellIndex} className={classes}>
                           {cellData}
                         </td>
                       );
@@ -69,7 +64,7 @@ function ReusableTable({ tableHead, tableData }) {
 
 ReusableTable.propTypes = {
   tableHead: PropTypes.arrayOf(PropTypes.string).isRequired,
-  tableData: PropTypes.arrayOf(PropTypes.array).isRequired, // Removed type checking for inner arrays
+  tableData: PropTypes.arrayOf(PropTypes.array).isRequired,
 };
 
 export default ReusableTable;

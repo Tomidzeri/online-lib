@@ -56,60 +56,30 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         }
       />
 
-      {/* Define your layout structure */}
       <Route path="*" element={<Layout token={token} />}>
-  <Route index element={<Dashboard />} />
-  <Route path="activities" element={<Activities />} />
-  <Route path="reservations" element={<Reservations />} />
-  <Route path="statistics" element={<Statistics />} />
+        <Route index element={<Dashboard />} />
+        <Route path="activities" element={<Activities />} />
+        <Route path="reservations" element={<Reservations />} />
+        <Route path="statistics" element={<Statistics />} />
 
-        {/* Profile route */}
         <Route path="profile" element={<Profile />} />
-
-        {/* Books route */}
         <Route path="books" element={<Books />} />
-
-        {/* Librarians route */}
         <Route path="librarians" element={<Librarians />} />
-
-        {/* Students route */}
         <Route path="students" element={<Students />} />
-
-        {/* Settings route */}
         <Route path="settings" element={<Settings />} />
-
-        {/* Authors route */}
         <Route path="authors" element={<Authors />} />
-
-        {/* User Add Form route */}
         <Route path="useraddform" element={<UserAddForm />} />
-
-        {/* Create Author route */}
         <Route path="createauthor" element={<CreateAuthor />} />
-
-        {/* Store Book route */}
         <Route path="store-book" element={<StoreBook />} />
 
-        {/* View User Details route */}
         <Route path="viewuserdetails/:userId" element={<ViewUserDetails />} />
-
-        {/* Edit User Form route */}
         <Route path="edituserform/:userId" element={<EditUserForm />} />
-
-        {/* Edit Author route */}
         <Route path="editauthor/:authorId" element={<EditAuthor />} />
-
-        {/* View Author Details route */}
         <Route path="viewauthor/:authorId" element={<ViewAuthorDetails />} />
-
-        {/* View Book Details route */}
         <Route path="viewbook/:bookId" element={<ViewBookDetails />} />
-
-        {/* Edit Book route */}
         <Route path="editbook/:bookId" element={<EditBook />} />
       </Route>
 
-      {/* Default redirect to the login page */}
       <Route path="/" element={<Navigate to="/login" />} />
     </Routes>
   );
