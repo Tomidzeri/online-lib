@@ -12,7 +12,7 @@ const Authors = () => {
   const [authors, setAuthors] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const ITEMS_PER_PAGE = 6; 
+  const ITEMS_PER_PAGE = 6;
   const deleteAuthor = useDeleteAuthor();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,23 +28,23 @@ const Authors = () => {
       });
   }, []);
 
-  const tableHeaders = ["Naziv Autora", "Opis"];
+  const tableHeaders = ["Naziv Autora", "Opis", "Actions"];
 
-      const filteredAuthors = authors.filter((author) =>
-      `${author.name} ${author.surname}`
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-    );
+  const filteredAuthors = authors.filter((author) =>
+    `${author.name} ${author.surname}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
 
-    const handleDeleteAuthor = (authorId) => {
-      deleteAuthor(authorId);
-      const updatedAuthors = authors.filter((author) => author.id !== authorId);
-      setAuthors(updatedAuthors);
-    };
+  const handleDeleteAuthor = (authorId) => {
+    deleteAuthor(authorId);
+    const updatedAuthors = authors.filter((author) => author.id !== authorId);
+    setAuthors(updatedAuthors);
+  };
 
   const handleSearch = (value) => {
     setSearchTerm(value);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const totalItems = filteredAuthors.length;
@@ -52,91 +52,53 @@ const Authors = () => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
   const visibleTableData = filteredAuthors
-  .slice(startIndex, endIndex)
-  .map((author) => [
-    `${author.name} ${author.surname}`,
-    " Lorem ipsum odor amet, consectetuer adipiscing elit.",
-    <AuthorActionsDropdown
-      author={author}
-      onDelete={() => handleDeleteAuthor(author.id)}
-    />,
-  ]);
+    .slice(startIndex, endIndex)
+    .map((author) => [
+      `${author.name} ${author.surname}`,
+      " Lorem ipsum odor amet, consectetuer adipiscing elit.",
+      <AuthorActionsDropdown
+        author={author}
+        onDelete={() => handleDeleteAuthor(author.id)}
+      />,
+    ]);
 
-
-//   return (
-//     <div className="main-content z-10 mt-24 ml-20">
-//       <div className="w-full">
-//         <div className="flex justify-between">
-//           <div className="flex justify-between">
-//             <h2 className="text-2xl font-bold">Autori</h2>
-//           </div>
-//           <div className="flex items-center space-x-4">
-//             <div className="flex items-center space-x-2">
-//               <BsSearch className="text-gray-600 text-lg" />
-//               <SearchBox
-//                 onSearch={handleSearch}
-//                 className="border border-gray-300 rounded-md p-2"
-//               />
-//             </div>
-//           </div>
-//         </div>
-//         <div className="mb-4"> 
-//           <Link to="/createauthor">
-//             <Button>Create Author</Button>
-//           </Link>
-//         </div>
-//         <ReusableTable tableHead={tableHeaders} tableData={visibleTableData} />
-//         <Pagination
-//           currentPage={currentPage}
-//           totalItems={totalItems}
-//           onPageChange={setCurrentPage}
-//           itemsPerPage={ITEMS_PER_PAGE}
-//           className="mt-4"
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-return (
-  <div className="main-content z-10 mt-24 ml-20">
-    <div className="w-full">
-      <div className="border-b border-gray-300 w-full pb-2 mb-2">
-        <h2 className="text-2xl font-bold text-center">Autori</h2>
-      </div>
-      <div className="flex justify-between">
-        <div className="flex justify-between w-full mb-2">
-          <Button
-            onClick={() =>
-              (window.location.href = "/createauthor")
-            }
-            className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-2 rounded-md"
-          >
-            Novi Autor
-          </Button>
+  return (
+    <div className="main-content z-10 mt-24 ml-20">
+      <div className="w-full">
+        <div className="border-b border-gray-300 w-full pb-2 mb-2">
+          <h2 className="text-2xl font-bold text-center">Autori</h2>
         </div>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <BsSearch className="text-gray-600 text-lg" />
-            <SearchBox
-              onSearch={handleSearch}
-              className="border border-gray-300 mb-2 px-2 py-2 rounded-md"
-            />
+        <div className="flex justify-between">
+          <div className="flex justify-between w-full mb-2">
+            <Button
+              onClick={() => (window.location.href = "/createauthor")}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-2 rounded-md"
+            >
+              Novi Autor
+            </Button>
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <BsSearch className="text-gray-600 text-lg" />
+              <SearchBox
+                onSearch={handleSearch}
+                className="border border-gray-300 mb-2 px-2 py-2 rounded-md"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <ReusableTable tableHead={tableHeaders} tableData={visibleTableData} />
-      <Pagination
-        currentPage={currentPage}
-        totalItems={totalItems}
-        onPageChange={setCurrentPage}
-        itemsPerPage={ITEMS_PER_PAGE}
-        className="mt-4"
-      />
+        <ReusableTable tableHead={tableHeaders} tableData={visibleTableData} />
+        <Pagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          onPageChange={setCurrentPage}
+          itemsPerPage={ITEMS_PER_PAGE}
+          className="mt-4"
+        />
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default Authors;

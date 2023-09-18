@@ -31,7 +31,6 @@ const UserActionsDropdown = ({ user, onDelete }) => {
       </button>
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
-          <button onClick={closeDropdown}>Close</button>
           <button className={classes.dropdownBtn} onClick={handleViewDetailsClick}>
             View Details
           </button>

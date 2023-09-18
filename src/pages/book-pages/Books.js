@@ -58,6 +58,7 @@ const Books = () => {
     'Na Raspolaganju',
     'Rezervisano',
     'Izdato',
+    "Actions",
     // 'Izdavac',
     // 'Zanr',
   ];

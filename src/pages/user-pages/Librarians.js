@@ -40,7 +40,6 @@ const Librarians = ({ userProfile }) => {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-
   const visibleTableData = filteredLibrarians
     .filter((item) => item.role === "Bibliotekar")
     .slice(startIndex, endIndex)

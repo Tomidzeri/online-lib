@@ -38,7 +38,8 @@
 .dropdownBtn,
 .dropdownContent button,
 .dropdownContent a {
-  margin: 5px;
+  margin: auto;
+  padding: 4px;
   font-size: 14px;
   color: rgb(0, 0, 0);
   text-decoration: none;

@@ -11,7 +11,7 @@ const DeleteAuthor = ({ author, onDelete }) => {
 
   return (
     <div>
-      <p>Are you sure you want to delete {author.name}?</p>
+      {/* <p>Are you sure you want to delete {author.name}?</p> */}
       <button onClick={handleDelete}>Delete author</button>
     </div>
   );
