@@ -4,6 +4,7 @@ import { FcLibrary } from "react-icons/fc";
 import { FaRegAddressBook } from "react-icons/fa";
 import { PiStudentFill } from "react-icons/pi";
 import { BsBook, BsGear } from "react-icons/bs";
+import { GoArrowSwitch } from "react-icons/go";
 import {
   useNavigateToDashboard,
   useNavigateToLibrarians,
@@ -11,6 +12,7 @@ import {
   useNavigateToBooks,
   useNavigateToAuthors,
   useNavigateToSettings,
+  useNavigateToBorrows,
 } from "./navigation";
 
 const Sidebar = ({ className }) => {
@@ -20,6 +22,7 @@ const Sidebar = ({ className }) => {
   const navigateToBooks = useNavigateToBooks();
   const navigateToAuthors = useNavigateToAuthors();
   const navigateToSettings = useNavigateToSettings();
+  const navigateToBorrows = useNavigateToBorrows();
 
   return (
     <div className={`${classes.list} ${className}`}>
@@ -60,7 +63,15 @@ const Sidebar = ({ className }) => {
           <FaRegAddressBook className={classes.icon} />
         </button>
         <button onClick={navigateToAuthors}>
-          <p>Authors</p>
+          <p>Autori</p>
+        </button>
+      </div>
+      <div className={classes.listContent}>
+        <button onClick={navigateToBorrows}>
+          <GoArrowSwitch className={classes.icon} />
+        </button>
+        <button onClick={navigateToBorrows}>
+          <p>Izdavanje</p>
         </button>
       </div>
       <div className={classes.listContent}>
@@ -68,7 +79,7 @@ const Sidebar = ({ className }) => {
           <BsGear className={classes.icon} />
         </button>
         <button onClick={navigateToSettings}>
-          <p>Settings</p>
+          <p>Podesavanja</p>
         </button>
       </div>
     </div>

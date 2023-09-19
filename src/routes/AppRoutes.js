@@ -24,6 +24,7 @@ import ViewAuthorDetails from "../components/UI/authorActions/ViewAuthorDetails"
 import CreateAuthor from "../components/UI/authorActions/CreateAuthor";
 import ViewBookDetails from "../components/UI/bookActions/ViewBookDetails";
 import EditBook from "../components/UI/bookActions/EditBook";
+import Borrows from "../pages/book-pages/Borrows";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -68,6 +69,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="students" element={<Students />} />
         <Route path="settings" element={<Settings />} />
         <Route path="authors" element={<Authors />} />
+        <Route path="borrows" element={<Borrows />} />
         <Route path="useraddform" element={<UserAddForm />} />
         <Route path="createauthor" element={<CreateAuthor />} />
         <Route path="store-book" element={<StoreBook />} />

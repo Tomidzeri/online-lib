@@ -30,3 +30,8 @@ export const useNavigateToSettings = () => {
   const navigate = useNavigate();
   return () => navigate("/settings");
 };
+
+export const useNavigateToBorrows = () => {
+  const navigate = useNavigate();
+  return () => navigate("/borrows");
+};
