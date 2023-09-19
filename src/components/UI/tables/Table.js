@@ -12,7 +12,7 @@ function ReusableTable({ tableHead, tableData }) {
               {tableHead.map((head) => (
                 <th
                   key={head}
-                  className="border-b border-blue-gray-100 p-2 sm:p-1 sticky top-0 z-10 shadow-md text-black"
+                  className="border-b border-blue-gray-100 p-2 sm:p-1 sticky top-0  shadow-md text-black"
                 >
                   <div className="font-small leading-none opacity-70">
                     {head}

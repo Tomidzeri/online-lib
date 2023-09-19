@@ -66,7 +66,7 @@ const Librarians = ({ userProfile }) => {
     ]);
 
   return (
-    <div className="main-content z-10 mt-24 ml-20">
+    <div className="main-content  mt-24 ml-20">
       <div className="w-full">
         <div className="border-b border-gray-300 w-full pb-2 mb-2">
           <h2 className="text-2xl font-bold text-center">Bibliotekari</h2>

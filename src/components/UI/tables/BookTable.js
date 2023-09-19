@@ -14,7 +14,7 @@ const BookTable = ({ tableHead, tableData }) => {
         {tableData.map((row, index) => (
           <tr key={index}>
             {row.map((cell, cellIndex) => (
-              <td key={cellIndex} className="border border-gray-400 px-4 py-2">{cell}</td>
+              <td key={cellIndex} className="border border-gray-300 px-4 py-2">{cell}</td>
             ))}
           </tr>
         ))}

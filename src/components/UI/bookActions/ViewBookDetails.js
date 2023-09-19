@@ -52,7 +52,10 @@ const ViewBookDetails = () => {
           </div>
           <div className="w-1/2">
             <h3 className="text-xl font-semibold">Description:</h3>
-            <p className="mt-2">{book.description}</p>
+            <div
+              className="mt-2"
+              dangerouslySetInnerHTML={{ __html: book.description }}
+            />
           </div>
         </div>
       ),
@@ -61,7 +64,9 @@ const ViewBookDetails = () => {
       label: "Specifications",
       content: (
         <div className="p-4">
-          <h3 className="text-xl font-semibold">Language: {book.language.name}</h3>
+          <h3 className="text-xl font-semibold">
+            Language: {book.language.name}
+          </h3>
           <h3 className="text-lg mt-2">Number of Pages: {book.pages}</h3>
           <h3 className="text-lg mt-2">ISBN: {book.isbn}</h3>
           <h3 className="text-lg mt-2">Pismo: {book.script.name}</h3>
@@ -102,9 +107,7 @@ const ViewBookDetails = () => {
           </div>
         ))}
       </Tab>
-      <Button onClick={handleBackClick}>
-        Go back
-      </Button>
+      <Button onClick={handleBackClick}>Go back</Button>
     </div>
   );
 };

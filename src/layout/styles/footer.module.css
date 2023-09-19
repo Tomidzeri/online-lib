@@ -5,13 +5,15 @@
   width: 100%;
   transform: translateX(-50%);
   background-color: #4558BE;
-  /* background: linear-gradient(#333, #6577d2); */
   color: #fff;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
-  height: 40px;
+  height: 2rem;
   z-index: 2;
+
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
 }
 
 .footer p {

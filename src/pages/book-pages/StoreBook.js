@@ -102,7 +102,7 @@ const StoreBook = () => {
   };
 
   return (
-    <div className="main-content z-10 mt-24 ml-20 mr-5 flex flex-col">
+    <div className="main-content  mt-24 ml-20 mr-5 flex flex-col">
       <div className="w-full">
         <h2 className="text-3xl font-semibold mb-4">Nova Knjiga</h2>
         <form onSubmit={handleSubmit}>

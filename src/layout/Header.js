@@ -29,7 +29,10 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-blue-900 p-4 flex justify-between items-center fixed top-0 left-0 w-full z-50">
+    <header
+      className="bg-blue-900 p-4 flex justify-between items-center fixed top-0 left-0 w-full z-50"
+      style={{ backgroundColor: "#4558BE", height: "4rem" }}
+    >
       <div className="flex">
         <button
           className="flex items-center text-white"

@@ -2,11 +2,12 @@
   align-self: center;
   text-align: center;
   width: 60%;
-  background-color: #f7f7f7;
-  border: 1px solid #ddd;
+  background-color: transparent;
+  border: none;
   padding: 20px;
   border-radius: 5px;
   margin-top: 5rem;
+  margin-bottom: 3.5rem;
 }
 
 .form-group {
@@ -39,8 +40,8 @@
   display: flex;
   justify-content: flex-end; 
   align-items: flex-end; 
-  margin-top: auto; 
+  gap: 2rem;
+  margin-right: 1rem;
   padding: 1rem;
-  margin-bottom: 2rem;
 }
 

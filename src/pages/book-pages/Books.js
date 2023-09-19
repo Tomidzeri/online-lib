@@ -8,12 +8,14 @@ import Pagination from '../../components/UI/pagination/Pagination';
 import BookActionsDropdown from '../../components/UI/BookActionsDropdown';
 import useDeleteBook from '../../queries/useDeleteBook';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'; 
+import { useNavigate } from 'react-router-dom';
 
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true); 
+  const navigate = useNavigate();
 
   const deleteBook = useDeleteBook();
 
@@ -78,17 +80,15 @@ const Books = () => {
   };
 
   return (
-    <div className="main-content z-10 mt-24 ml-20">
+    <div className="main-content mt-24 ml-20">
       <div className="w-full">
         <div className="border-b border-gray-300 w-full pb-2 mb-2">
           <h2 className="text-2xl font-bold text-center">Knjige</h2>
         </div>
         <div className="flex justify-between">
           <div className="flex justify-between w-full mb-2">
-            <Button
-              onClick={() =>
-                (window.location.href = "/storebook")
-              }
+          <Button
+              onClick={() => navigate("/storebook")} 
               className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-2 rounded-md"
             >
               Nova Knjiga

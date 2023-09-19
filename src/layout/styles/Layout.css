@@ -13,7 +13,7 @@
 .main-content {
   flex: 1;
   display: flex;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .sidebar {
@@ -26,7 +26,7 @@
 .content-area {
   flex: 1;
   padding: 20px;
-  overflow: auto;
+  /* overflow: auto; */
   background-color: white;
 }
 
