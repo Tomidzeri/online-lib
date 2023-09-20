@@ -17,10 +17,12 @@ function Login() {
         device,
       });
 
-      const { token } = response.data.data;
+      const { token, name } = response.data.data;
       sessionStorage.setItem("token", token);
+      sessionStorage.setItem("username", name);
 
-      console.log("Login successful. Token:", token); // Log the token here
+      console.log("Login successful. Token:", token); 
+      console.log("Name:", name);  
 
       navigate("/dashboard");
 

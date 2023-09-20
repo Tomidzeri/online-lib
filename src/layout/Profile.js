@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from "react";
-import libraryAPI from "../utils/api"; 
-import classes from "./styles/profile.module.css";
+import { fetchUserProfile } from "../queries/profileInfo";
+// import classes from "./styles/profile.module.css";
+import photo from "../Images/photo.jpg";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-
-const Profile = ({ token }) => {
+const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const token = sessionStorage.getItem("token");
+    const loggedInUsername = sessionStorage.getItem("username");
+
+    if (!token || !loggedInUsername) {
+      setIsLoading(false);
+      return;
+    }
+
+    const fetchUserData = async () => {
       try {
-        const token = sessionStorage.getItem("token");
-        const response = await libraryAPI.get(`/users`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json; charset=utf-8",
-          },
-        });
+        const user = await fetchUserProfile(token, loggedInUsername);
 
-        const userData = response.data.data; 
-        const [user] = userData.filter(item => item.username === 'bibliotekar');
-        console.log(user);
-
-        
         setUserProfile(user);
         setIsLoading(false);
       } catch (error) {
@@ -31,26 +29,63 @@ const Profile = ({ token }) => {
       }
     };
 
-    fetchUserProfile(); 
-
-  }, [token]);
+    fetchUserData();
+  }, []);
 
   return (
-    <div className={classes.profile}>
-      <h2>Profile</h2>
-      {isLoading ? (
-        <p>Loading profile data...</p>
-      ) : setUserProfile ? (
-        <>
-          <p>Name: {userProfile.name}</p>
-          <p>Surname: {userProfile.surname}</p>
-          <p>Email: {userProfile.email}</p>
-          <p>Role: {userProfile.role}</p>
-          <img src={userProfile.photoPath} alt="slika" />
-        </>
-      ) : (
-        <p>Failed to load profile data.</p>
-      )}
+    <div className="main-content mt-24 ml-20">
+      <div className="w-full">
+        <div className="border-b border-gray-300 w-full pb-2 mb-2">
+          <h2 className="text-2xl font-bold text-center">
+            {userProfile.name} {userProfile.surname}
+          </h2>
+        </div>
+        {isLoading ? (
+          <div className="flex items-center justify-center h-32">
+            <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
+          </div>
+        ) : userProfile ? (
+          <>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-row">
+                <div className="flex flex-col text-left">
+                  <div className="pb-8">
+                    <p className="text-left font-black">Ime i prezime</p>
+                    <p className="text-left">
+                      {userProfile.name} {userProfile.surname}
+                    </p>
+                  </div>
+                  <div className="pb-8">
+                    <p className="text-left font-black">Tip korisnika:</p>
+                    <p className="text-left">{userProfile.role}</p>
+                  </div>
+                  <div className="pb-8">
+                    <p className="text-left font-black">JMBG:</p>
+                    <p className="text-left">{userProfile.jmbg}</p>
+                  </div>
+                  <div className="pb-8">
+                    <p className="text-left font-black">Email:</p>
+                    <p className="text-left">{userProfile.email}</p>
+                  </div>
+                  <div className="pb-8">
+                    <p className="text-left font-black">Korisnicko ime:</p>
+                    <p className="text-left">{userProfile.username}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-baseline items-center">
+                <img
+                  src={photo}
+                  alt="User Cover"
+                  className="border border-gray-400 p-2 mt-2 w-60 h-80"
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <p>Failed to load profile data.</p>
+        )}
+      </div>
     </div>
   );
 };
