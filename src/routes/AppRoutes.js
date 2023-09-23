@@ -1,30 +1,32 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import PrivateRoute from "../services/PrivateRoute";
-import LoginForm from "../pages/service-pages/LoginForm";
-import SignupForm from "../pages/service-pages/SignupForm";
+import LoginForm from "../pages/service-stranice/LoginForm";
+import SignupForm from "../pages/service-stranice/SignupForm";
 import Logout from "../services/Logout";
 import Layout from "../layout/Layout";
 import Dashboard from "../layout/Dashboard";
-import Profile from "../layout/Profile";
-import Books from "../pages/book-pages/Books";
-import Librarians from "../pages/user-pages/Librarians";
-import Students from "../pages/user-pages/Students";
+import Profile from "../pages/Profile";
+import Books from "../pages/book-stranice/Books";
+import Librarians from "../pages/user-stranice/Librarians";
+import Students from "../pages/user-stranice/Students";
 import Settings from "../pages/Settings";
-import UserAddForm from "../components/UI/userActions/UserAddForm";
-import EditUserForm from "../components/UI/userActions/EditUserForm";
-import ViewUserDetails from "../components/UI/userActions/ViewUserDetails";
+import UserAddForm from "../components/UI/actions/userActions/UserAddForm";
+import EditUserForm from "../components/UI/actions/userActions/EditUserForm";
+import ViewUserDetails from "../components/UI/actions/userActions/ViewUserDetails";
 import Statistics from "../layout/dashboard-content/Statistics";
 import Activities from "../layout/dashboard-content/Activities";
 import Reservations from "../layout/dashboard-content/Reservations";
-import StoreBook from "../pages/book-pages/StoreBook";
+import StoreBook from "../pages/book-stranice/StoreBook";
 import Authors from "../pages/Authors";
-import EditAuthor from "../components/UI/authorActions/EditAuthor";
-import ViewAuthorDetails from "../components/UI/authorActions/ViewAuthorDetails";
-import CreateAuthor from "../components/UI/authorActions/CreateAuthor";
-import ViewBookDetails from "../components/UI/bookActions/ViewBookDetails";
-import EditBook from "../components/UI/bookActions/EditBook";
-import Borrows from "../pages/book-pages/Borrows";
+import EditAuthor from "../components/UI/actions/authorActions/EditAuthor";
+import ViewAuthorDetails from "../components/UI/actions/authorActions/ViewAuthorDetails";
+import CreateAuthor from "../components/UI/actions/authorActions/CreateAuthor";
+import ViewBookDetails from "../components/UI/actions/bookActions/ViewBookDetails";
+import EditBook from "../components/UI/actions/bookActions/EditBook";
+import Borrows from "../pages/book-stranice/Borrows";
+import EditProfile from "../components/UI/actions/profileActions/EditProfile";
+import BorrowBook from "../components/UI/actions/bookActions/BorrowBook";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -80,6 +82,8 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="viewauthor/:authorId" element={<ViewAuthorDetails />} />
         <Route path="viewbook/:bookId" element={<ViewBookDetails />} />
         <Route path="editbook/:bookId" element={<EditBook />} />
+        <Route path="editprofile/:bookId" element={<EditProfile />} />
+        <Route path="borrowbook/:bookId" element={<BorrowBook />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/login" />} />

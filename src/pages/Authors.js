@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReusableTable from "../components/UI/tables/Table";
-import fetchAuthors from "../queries/fetchAuthors";
+import fetchAuthors from "../queries/autori/fetchAuthors";
 import Pagination from "../components/UI/pagination/Pagination";
 import SearchBox from "../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
 import Button from "../components/UI/buttons/Button";
-import AuthorActionsDropdown from "../components/UI/AuthorActionsDropdown";
-import useDeleteAuthor from "../queries/useDeleteAuthor";
+import AuthorActionsDropdown from "../components/UI/actions/AuthorActionsDropdown";
+import useDeleteAuthor from "../queries/autori/useDeleteAuthor";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Authors = () => {

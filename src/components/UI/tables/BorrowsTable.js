@@ -7,12 +7,12 @@ function BorrowsTable({ tableHead, tableData }) {
     <Card className="w-full rounded-lg shadow-lg block">
       <div className="overflow-none">
         <table className="w-full table-auto text-left">
-          <thead className="bg-gray-200" style={{ height: "50px" }}> {/* Set a fixed height here */}
+          <thead className="bg-gray-200" style={{ height: "50px" }}>
             <tr>
-              {tableHead.map((head) => (
+              {tableHead.map((head, index) => (
                 <th
-                  key={head}
-                  className="border-b border-blue-gray-100 p-2 sm:p-1 sticky top-0  shadow-md text-sm text-black"
+                  key={index}
+                  className="border-b border-blue-gray-100 p-2 sm:p-1 sticky top-0 shadow-md text-sm text-black"
                 >
                   <div className="font-normal leading-none opacity-70 pr-32 pl-2">
                     {head}

@@ -2,6 +2,7 @@ import libraryAPI from "../utils/api";
 
 export const fetchUserProfile = async (token, username) => {
   try {
+    const token = sessionStorage.getItem("token");
     const response = await libraryAPI.get(`/users`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -11,9 +12,9 @@ export const fetchUserProfile = async (token, username) => {
 
     const userData = response.data.data;
 
-    // Find the user with the specified username
     const user = userData.find((item) => item.username === username);
 
+    console.log(user)
     return user;
   } catch (error) {
     throw error;
