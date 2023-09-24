@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DeleteAuthor from "../../../queries/autori/useDeleteAuthor";
+import DeleteAuthor from "./authorActions/DeleteAuthor";
 import classes from "./ActionsDropdown.module.css";
 import { useNavigate } from "react-router-dom";
 
