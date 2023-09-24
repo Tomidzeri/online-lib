@@ -6,7 +6,7 @@ import Button from "../../components/UI/buttons/Button";
 import SearchBox from "../../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
 import Pagination from "../../components/UI/pagination/Pagination";
-import { AiOutlineLoading3Quarters } from "react-icons/ai"; 
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Librarians = ({ userProfile }) => {
   const { librarians, setLibrarians } = useFetchLibrarians();
@@ -20,14 +20,14 @@ const Librarians = ({ userProfile }) => {
     "Actions",
   ];
 
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true); 
+    setLoading(true);
 
     setTimeout(() => {
-      setLoading(false); 
-    }, 1000); 
+      setLoading(false);
+    }, 1000);
   }, []);
 
   const handleDeleteUser = (userId) => {
@@ -35,17 +35,20 @@ const Librarians = ({ userProfile }) => {
     setLibrarians(updatedLibrarians);
   };
 
-  const filteredLibrarians = librarians.filter((librarian) =>
-    `${librarian.name} ${librarian.surname}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+  const filteredLibrarians = librarians.filter(
+    (librarian) =>
+      `${librarian.name} ${librarian.surname}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      librarian.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const ITEMS_PER_PAGE = 4;
-
-  const totalItems = filteredLibrarians.length;
+  const totalItems = librarians.filter(
+    (librarian) => librarian.role === "Bibliotekar"
+  ).length;
 
   const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 5;
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -64,6 +67,10 @@ const Librarians = ({ userProfile }) => {
         onDelete={() => handleDeleteUser(librarian.id)}
       />,
     ]);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   return (
     <div className="main-content  mt-24 ml-20">
@@ -93,7 +100,7 @@ const Librarians = ({ userProfile }) => {
           </div>
         </div>
 
-        {loading ? ( 
+        {loading ? (
           <div className="flex items-center justify-center h-32">
             <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
           </div>
@@ -106,7 +113,7 @@ const Librarians = ({ userProfile }) => {
             <Pagination
               currentPage={currentPage}
               totalItems={totalItems}
-              onPageChange={setCurrentPage}
+              onPageChange={handlePageChange}
               itemsPerPage={ITEMS_PER_PAGE}
               className="mt-4"
             />

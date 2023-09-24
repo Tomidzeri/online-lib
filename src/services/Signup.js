@@ -25,11 +25,13 @@ const Signup = () => {
 
       sessionStorage.setItem("token", response.data.token);
 
+      console.log("Signup success:", response.data);
+      
       if (response.status === 200) {
         navigate("/login");
-      } else {
-        console.error("Signup failed:", response.data);
       }
+      
+      console.log("Signup Response:", response.data);
     } catch (error) {
       console.error("Error during signup:", error);
     }

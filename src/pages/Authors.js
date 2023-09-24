@@ -12,7 +12,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const Authors = () => {
   const [authors, setAuthors] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const ITEMS_PER_PAGE = 6;
+  const ITEMS_PER_PAGE = 5;
   const deleteAuthor = useDeleteAuthor();
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);

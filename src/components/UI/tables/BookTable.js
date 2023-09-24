@@ -1,25 +1,30 @@
 import React from 'react';
+import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
 const BookTable = ({ tableHead, tableData }) => {
   return (
-    <table className="border-collapse w-full">
-      <thead>
-        <tr>
+    <Table aria-label="collapsible table">
+      <TableHead>
+        <TableRow>
           {tableHead.map((header) => (
-            <th key={header} className="border border-gray-400 px-4 py-2">{header}</th>
+            <TableCell key={header}>
+              {header}
+            </TableCell>
           ))}
-        </tr>
-      </thead>
-      <tbody>
+        </TableRow>
+      </TableHead>
+      <TableBody>
         {tableData.map((row, index) => (
-          <tr key={index}>
+          <TableRow key={index}>
             {row.map((cell, cellIndex) => (
-              <td key={cellIndex} className="border border-gray-300 px-4 py-2">{cell}</td>
+              <TableCell key={cellIndex}>
+                {cell}
+              </TableCell>
             ))}
-          </tr>
+          </TableRow>
         ))}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 };
 

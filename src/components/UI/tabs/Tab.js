@@ -1,31 +1,31 @@
 import React from 'react';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
-const Tab = ({ labels, activeTab, setActiveTab, children }) => {
-  const handleTabClick = (index, event) => {
-    event.preventDefault();
-    setActiveTab(index);
+const CustomTab = ({ labels, activeTab, setActiveTab, children }) => {
+  const handleTabChange = (_, newValue) => {
+    setActiveTab(newValue);
   };
 
   return (
-    <div className="border rounded-lg p-8">
-      <div className="flex space-x-4">
+    <div className="w-full mt-4">
+      <Tabs
+        value={activeTab}
+        onChange={handleTabChange}
+        indicatorColor="primary"
+        textColor="primary"
+        centered
+      >
         {labels.map((label, index) => (
-          <button
+          <Tab
             key={index}
-            onClick={(event) => handleTabClick(index, event)}
-            className={`${
-              index === activeTab
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-600'
-            } px-4 py-2 rounded-lg focus:outline-none hover:bg-blue-400 transition`}
-          >
-            {label}
-          </button>
+            label={label}
+          />
         ))}
-      </div>
+      </Tabs>
       <div>{children[activeTab]}</div>
     </div>
   );
 };
 
-export default Tab;
+export default CustomTab;

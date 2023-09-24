@@ -39,7 +39,7 @@ const UserAddForm = () => {
     <div className="main-content mt-14 ml-20">
       <div className="w-full">
         <div className="flex flex-col border-b border-gray-300 w-full pb-2">
-          <h2 className="text-2xl font-bold text-center">Novi Korisnik</h2>
+          <h2 className="text-2xl font-bold text-center">Novi {role}</h2>
         </div>
           <Form
             fields={[

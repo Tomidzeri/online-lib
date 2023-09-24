@@ -1,62 +1,55 @@
-import { Card } from "@material-tailwind/react";
-import PropTypes from "prop-types";
-import React from "react";
+import React from 'react';
+import { Card, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import PropTypes from 'prop-types';
 
 function ReusableTable({ tableHead, tableData }) {
   return (
-    <Card className="w-full rounded-lg shadow-lg block">
-      <div className="overflow-none">
-        <table className="w-full table-auto text-left">
-          <thead className="bg-gray-200">
-            <tr>
+    <Card variant="outlined">
+      <div className="overflow-auto">
+        <Table>
+          <TableHead>
+            <TableRow>
               {tableHead.map((head) => (
-                <th
-                  key={head}
-                  className="border-b border-blue-gray-100 p-2 sm:p-1 sticky top-0  shadow-md text-black"
-                >
+                <TableCell key={head} className="bg-gray-200">
                   <div className="font-small leading-none opacity-70">
                     {head}
                   </div>
-                </th>
+                </TableCell>
               ))}
-            </tr>
-          </thead>
-          <tbody>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {tableData.map((rowData, index) => {
               const isLast = index === tableData.length - 1;
               const classes = isLast
-                ? "p-2 sm:p-2"
-                : "p-2 sm:p-3 border-b border-blue-gray-50";
+                ? 'p-2 sm:p-2'
+                : 'p-2 sm:p-3';
 
               return (
-                <tr key={index}>
+                <TableRow key={index}>
                   {rowData.map((cellData, cellIndex) => {
                     if (React.isValidElement(cellData)) {
                       return (
-                        <td key={cellIndex} className={classes}>
+                        <TableCell key={cellIndex} className={classes}>
                           {cellData}
-                        </td>
+                        </TableCell>
                       );
                     }
 
                     return (
-                      <td
+                      <TableCell
                         key={cellIndex}
-                        className={`${
-                          cellIndex % 2 === 0
-                            ? classes
-                            : `${classes} bg-blue-gray-100/50`
-                        }`}
+                        className={`${cellIndex % 2 === 0 ? classes : `${classes} bg-blue-gray-100/50`}`}
                       >
                         <div className="font-normal">{cellData}</div>
-                      </td>
+                      </TableCell>
                     );
                   })}
-                </tr>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </Card>
   );

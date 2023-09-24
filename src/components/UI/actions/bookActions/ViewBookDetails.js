@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Tab from "../../tabs/Tab";
 import useBookDetails from "../../../../queries/knjige/useBookDetails";
 import { useParams } from "react-router-dom";
-import Button from "../../buttons/Button";
 import { useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 
 const ViewBookDetails = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -66,7 +67,7 @@ const ViewBookDetails = () => {
       label: "Specifikacije",
       content: (
         <div className="p-4">
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-lg">
             Language: {book.language.name}
           </h3>
           <h3 className="text-lg mt-2">Broj strana: {book.pages}</h3>
@@ -97,8 +98,23 @@ const ViewBookDetails = () => {
   return (
     <div className="main-content mt-14 ml-20">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full pb-2 text-center">
-          <h2 className="text-3xl font-semibold mb-4">Detalji knjige</h2>
+        <div className="border-b border-gray-300 w-full text-left flex flex-row">
+          <Avatar
+            alt="Book Cover"
+            src="https://tim2.petardev.live/img/book-cover-placeholder.png"
+            sx={{ width: 60, height: 60, marginRight: 2 }}
+          />
+          <div className="flex flex-col">
+            <h2 className="text-3xl font-semibold">{book?.title}</h2>
+            <Button
+              onClick={handleBackClick}
+              variant="text"
+              color="primary"
+              sx={{ textTransform: "none", paddingLeft: 0 }}
+            >
+              Sve Knjige
+            </Button>
+          </div>
         </div>
         <Tab
           labels={tabsContent.map((tab) => tab.label)}
@@ -112,7 +128,6 @@ const ViewBookDetails = () => {
             </div>
           ))}
         </Tab>
-        <Button onClick={handleBackClick}>Nazad</Button>
       </div>
     </div>
   );

@@ -6,10 +6,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import updateUserData from "../../../../queries/korisnici/useUpdateUserData";
 import Submit from "../../buttons/Submit";
 import Cancel from "../../buttons/Cancel";
+import useUserDetails from "../../../../queries/korisnici/useUserDetails";
 
 const EditUser = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
+
+  const user = useUserDetails(userId);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -33,7 +36,7 @@ const EditUser = () => {
           surname: fetchedUserData.surname,
           email: fetchedUserData.email,
           username: fetchedUserData.username,
-          jmbg: fetchedUserData.jmbg,
+          // jmbg: fetchedUserData.jmbg,
           password: "",
           password_confirmation: "",
           role: fetchedUserData.role,
@@ -100,7 +103,7 @@ const EditUser = () => {
     {
       name: "jmbg",
       label: "JMBG",
-      type: "text",
+      type: "number",
       placeholder: "Enter JMBG",
       pattern: "[0-9]{13}",
     },
@@ -118,13 +121,32 @@ const EditUser = () => {
     },
   ];
 
+  const roleDisplay = () => {
+    if (user) {
+      if (user.role === "Bibliotekar") {
+        return <p>Svi Bibliotekari</p>;
+      } else if (user.role === "Učenik") {
+        return <p>Svi Ucenici</p>;
+      }
+    }
+    return <p>Admins</p>;
+  };
+
   return (
-    <div className="main-content mt-14 ml-20">
+    <div className="main-content mt-12 ml-20 flex flex-col">
       <div className="w-full">
-        <div className="flex flex-col border-b border-gray-300 w-full pb-2">
-          <h2 className="text-2xl font-bold text-center">Izmjena podataka</h2>
-          <h2 className="text-2xl font-bold text-center">{formData.name} {formData.surname}</h2>
+        <div className="flex flex-col border-b border-gray-300 w-full">
+          <h2 className="text-2xl font-bold text-left">Izmjena podataka</h2>
+          <button
+            type="button"
+            className="text-blue-500 hover:text-blue-700 text-left pt-2"
+            onClick={() => navigateToUserRolePage(formData.role)}
+          >
+            {roleDisplay()}
+          </button>
         </div>
+      </div>
+      <div>
         <Form
           fields={formFields}
           formData={formData}
@@ -132,9 +154,9 @@ const EditUser = () => {
           // onSubmit={handleUpdateUser}
         />
         <div className="button-container">
-          <Submit onClick={handleUpdateUser}>Submit</Submit>
+          <Submit onClick={handleUpdateUser}>Sacuvaj</Submit>
           <Cancel onClick={() => navigateToUserRolePage(formData.role)}>
-            Cancel
+            Ponisti
           </Cancel>
         </div>
       </div>

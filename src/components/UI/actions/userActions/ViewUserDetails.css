@@ -19,8 +19,8 @@
   } */
   
   .back-button {
-    display: inline-block;
-  
+    margin-bottom: 0;
+    bottom: 0;
     padding: 0.8rem;
     background-color: #007bff;
     color: white;

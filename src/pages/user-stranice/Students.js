@@ -35,15 +35,19 @@ const Students = ({ userProfile }) => {
     }, 1000);
   }, []);
 
-  const filteredStudents = students.filter((student) =>
-    `${student.name} ${student.surname}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+  const filteredStudents = students.filter(
+    (student) =>
+      `${student.name} ${student.surname}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      student.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const ITEMS_PER_PAGE = 4;
 
-  const totalItems = filteredStudents.length;
+  const totalItems = students.filter(
+    (student) => student.role === "Učenik"
+  ).length;
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -79,7 +83,7 @@ const Students = ({ userProfile }) => {
               }
               className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-2 rounded-md"
             >
-              Novi Ucenici
+              Novi Ucenik
             </Button>
           </div>
           <div className="flex items-center space-x-4">
