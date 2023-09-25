@@ -34,7 +34,7 @@ const Authors = () => {
       });
   }, []);
 
-  const tableHeaders = ["Naziv Autora", "Opis", "Actions"];
+  const tableHeaders = ["ID", "Naziv Autora", "Actions"];
 
   const filteredAuthors = authors.filter((author) =>
     `${author.name} ${author.surname}`
@@ -60,8 +60,8 @@ const Authors = () => {
   const visibleTableData = filteredAuthors
     .slice(startIndex, endIndex)
     .map((author) => [
+      author.id,
       `${author.name} ${author.surname}`,
-      " Lorem ipsum odor amet, consectetuer adipiscing elit.",
       <AuthorActionsDropdown
         author={author}
         onDelete={() => handleDeleteAuthor(author.id)}

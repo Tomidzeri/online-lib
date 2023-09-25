@@ -6,6 +6,7 @@ import { BiCross, BiSolidUserCircle } from "react-icons/bi";
 import { MdLocalLibrary } from "react-icons/md";
 import { useNavigation } from "./navigation";
 import "./styles/header.css";
+import { RiProfileLine } from "react-icons/ri";
 
 const Header = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
@@ -61,7 +62,7 @@ const Header = () => {
             onClick={toggleProfileDropdown}
           />
           <div
-            className={`absolute right-0 mt-4 bg-white text-black shadow-lg rounded py-2 w-40 text-center ${
+            className={`absolute right-0 mt-3 bg-white text-black shadow-lg rounded py-2 w-40 text-center dropdown-menu ${
               showProfileDropdown
                 ? "dropdown-open"
                 : "dropdown-closed pointer-events-none"
@@ -69,8 +70,9 @@ const Header = () => {
           >
             <button
               onClick={navigateToProfile}
-              className="block px-4 py-2 hover:font-bold hover:underline"
+              className="block px-4 py-2 hover:font-bold hover:underline flex items-center justify-center"
             >
+              <RiProfileLine className="text-2l mr-2" />
               View Profile
             </button>
             <Logout onSuccess={closeDropdowns} />
@@ -78,7 +80,7 @@ const Header = () => {
         </div>
         <div className="relative inline-block">
           <div
-            className={`absolute right-40 mt-8 bg-white text-black shadow-lg rounded py-2 w-40 text-center ${
+            className={`absolute right-32 mt-7 bg-white text-black shadow-lg rounded py-2 w-40 text-center dropdown-menu ${
               showCrossDropdown
                 ? "dropdown-open"
                 : "dropdown-closed pointer-events-none"

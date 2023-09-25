@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import DeleteAuthor from "./authorActions/DeleteAuthor";
 import classes from "./ActionsDropdown.module.css";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const AuthorActionsDropdown = ({ author, onDelete }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
 
   const closeDropdown = () => {
     setShowDropdown(false);
@@ -21,8 +22,24 @@ const AuthorActionsDropdown = ({ author, onDelete }) => {
     closeDropdown();
   };
 
+  useEffect(() => {
+    // Detect if the dropdown is going below the viewport
+    if (dropdownRef.current) {
+      const dropdownRect = dropdownRef.current.getBoundingClientRect();
+      const isDropdownBelowViewport = dropdownRect.bottom > window.innerHeight;
+
+      if (isDropdownBelowViewport) {
+        dropdownRef.current.style.bottom = "100%";
+        dropdownRef.current.style.top = "auto";
+      } else {
+        dropdownRef.current.style.bottom = "auto";
+        dropdownRef.current.style.top = "100%";
+      }
+    }
+  }, [showDropdown]);
+
   return (
-    <div className={classes.dropdown}>
+    <div className={classes.dropdown} ref={dropdownRef}>
       <button
         className={`${classes.dropdownBtn} ${
           showDropdown ? classes.active : ""

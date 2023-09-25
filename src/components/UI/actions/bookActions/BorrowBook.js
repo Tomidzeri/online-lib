@@ -1,46 +1,51 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../buttons/Button';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { borrowBook } from '../../../../queries/knjige/useSingleBookBorrow';
-import useFetchStudents from '../../../../queries/korisnici/useFetchStudents';
+import React, { useState } from "react";
+import Button from "../../buttons/Button";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { borrowBook } from "../../../../queries/knjige/useSingleBookBorrow";
+import useFetchStudents from "../../../../queries/korisnici/useFetchStudents";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const BorrowBook = ({ bookId, onBorrowSuccess }) => {
+const BorrowBook = () => {
   const [borrowDate, setBorrowDate] = useState(new Date());
   const [returnDate, setReturnDate] = useState(new Date());
+  const { bookId } = useParams();
   const navigate = useNavigate();
 
   const { students } = useFetchStudents();
-  const [selectedUserId, setSelectedUserId] = useState('');
 
-  const handleBorrow = async () => {
+  const [selectedUserId, setSelectedUserId] = useState("");
+
+  console.log(selectedUserId);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getUTCDate().toString().padStart(2, "0");
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+    const year = date.getUTCFullYear();
+    return `${month}/${day}/${year}`;
+  }
+
+  const handleBorrow =  () => {
     try {
       const borrowedBookData = {
-        userId: selectedUserId,
-        datumIzdavanja: borrowDate.toISOString(), // Updated field name
-        datumVracanja: returnDate.toISOString(), // Updated field name
+        student_id: selectedUserId,
+        datumIzdavanja: formatDate(borrowDate),
+        datumVracanja: formatDate(returnDate),
       };
 
-      await borrowBook(bookId, borrowedBookData);
-
-      // Pass the borrowed book data to the parent component (Books.js)
-      if (onBorrowSuccess) {
-        onBorrowSuccess({
-          bookId: bookId,
-          borrowDate: borrowedBookData.datumIzdavanja, // Updated field name
-          returnDate: borrowedBookData.datumVracanja,
-        });
-      }
-
-      navigate('/books');
+      borrowBook(bookId, borrowedBookData);
+      navigate("/books");
+      console.log("Book borrowed succesfully:", borrowedBookData);
     } catch (error) {
-      console.error('Error borrowing book:', error);
+      console.error("Error borrowing book:", error);
     }
   };
 
-  const filteredStudents = students.filter((student) => student.role === 'Učenik');
-
+  const filteredStudents = students.filter(
+    (student) => student.role === "Učenik"
+  );
 
   return (
     <div className="main-content mt-24 ml-20">
@@ -90,7 +95,7 @@ const BorrowBook = ({ bookId, onBorrowSuccess }) => {
                 htmlFor="returnDate"
                 className="block text-gray-600 font-semibold mb-2"
               >
-                Datum vracanja (Datum isteka 20 dana)
+                Datum izdavanja (Minimum 20 dana)
               </label>
               <DatePicker
                 id="returnDate"

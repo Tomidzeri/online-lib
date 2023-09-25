@@ -4,8 +4,7 @@ import Form from "../../forms/Form";
 import { useParams, useNavigate } from "react-router-dom";
 import updateAuthorData from "../../../../queries/autori/useUpdateAuthorData";
 import Submit from "../../buttons/Submit";
-import Cancel from "../../buttons/Cancel";
-import "../userActions/EditUserForm.css";
+import { Typography } from "@mui/material";
 
 const EditAuthor = () => {
   const { authorId } = useParams();
@@ -21,7 +20,7 @@ const EditAuthor = () => {
   useEffect(() => {
     const fetchAndSetAuthorData = async () => {
       try {
-        const fetchedAuthorData = await fetchAuthorData(authorId); 
+        const fetchedAuthorData = await fetchAuthorData(authorId);
         setFormData({
           name: fetchedAuthorData.name,
           surname: fetchedAuthorData.surname,
@@ -37,7 +36,7 @@ const EditAuthor = () => {
 
   const handleUpdateAuthor = async () => {
     try {
-      const updatedData = await updateAuthorData(authorId, formData); 
+      const updatedData = await updateAuthorData(authorId, formData);
       console.log("Author data updated:", updatedData);
     } catch (error) {
       console.error("Error updating author data:", error);
@@ -45,7 +44,7 @@ const EditAuthor = () => {
   };
 
   const navigateToAuthorsPage = () => {
-    navigate("/authors"); 
+    navigate("/authors");
   };
 
   const formFields = [
@@ -65,18 +64,28 @@ const EditAuthor = () => {
   ];
 
   return (
-    <div className="page">
-      <div className="user-edit-form-container">
-        <h2>Edit Author</h2>
+    <div className="main-content mt-24 ml-20 flex flex-col content-end">
+      <div className="w-full">
+        <div className="flex flex-col justify-baseline items-baseline border-b border-gray-300 mb-14 text-center">
+          <Typography variant="h4" align="center" gutterBottom>
+            {formData?.name} {formData.surname}
+          </Typography>
+          <button
+            type="button"
+            className="text-blue-500 hover:text-blue-700"
+            onClick={navigateToAuthorsPage}
+          >
+            Evidencija Autora
+          </button>
+        </div>
         <Form
           fields={formFields}
           formData={formData}
           setFormData={setFormData}
         />
       </div>
-      <div className="button-container">
+      <div className="flex flex-row justify-end items-end">
         <Submit onClick={handleUpdateAuthor}>Submit</Submit>
-        <Cancel onClick={navigateToAuthorsPage}>Cancel</Cancel>
       </div>
     </div>
   );

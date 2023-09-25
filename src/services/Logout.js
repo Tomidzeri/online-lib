@@ -1,6 +1,7 @@
 import React from 'react';
 import libraryAPI from '../utils/api';
 import { useNavigate } from 'react-router-dom';
+import { LuLogOut } from "react-icons/lu";
 
 function Logout() {
   const navigate = useNavigate();
@@ -29,7 +30,9 @@ function Logout() {
     }
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return <button  className="block px-4 py-2 hover:font-bold hover:underline flex items-center justify-center" onClick={handleLogout}>
+    <LuLogOut className="text-2l mr-2" />
+    Logout</button>;
 }
 
 export default Logout;
