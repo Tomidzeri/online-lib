@@ -14,6 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Paper from "@mui/material/Paper";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useNavigate } from "react-router-dom";
 
 import Signup from "../../services/Signup";
 
@@ -38,6 +39,12 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignupForm() {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login"); 
+  };
+
   const {
     name,
     surname,
@@ -198,7 +205,7 @@ export default function SignupForm() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/login" variant="body2">
+                  <Link variant="body2" onClick={handleLoginClick} style={{ cursor: 'pointer' }}>
                     Already have an account? Sign in
                   </Link>
                 </Grid>
