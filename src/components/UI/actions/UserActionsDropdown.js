@@ -26,6 +26,7 @@ const UserActionsDropdown = ({ user, onDelete }) => {
       <button
         className={`${classes.dropdownBtn} ${showDropdown ? classes.active : ""}`}
         onClick={() => setShowDropdown(!showDropdown)}
+        style={{ fontSize: "32px", writingMode: "horizontal-tb", textOrientation: "mixed" }}
       >
         ...
       </button>

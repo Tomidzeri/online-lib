@@ -32,39 +32,38 @@ const BorrowBook = () => {
   }
 
   const filteredStudents = students.filter(
-  (student) =>
-    student.role === "Učenik" &&
-    (student.name ||
-      student.surname)
-);
+    (student) => student.role === "Učenik" && (student.name || student.surname)
+  );
 
-const handleBorrow = async (e) => {
-  e.preventDefault(); 
-  try {
-    const borrowedBookData = {
-      student_id: selectedUserId,
-      datumIzdavanja: formatDate(borrowDate),
-      datumVracanja: formatDate(returnDate),
-    };
+  const handleBorrow = async (e) => {
+    e.preventDefault();
+    try {
+      const borrowedBookData = {
+        student_id: selectedUserId,
+        datumIzdavanja: formatDate(borrowDate),
+        datumVracanja: formatDate(returnDate),
+      };
 
-    borrowBook(bookId, borrowedBookData);
+      borrowBook(bookId, borrowedBookData);
 
-    toast.success('Knjiga je uspješno izdata.' , {
-      position: "top-center",
-      autoClose: 3000,
-    });
+      toast.success("Knjiga je uspješno izdata.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
 
-    console.log("Book borrowed successfully:", borrowedBookData);
-  } catch (error) {
-    console.error("Error borrowing book:", error);
+      console.log("Book borrowed successfully:", borrowedBookData);
+    } catch (error) {
+      console.error("Error borrowing book:", error);
 
-    toast.error('Nije moguće izdati knjigu, učenik već ima primjerak ove knjige kod sebe.', {
-      position: "top-center",
-      autoClose: 3000,
-    });
-  }
-};
-
+      toast.error(
+        "Nije moguće izdati knjigu, učenik već ima primjerak ove knjige kod sebe.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
+    }
+  };
 
   const handleBackClick = () => {
     navigate("/books");
@@ -81,7 +80,7 @@ const handleBorrow = async (e) => {
               className="text-blue-500 hover:text-blue-700"
               onClick={handleBackClick}
             >
-              Evidencija Knjiga / 
+              Evidencija Knjiga /
             </button>
             <p>&nbsp;{book?.title}</p>
           </div>
@@ -102,6 +101,7 @@ const handleBorrow = async (e) => {
                 value={selectedUserId}
                 onChange={(e) => setSelectedUserId(e.target.value)}
               >
+                <option value="">Select User</option> {/* Add this line */}
                 {filteredStudents.map((student) => (
                   <option key={student.id} value={student.id}>
                     {`${student.name} ${student.surname}`}

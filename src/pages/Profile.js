@@ -4,6 +4,7 @@ import photo from "../Images/photo.jpg";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Avatar, Grid, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import UserActionsDropdown from "../components/UI/actions/UserActionsDropdown";
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -37,33 +38,59 @@ const Profile = () => {
   const navigation = () => {
     if (userProfile && userProfile.role === "Bibliotekar") {
       navigate("/librarians");
-    } else if (userProfile && userProfile.role === "Student") {
+    } else if (userProfile && userProfile.role === "Učenik") {
       navigate("/students");
     }
   };
 
   const roleDisplay = () => {
     if (userProfile && userProfile.role === "Bibliotekar") {
-      return <p>Bibliotekari</p>;
-    } else {
-      return <p>Ucenici</p>;
+      return <p>Svi Bibliotekari</p>;
+    } else if (userProfile && userProfile.role === "Učenik") {
+      return <p>Svi Ucenici</p>;
     }
   };
 
   return (
     <div className="main-content mt-24 ml-20 flex flex-col">
       <div className="w-full">
-        <div className="flex flex-col justify-baseline items-baseline border-b border-gray-300 mb-14 text-center">
-          <Typography variant="h4" align="center" gutterBottom>
-            {userProfile?.name} {userProfile?.surname}
-          </Typography>
-          <button
-            type="button"
-            className="text-blue-500 hover:text-blue-700"
-            onClick={navigation}
-          >
-            {roleDisplay()}
-          </button>
+        <div className="flex flex-row justify-between border-b border-gray-300 mb-14 text-center">
+          <div className="flex flex-col">
+            <Typography variant="h4" align="center" gutterBottom>
+              {userProfile?.name} {userProfile?.surname}
+            </Typography>
+            <button
+              type="button"
+              className="text-blue-500 hover:text-blue-700"
+              onClick={navigation}
+            >
+              {roleDisplay()}
+            </button>
+          </div>
+          <div className="flex items-center">
+            <button
+              type="button"
+              className="text-blue-500 hover:text-blue-700"
+              onClick={() => {
+                // Logic
+              }}
+            >
+              Resetuj šifru
+            </button>
+            <button
+              type="button"
+              className="text-blue-500 hover:text-blue-700"
+              onClick={() => {
+                // Logic
+              }}
+            >
+              &nbsp;&nbsp;&nbsp;Izmijeni podatke
+            </button>
+            <span className="mx-2 border-l border-gray-300 h-8" />
+            <div className="flex flex-row justify-center items-center">
+              <UserActionsDropdown />
+            </div>
+          </div>
         </div>
       </div>
       <div className="w-96">

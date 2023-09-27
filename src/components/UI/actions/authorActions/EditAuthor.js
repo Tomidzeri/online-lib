@@ -5,6 +5,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import updateAuthorData from "../../../../queries/autori/useUpdateAuthorData";
 import Submit from "../../buttons/Submit";
 import { Typography } from "@mui/material";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditAuthor = () => {
   const { authorId } = useParams();
@@ -27,7 +29,9 @@ const EditAuthor = () => {
           biography: fetchedAuthorData.bio,
         });
       } catch (error) {
-        console.error("Error fetching author data:", error);
+        console.error("Greška pri preuzimanju podataka o autoru:", error);
+        // Dodaj notifikaciju za grešku
+        toast.error("Greška pri preuzimanju podataka o autoru.");
       }
     };
 
@@ -37,9 +41,13 @@ const EditAuthor = () => {
   const handleUpdateAuthor = async () => {
     try {
       const updatedData = await updateAuthorData(authorId, formData);
-      console.log("Author data updated:", updatedData);
+      console.log("Podaci o autoru su ažurirani:", updatedData);
+      // Dodaj notifikaciju za uspešno ažuriranje
+      toast.success("Podaci o autoru su uspešno ažurirani.");
     } catch (error) {
-      console.error("Error updating author data:", error);
+      console.error("Greška pri ažuriranju podataka o autoru:", error);
+      // Dodaj notifikaciju za grešku pri ažuriranju
+      toast.error("Greška pri ažuriranju podataka o autoru.");
     }
   };
 
@@ -48,18 +56,18 @@ const EditAuthor = () => {
   };
 
   const formFields = [
-    { name: "name", label: "Name", type: "text", placeholder: "Enter name" },
+    { name: "name", label: "Ime", type: "text", placeholder: "Unesite ime" },
     {
       name: "surname",
-      label: "Surname",
+      label: "Prezime",
       type: "text",
-      placeholder: "Enter surname",
+      placeholder: "Unesite prezime",
     },
     {
       name: "biography",
-      label: "Biography",
-      type: "textare",
-      placeholder: "Enter biography",
+      label: "Biografija",
+      type: "textarea",
+      placeholder: "Unesite biografiju",
     },
   ];
 
@@ -85,7 +93,7 @@ const EditAuthor = () => {
         />
       </div>
       <div className="flex flex-row justify-end items-end">
-        <Submit onClick={handleUpdateAuthor}>Submit</Submit>
+        <Submit onClick={handleUpdateAuthor}>Sačuvaj</Submit>
       </div>
     </div>
   );

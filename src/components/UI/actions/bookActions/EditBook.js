@@ -5,9 +5,11 @@ import Submit from "../../buttons/Submit";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchBookData } from "../../../../queries/knjige/fetchBookData"
+import { fetchBookData } from "../../../../queries/knjige/fetchBookData";
 import updateBookData from "../../../../queries/knjige/useUpdateBookData";
 import { useCreateBook } from "../../../../queries/knjige/useCreateBook";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditBook = () => {
   const { bookId } = useParams();
@@ -32,7 +34,7 @@ const EditBook = () => {
     photo: null,
   });
 
-console.log(formData);
+  console.log(formData);
 
   useEffect(() => {
     const fetchAndSetBookData = async () => {
@@ -118,9 +120,11 @@ console.log(formData);
       .then((response) => {
         console.log("Book updated successfully:", response);
         navigate(`/books/${bookId}`);
+        toast.success("Knjiga uspešno izmenjena.");
       })
       .catch((error) => {
         console.error("Error updating book:", error);
+        toast.error("Greška prilikom izmene knjige.");
       });
   };
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./EditUserForm.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchUserData } from "../../../../queries/korisnici/fetchUserData";
 import Form from "../../forms/Form";
-import { useParams, useNavigate } from "react-router-dom";
 import updateUserData from "../../../../queries/korisnici/useUpdateUserData";
 import Submit from "../../buttons/Submit";
 import Cancel from "../../buttons/Cancel";
@@ -19,7 +20,7 @@ const EditUser = () => {
     surname: "",
     email: "",
     username: "",
-    imbg: 0,
+    jmbg: "",
     password: "",
     password_confirmation: "",
     role: "",
@@ -36,7 +37,7 @@ const EditUser = () => {
           surname: fetchedUserData.surname,
           email: fetchedUserData.email,
           username: fetchedUserData.username,
-          // jmbg: fetchedUserData.jmbg,
+          jmbg: fetchedUserData.jmbg,
           password: "",
           password_confirmation: "",
           role: fetchedUserData.role,
@@ -51,7 +52,7 @@ const EditUser = () => {
 
   const validatePasswordConfirmation = () => {
     if (formData.password !== formData.password_confirmation) {
-      setPasswordError("Password confirmation does not match.");
+      setPasswordError("Lozinke se ne poklapaju.");
     } else {
       setPasswordError("");
     }
@@ -67,8 +68,10 @@ const EditUser = () => {
     try {
       const updatedData = await updateUserData(userId, formData);
       console.log("User data updated:", updatedData);
+      toast.success("Detalji korisnika uspjesno izmjenjeni.");
     } catch (error) {
       console.error("Error updating user data:", error);
+      toast.error("Greska prilikom izmjene korisnika.");
     }
   };
 

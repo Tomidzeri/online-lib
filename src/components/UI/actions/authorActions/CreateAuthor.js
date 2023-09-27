@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Form from "../../forms/Form";
 import useCreateAuthor from "../../../../queries/autori/useCreateAuthor";
 import "../userActions/UserAddForm.css";
-// import Cancel from "../../buttons/Cancel";
 import Submit from "../../buttons/Submit";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,29 +15,43 @@ const CreateAuthor = () => {
     name: "",
     surname: "",
     biography: "",
-    image: "",
   });
+
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setImageFile(file);
+  };
 
   const handleCreateAuthor = async () => {
     try {
-      const newAuthorData = await createAuthor(formData);
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("surname", formData.surname);
+      formDataToSend.append("biography", formData.biography);
+      
+      if (imageFile) {
+        formDataToSend.append("image", imageFile);
+      }
+
+      const newAuthorData = await createAuthor(formDataToSend);
 
       console.log("New author created:", newAuthorData);
-  
-      toast.success('Novi autor je uspješno kreiran.', {
+
+      toast.success("Novi autor je uspješno kreiran.", {
         position: "top-center",
         autoClose: 3000,
       });
     } catch (error) {
       console.error("Error creating author:", error);
-  
-      toast.error('Došlo je do greške prilikom kreiranja autora.', {
+
+      toast.error("Došlo je do greške prilikom kreiranja autora.", {
         position: "top-center",
         autoClose: 3000,
       });
     }
   };
-  
 
   const handleBackClick = () => {
     navigate("/authors");
@@ -58,12 +71,6 @@ const CreateAuthor = () => {
       type: "text",
       placeholder: "Enter biography",
     },
-    {
-      name: "image",
-      label: "Image",
-      type: "text",
-      placeholder: "Enter image URL",
-    },
   ];
 
   return (
@@ -81,14 +88,22 @@ const CreateAuthor = () => {
             </button>
           </div>
         </div>
-        <Form
-          fields={formFields}
-          formData={formData}
-          setFormData={setFormData}
-        />
+        <Form fields={formFields} formData={formData} setFormData={setFormData} />
+
+        <div className="mb-4 text-center">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Select an Image:
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="border rounded p-2 w-80 mx-auto"
+          />
+        </div>
+
         <div className="button-container">
           <Submit onClick={handleCreateAuthor}>Kreiraj</Submit>
-          {/* <Cancel onClick={() => navigate(`/authors`)}>Cancel</Cancel> */}
         </div>
       </div>
     </div>

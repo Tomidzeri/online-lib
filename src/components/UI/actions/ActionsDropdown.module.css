@@ -2,6 +2,7 @@
   position: relative;
   display: inline-block;
   border-radius: 10px;
+  margin-bottom: 1.4rem;
 }
 
 .dropdownBtn {

@@ -7,6 +7,8 @@ import "react-quill/dist/quill.snow.css";
 import { useCreateBook } from "../../queries/knjige/useCreateBook";
 import { useStoreBook } from "../../queries/knjige/useStoreBook";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const StoreBook = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -98,7 +100,15 @@ const StoreBook = () => {
       format: formData.format_id,
     };
 
-    storeBook(bookData);
+    storeBook(bookData)
+      .then(() => {
+        toast.success("Knjiga uspešno sačuvana.");
+        navigate("/books");
+      })
+      .catch((error) => {
+        console.error("Greška pri čuvanju knjige:", error);
+        toast.error("Greška prilikom čuvanja knjige.");
+      });
   };
 
   return (
