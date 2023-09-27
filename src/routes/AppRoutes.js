@@ -59,8 +59,8 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         }
       />
 
-      <Route path="/" element={<Layout token={token} />}>
-        <Route index path="/dashboard" element={<Dashboard />} />
+      <Route path="/*" element={<Layout token={token} />}>
+        <Route index path="dashboard" element={<Dashboard />} />
         <Route path="activities" element={<Activities />} />
         <Route path="reservations" element={<Reservations />} />
         <Route path="statistics" element={<Statistics />} />
@@ -86,7 +86,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="borrowbook/:bookId" element={<BorrowBook />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/login" />} />
+      <Route path="/" element={<Navigate to="/login" />} />
     </Routes>
   );
 };

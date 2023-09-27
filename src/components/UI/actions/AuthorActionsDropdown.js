@@ -12,6 +12,20 @@ const AuthorActionsDropdown = ({ author, onDelete, showEditAndDeleteButtons }) =
     setShowDropdown(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   const handleViewDetailsClick = () => {
     navigate(`/viewauthor/${author.id}`);
     closeDropdown();
@@ -23,7 +37,6 @@ const AuthorActionsDropdown = ({ author, onDelete, showEditAndDeleteButtons }) =
   };
 
   useEffect(() => {
-    // Detect if the dropdown is going below the viewport
     if (dropdownRef.current) {
       const dropdownRect = dropdownRef.current.getBoundingClientRect();
       const isDropdownBelowViewport = dropdownRect.bottom > window.innerHeight;
@@ -47,24 +60,17 @@ const AuthorActionsDropdown = ({ author, onDelete, showEditAndDeleteButtons }) =
         onClick={() => setShowDropdown(!showDropdown)}
       >
         ...
-       </button>
+      </button>
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
-          {showEditAndDeleteButtons && (
-            <React.Fragment>
-              <button
-                className={classes.dropdownBtn}
-                onClick={handleViewDetailsClick}
-              >
-                View Details
-              </button>
-              <button className={classes.dropdownBtn} onClick={handleEditClick}>
-                Edit
-              </button>
-            </React.Fragment>
-          )}
+          <button
+            className={classes.dropdownBtn}
+            onClick={handleViewDetailsClick}
+          >
+            Detalji autora
+          </button>
           <button className={classes.dropdownBtn} onClick={handleEditClick}>
-            Edit
+            Izmijeni detalje autora
           </button>
           <DeleteAuthor author={author} onDelete={onDelete} />
         </div>

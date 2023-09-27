@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import classes from "./ActionsDropdown.module.css";
+import DeleteAuthor from "./DeleteAuthor";
+import classes from "../ActionsDropdown.module.css";
 import { useNavigate } from "react-router-dom";
 
-const BookActionsDropdown = ({ book, onDelete }) => {
+const AuthorDropdownList = ({ author, onDelete, showEditAndDeleteButtons }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
@@ -12,24 +13,21 @@ const BookActionsDropdown = ({ book, onDelete }) => {
   };
 
   useEffect(() => {
-    // Function to handle clicks outside the dropdown
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         closeDropdown();
       }
     };
-  
-    // Add event listener when the component mounts
+
     document.addEventListener("click", handleClickOutside);
-  
-    // Remove event listener when the component unmounts
+
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
-  const handleViewDetailsClick = () => {
-    navigate(`/viewbook/${book.id}`);
+  const handleEditClick = () => {
+    navigate(`/editauthor/${author.id}`);
     closeDropdown();
   };
 
@@ -45,13 +43,14 @@ const BookActionsDropdown = ({ book, onDelete }) => {
       </button>
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
-          <button className={classes.dropdownBtn} onClick={handleViewDetailsClick}>
-            View Details
+          <button className={classes.dropdownBtn} onClick={handleEditClick}>
+            Izmijeni detalje autora
           </button>
+          <DeleteAuthor author={author} onDelete={onDelete} />
         </div>
       )}
     </div>
   );
 };
 
-export default BookActionsDropdown;
+export default AuthorDropdownList;

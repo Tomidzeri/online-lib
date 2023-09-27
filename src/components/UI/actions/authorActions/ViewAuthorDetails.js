@@ -4,7 +4,7 @@ import useAuthorDetails from "../../../../queries/autori/useAuthorDetails";
 import "../userActions/ViewUserDetails.css";
 import { useNavigate } from "react-router-dom";
 import { Typography, Grid, Paper } from "@mui/material";
-import AuthorActionsDropdown from "../AuthorActionsDropdown";
+import AuthorDropdownList from "./authorDropdown";
 import useDeleteAuthor from "../../../../queries/autori/useDeleteAuthor";
 
 const ViewAuthorDetails = () => {
@@ -44,7 +44,7 @@ const ViewAuthorDetails = () => {
               Evidencija Autora
             </button>
           </div>
-          <AuthorActionsDropdown
+          <AuthorDropdownList
             author={author}
             onDelete={() => handleDeleteAuthor(author.id)}
           />

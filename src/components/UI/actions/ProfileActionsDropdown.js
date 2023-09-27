@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProfileDropdown = ({ user, onPasswordReset, onDeleteUser }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-
-  const navigate = useNavigate();
 
   const handleEditClick = () => {
     navigate(`/editprofile/${user.id}`);
     toggleDropdown();
   };
 
+  // Function to close the dropdown when clicking outside
+  const handleClickOutside = (event) => {
+    if (!event.target.closest(".profile-dropdown-container")) {
+      setIsOpen(false);
+    }
+  };
+
+  // Add event listener when the component mounts
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left profile-dropdown-container">
       <div>
         <button
           onClick={toggleDropdown}

@@ -27,18 +27,14 @@ const CreateAuthor = () => {
 
   const handleCreateAuthor = async () => {
     try {
-      // Check if an author with the same name and surname exists
-      // You should replace this with your actual API call or database query
       const authorExists = await fetchAuthors(formData.name, formData.surname);
   
       if (authorExists) {
-        // Display an error toast if the author already exists
         toast.error("Autor sa istim imenom i prezimenom već postoji.", {
           position: "top-center",
           autoClose: 3000,
         });
       } else {
-        // Author does not exist, proceed with creating a new author
         const formDataToSend = new FormData();
         formDataToSend.append("name", formData.name);
         formDataToSend.append("surname", formData.surname);
