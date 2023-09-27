@@ -44,7 +44,7 @@ const BorrowBook = () => {
         datumVracanja: formatDate(returnDate),
       };
 
-      borrowBook(bookId, borrowedBookData);
+      await borrowBook(bookId, borrowedBookData);
 
       toast.success("Knjiga je uspješno izdata.", {
         position: "top-center",
@@ -55,13 +55,20 @@ const BorrowBook = () => {
     } catch (error) {
       console.error("Error borrowing book:", error);
 
-      toast.error(
-        "Nije moguće izdati knjigu, učenik već ima primjerak ove knjige kod sebe.",
-        {
+      if (error.response && error.response.status === 422) {
+        toast.error(
+          "Nije moguće izdati knjigu, učenik već ima primjerak ove knjige kod sebe.",
+          {
+            position: "top-center",
+            autoClose: 3000,
+          }
+        );
+      } else {
+        toast.error("Nepoznata greška prilikom izdavanja knjige.", {
           position: "top-center",
           autoClose: 3000,
-        }
-      );
+        });
+      }
     }
   };
 

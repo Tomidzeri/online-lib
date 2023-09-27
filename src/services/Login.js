@@ -24,11 +24,6 @@ function Login() {
       console.log("Login successful. Token:", token);
       console.log("Name:", name);
 
-      // const userProfileData = await profileData(); // Await here
-
-      // // You can now use userProfileData in your code
-      // console.log("User Profile Data:", userProfileData);
-
       navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);

@@ -3,7 +3,7 @@ import DeleteAuthor from "./authorActions/DeleteAuthor";
 import classes from "./ActionsDropdown.module.css";
 import { useNavigate } from "react-router-dom";
 
-const AuthorActionsDropdown = ({ author, onDelete }) => {
+const AuthorActionsDropdown = ({ author, onDelete, showEditAndDeleteButtons }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
@@ -47,15 +47,22 @@ const AuthorActionsDropdown = ({ author, onDelete }) => {
         onClick={() => setShowDropdown(!showDropdown)}
       >
         ...
-      </button>
+       </button>
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
-          <button
-            className={classes.dropdownBtn}
-            onClick={handleViewDetailsClick}
-          >
-            View Details
-          </button>
+          {showEditAndDeleteButtons && (
+            <React.Fragment>
+              <button
+                className={classes.dropdownBtn}
+                onClick={handleViewDetailsClick}
+              >
+                View Details
+              </button>
+              <button className={classes.dropdownBtn} onClick={handleEditClick}>
+                Edit
+              </button>
+            </React.Fragment>
+          )}
           <button className={classes.dropdownBtn} onClick={handleEditClick}>
             Edit
           </button>

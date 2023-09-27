@@ -37,8 +37,14 @@
   flex-direction: column;
 }
 
-.dropdownBtn,
+.dropdownBtn {
+  font-weight: bold;
+  font-size: larger;
+}
+
 .dropdownContent button {
+  font-weight: 400;
+  font-size: medium;
   padding: 4px;
   font-size: 16px; 
   text-decoration: none;

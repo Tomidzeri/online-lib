@@ -10,7 +10,7 @@ const IzdateKnjigeTable = ({ searchTerm }) => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
 
   const calculateDuration = (borrowDate, returnDate) => {
     if (!borrowDate || !returnDate) {

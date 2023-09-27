@@ -6,6 +6,7 @@ import Submit from "../../buttons/Submit";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import fetchAuthors from "../../../../queries/autori/fetchAuthors";
 
 const CreateAuthor = () => {
   const createAuthor = useCreateAuthor();
@@ -26,32 +27,46 @@ const CreateAuthor = () => {
 
   const handleCreateAuthor = async () => {
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("name", formData.name);
-      formDataToSend.append("surname", formData.surname);
-      formDataToSend.append("biography", formData.biography);
-      
-      if (imageFile) {
-        formDataToSend.append("image", imageFile);
+      // Check if an author with the same name and surname exists
+      // You should replace this with your actual API call or database query
+      const authorExists = await fetchAuthors(formData.name, formData.surname);
+  
+      if (authorExists) {
+        // Display an error toast if the author already exists
+        toast.error("Autor sa istim imenom i prezimenom već postoji.", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+      } else {
+        // Author does not exist, proceed with creating a new author
+        const formDataToSend = new FormData();
+        formDataToSend.append("name", formData.name);
+        formDataToSend.append("surname", formData.surname);
+        formDataToSend.append("biography", formData.biography);
+  
+        if (imageFile) {
+          formDataToSend.append("image", imageFile);
+        }
+  
+        const newAuthorData = await createAuthor(formDataToSend);
+  
+        console.log("New author created:", newAuthorData);
+  
+        toast.success("Novi autor je uspješno kreiran.", {
+          position: "top-center",
+          autoClose: 3000,
+        });
       }
-
-      const newAuthorData = await createAuthor(formDataToSend);
-
-      console.log("New author created:", newAuthorData);
-
-      toast.success("Novi autor je uspješno kreiran.", {
-        position: "top-center",
-        autoClose: 3000,
-      });
     } catch (error) {
       console.error("Error creating author:", error);
-
+  
       toast.error("Došlo je do greške prilikom kreiranja autora.", {
         position: "top-center",
         autoClose: 3000,
       });
     }
   };
+  
 
   const handleBackClick = () => {
     navigate("/authors");
