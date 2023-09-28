@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { fetchUserData } from "../../../../queries/korisnici/fetchUserData";
-import updateUserData from "../../../../queries/korisnici/useUpdateUserData";
+import { UpdateUser } from "../../../../queries/profileInfo/updateUserData";
 import { useParams } from "react-router-dom";
 import Form from "../../forms/Form";
 import Submit from "../../buttons/Submit";
 import Cancel from "../../buttons/Cancel";
 import { useNavigate } from "react-router-dom";
 
-const EditProfile = ({ token }) => {
+const EditProfile = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -19,23 +19,10 @@ const EditProfile = ({ token }) => {
     role: "",
   });
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const user = await fetchUserProfile(token, loggedInUsername);
-  //       setUserData(user);
-  //     } catch (error) {
-  //       console.error("Error fetching user profile:", error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, [token, loggedInUsername]);
-
   useEffect(() => {
     const fetchAndSetUserData = async () => {
       try {
-        const fetchedUserData = await fetchUserData(userId);
+        const fetchedUserData = await fetchUserData();
         setFormData({
           name: fetchedUserData.name,
           surname: fetchedUserData.surname,
@@ -50,19 +37,11 @@ const EditProfile = ({ token }) => {
     };
 
     fetchAndSetUserData();
-  }, [userId]);
-
-  //  const handleInputChange = (e) => {
-  //    const { name, value } = e.target;
-  //    setFormData((prevData) => ({
-  //      ...prevData,
-  //      [name]: value,
-  //    }));
-  //  };
+  }, []);
 
   const handleUpdateUser = async () => {
     try {
-      const updatedData = await updateUserData(userId, formData);
+      const updatedData = await UpdateUser(userId, formData);
       console.log("User data updated:", updatedData);
     } catch (error) {
       console.error("Error updating user data:", error);
@@ -110,7 +89,7 @@ const EditProfile = ({ token }) => {
           fields={formFields}
           formData={formData}
           setFormData={setFormData}
-          // onSubmit={handleUpdateUser}
+          onSubmit={handleUpdateUser} // Uncomment this line
         />
       </div>
       <div className="button-container">

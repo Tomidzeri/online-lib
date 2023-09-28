@@ -10,22 +10,19 @@ const ProfileDropdown = ({ user, onPasswordReset, onDeleteUser }) => {
   };
 
   const handleEditClick = () => {
-    navigate(`/editprofile/${user.id}`);
+    navigate("/editprofileme");
     toggleDropdown();
   };
 
-  // Function to close the dropdown when clicking outside
   const handleClickOutside = (event) => {
     if (!event.target.closest(".profile-dropdown-container")) {
       setIsOpen(false);
     }
   };
 
-  // Add event listener when the component mounts
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 
-    // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -69,12 +66,6 @@ const ProfileDropdown = ({ user, onPasswordReset, onDeleteUser }) => {
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
             >
               Resetuj lozinku
-            </button>
-            <button
-              onClick={onDeleteUser}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-            >
-              Deaktiviraj profil
             </button>
           </div>
         </div>

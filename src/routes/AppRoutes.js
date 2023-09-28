@@ -78,6 +78,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="useraddform" element={<UserAddForm />} />
         <Route path="createauthor" element={<CreateAuthor />} />
         <Route path="storebook" element={<StoreBook />} />
+        <Route path="editprofile" element={<EditProfile />} />
 
         <Route path="viewuserdetails/:userId" element={<ViewUserDetails />} />
         <Route path="edituserform/:userId" element={<EditUserForm />} />
@@ -85,7 +86,6 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="viewauthor/:authorId" element={<ViewAuthorDetails />} />
         <Route path="viewbook/:bookId" element={<ViewBookDetails />} />
         <Route path="editbook/:bookId" element={<EditBook />} />
-        <Route path="editprofile/:bookId" element={<EditProfile />} />
         <Route path="borrowbook/:bookId" element={<BorrowBook />} />
         <Route path="returnbook/:bookId" element={<ReturnBook />} />
         <Route path="writeoffbook/:bookId" element={<WriteOffBook />} />

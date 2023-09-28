@@ -1,22 +1,18 @@
-// updateUserData.js
-
 import libraryAPI from "../../utils/api";
 
-export const updateUserData = async (userId, updatedUserData) => {
+export const UpdateUser = async (updatedUserData) => {
   try {
     const token = sessionStorage.getItem("token");
-    const response = await libraryAPI.put(`/users/${userId}`, updatedUserData, {
+    const response = await libraryAPI.put("/users/me", updatedUserData, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to update user data");
-    }
+    const data = response.data.data;
 
-    const data = response.data;
+    console.log(data);
 
     return data;
   } catch (error) {

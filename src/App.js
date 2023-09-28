@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
-import { ToastContainer } from 'react-toastify'; // Import ToastContainer and react-toastify
+import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ToastContainer position="top-center" autoClose={3000} /> {/* Include ToastContainer */}
+      <ToastContainer position="top-center" autoClose={3000} /> 
       <AppRoutes handleSetToken={handleSetToken} setToken={setToken} token={token} />
     </BrowserRouter>
   );

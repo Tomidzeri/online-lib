@@ -24,7 +24,11 @@ function Login() {
       console.log("Login successful. Token:", token);
       console.log("Name:", name);
 
-      navigate("/dashboard");
+      if (username.includes("admin") || username.includes("bibliotekar")) {
+        navigate("/dashboard");
+      } else {
+        navigate("/books");
+      }
     } catch (error) {
       console.error("Login error:", error);
     }

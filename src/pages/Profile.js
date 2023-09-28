@@ -81,7 +81,7 @@ const Profile = () => {
               type="button"
               className="text-blue-500 hover:text-blue-700"
               onClick={() => {
-                // Logic
+                navigate("/editprofile");
               }}
             >
               &nbsp;&nbsp;&nbsp;Izmijeni podatke

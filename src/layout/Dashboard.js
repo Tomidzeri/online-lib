@@ -35,8 +35,6 @@ const Dashboard = () => {
     <div className="dashboard-container">
       {isLoading ? (
         <div className="loading-animation">
-          <div className="centered-animation">
-          </div>
           <div style={animationStyle}>
             <Lottie options={defaultOptions} />
           </div>
