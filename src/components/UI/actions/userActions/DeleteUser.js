@@ -51,7 +51,7 @@ const DeleteUser = ({ user, onDelete }) => {
 
   return (
     <div className="delete">
-      <button onClick={handleDelete}>Delete user</button>
+      <button onClick={handleDelete}>Izbrisi korisnika</button>
     </div>
   );
 };

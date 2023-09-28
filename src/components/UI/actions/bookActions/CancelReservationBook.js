@@ -1,18 +1,18 @@
 import React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import useDeleteBook from "../../../../queries/knjige/useDeleteBook";
+import CancelReservation from "../../../../queries/knjige/useCancelReservation";
 import { TiTick } from "react-icons/ti";
 import { GiCrossMark } from "react-icons/gi";
 
-const DeleteBook = ({ book, onDelete }) => {
-  const deleteBook = useDeleteBook();
+const CancelReservationAction = ({ book, onCancel }) => {
+  const cancelReservation = CancelReservation();
 
-  const handleDelete = () => {
+  const handleCancel = () => {
     toast.warning(
       <>
         <div style={{ textAlign: "center" }}>
-          <p>Da li ste sigurni da zelite da izbrisete knjigu:</p>
+          <p>Da li ste sigurni da želite da otkažete rezervaciju knjige:</p>
           <p>
             <span style={{ fontWeight: "bold", textAlign: "center" }}>
               {book.title}
@@ -21,10 +21,15 @@ const DeleteBook = ({ book, onDelete }) => {
         </div>
         <div className="flex flex-row justify-between">
           <button
-            onClick={() => {
-              deleteBook(book.id);
-              onDelete(book.id);
-              toast.dismiss();
+            onClick={async () => {
+              try {
+                await cancelReservation(book.id);
+                onCancel(book.id);
+                toast.dismiss();
+              } catch (error) {
+                console.error("Error canceling reservation book:", error);
+                toast.error("Greška pri otkazivanju rezervacije.");
+              }
             }}
             style={{ color: "red" }}
           >
@@ -50,9 +55,9 @@ const DeleteBook = ({ book, onDelete }) => {
 
   return (
     <div>
-      <button onClick={handleDelete}>Izbrisi knjigu</button>
+      <button onClick={handleCancel}>Otkaži rezervaciju</button>
     </div>
   );
 };
 
-export default DeleteBook;
+export default CancelReservationAction;

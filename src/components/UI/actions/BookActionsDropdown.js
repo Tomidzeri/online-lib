@@ -50,7 +50,19 @@ const BookActionsDropdown = ({ book, onDelete }) => {
     setSelectedBookId(book.id);
     navigate(`/returnbook/${book.id}`);
     closeDropdown();
-  };  
+  };
+
+  const handleWriteOffClick = () => {
+    setSelectedBookId(book.id);
+    navigate(`/writeoffbook/${book.id}`);
+    closeDropdown();
+  };
+
+  const handleReserveClick = () => {
+    setSelectedBookId(book.id);
+    navigate(`/reservebook/${book.id}`);
+    closeDropdown();
+  };
 
   return (
     <div className={classes.dropdown} ref={dropdownRef}>
@@ -76,8 +88,26 @@ const BookActionsDropdown = ({ book, onDelete }) => {
           <button className={classes.dropdownBtn} onClick={handleBorrowClick}>
             Izdaj knjigu
           </button>
-          <button className={classes.dropdownBtn} onClick={handleReturnClick} selectedbookid={selectedBookId}>
+          <button
+            className={classes.dropdownBtn}
+            onClick={handleReturnClick}
+            selectedbookid={selectedBookId}
+          >
             Vrati knjigu
+          </button>
+          <button
+            className={classes.dropdownBtn}
+            onClick={handleWriteOffClick}
+            selectedbookid={selectedBookId}
+          >
+            Otpisi knjigu
+          </button>
+          <button
+            className={classes.dropdownBtn}
+            onClick={handleReserveClick}
+            selectedbookid={selectedBookId}
+          >
+            Reservisi knjigu
           </button>
           <DeleteBook book={book} onDelete={onDelete} />
         </div>

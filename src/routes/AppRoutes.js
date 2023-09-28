@@ -28,6 +28,8 @@ import Borrows from "../pages/book-stranice/Borrows";
 import EditProfile from "../components/UI/actions/profileActions/EditProfile";
 import BorrowBook from "../components/UI/actions/bookActions/BorrowBook";
 import ReturnBook from "../components/UI/actions/bookActions/ReturnBook";
+import WriteOffBook from "../components/UI/actions/bookActions/WriteOffBook";
+import ReserveBook from "../components/UI/actions/bookActions/ReserveBook";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -86,6 +88,8 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="editprofile/:bookId" element={<EditProfile />} />
         <Route path="borrowbook/:bookId" element={<BorrowBook />} />
         <Route path="returnbook/:bookId" element={<ReturnBook />} />
+        <Route path="writeoffbook/:bookId" element={<WriteOffBook />} />
+        <Route path="reservebook/:bookId" element={<ReserveBook />} />
       </Route>
 
       <Route path="/" element={<Navigate to="/login" />} />

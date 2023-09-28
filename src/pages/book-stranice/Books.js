@@ -52,7 +52,7 @@ const Books = () => {
     book.categories.map((category) => category.name).join(', '),
     book.samples,
     book.rSamples,
-    book.fSamples ? book.fSamples : book.samples - book.bSamples,
+    book.samples - book.bSamples,
     book.bSamples,
     <BookActionsDropdown
       book={book}

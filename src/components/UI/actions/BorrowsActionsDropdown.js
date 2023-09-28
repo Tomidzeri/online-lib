@@ -46,7 +46,7 @@ const BookActionsDropdown = ({ book, onDelete }) => {
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
           <button className={classes.dropdownBtn} onClick={handleViewDetailsClick}>
-            View Details
+            Pogledaj detalje
           </button>
         </div>
       )}

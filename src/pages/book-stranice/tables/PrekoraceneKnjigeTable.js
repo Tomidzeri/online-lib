@@ -3,10 +3,10 @@ import ReusableTable from "../../../components/UI/tables/Table";
 import BorrowsActionsDropdown from "../../../components/UI/actions/BorrowsActionsDropdown";
 import { fetchBorrowedBooks } from "../../../queries/knjige/useBookBorrow";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { formatDistance, parseISO, isAfter, format } from "date-fns";
+import { formatDistance, parseISO, isAfter, format, differenceInDays } from "date-fns";
 import Pagination from "../../../components/UI/pagination/Pagination";
 
-const IzdateKnjigeTable = ({ searchTerm }) => {
+const PrekoraceneKnjigeTable = ({ searchTerm }) => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,7 +42,7 @@ const IzdateKnjigeTable = ({ searchTerm }) => {
     fetchBorrowedBooks()
       .then((data) => {
         setTimeout(() => {
-          setBorrowedBooks(data.izdate);
+          setBorrowedBooks(data.prekoracene);
           setLoading(false);
           console.log(data);
         }, 1000);
@@ -71,29 +71,40 @@ const IzdateKnjigeTable = ({ searchTerm }) => {
     return date ? format(parseISO(date), "yyyy-MM-dd") : "";
   };
 
+  const calculateOverdueDays = (returnDate) => {
+    if (!returnDate) {
+      return "";
+    }
+
+    const returnDateParsed = parseISO(returnDate);
+    const currentDate = new Date();
+
+    if (isAfter(currentDate, returnDateParsed)) {
+      return differenceInDays(currentDate, returnDateParsed);
+    } else {
+      return 0;
+    }
+  };
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const tableData = filteredBorrowedBooks
     .slice(startIndex, endIndex)
     .map((book) => [
       book.knjiga.title,
-      `${book.student.name} ${book.student.surname}`,
       formatDate(book.borrow_date),
-      formatDate(book.return_date),
+      `${book.student.name} ${book.student.surname}`,
+      calculateOverdueDays(book.return_date),
       calculateDuration(book.borrow_date, book.return_date),
-      book.bibliotekar0
-        ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}`
-        : "",
       <BorrowsActionsDropdown book={book} />,
     ]);
 
   const customTableHead = [
     "Naziv knjige",
-    "Izdato uceniku",
     "Datum izdavanja",
-    "Datum vracanja",
+    "Izdato uceniku",
+    "Prekoracenje u danima",
     "Trenutno zadrzavanje knjige",
-    "Knjigu izdao",
     "Opcije",
   ];
 
@@ -118,4 +129,4 @@ const IzdateKnjigeTable = ({ searchTerm }) => {
   );
 };
 
-export default IzdateKnjigeTable;
+export default PrekoraceneKnjigeTable;

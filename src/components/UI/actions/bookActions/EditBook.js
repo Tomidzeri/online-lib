@@ -119,7 +119,7 @@ const EditBook = () => {
     updateBookData(bookId, updatedBookData)
       .then((response) => {
         console.log("Book updated successfully:", response);
-        navigate(`/books/${bookId}`);
+        navigate('/books');
         toast.success("Knjiga uspešno izmenjena.");
       })
       .catch((error) => {
@@ -132,7 +132,7 @@ const EditBook = () => {
     <div className="main-content  mt-24 ml-20 mr-5 flex flex-col">
       <div className="w-full">
         <h2 className="text-3xl font-semibold mb-4">Edit Book</h2>
-        <form onSubmit={handleSubmit}>
+        <form>
           <Tab
             labels={["Basic Info", "Specifications", "Multimedia"]}
             activeTab={activeTab}
@@ -370,7 +370,7 @@ const EditBook = () => {
         </form>
       </div>
       <div className="flex justify-end items-end mt-auto p-4 mb-8">
-        <Submit type="submit" className="mr-2">
+        <Submit onClick={handleSubmit} className="mr-2">
           Update
         </Submit>
         <Cancel onClick={() => navigate(`/books`)}>Cancel</Cancel>

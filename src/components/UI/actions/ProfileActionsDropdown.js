@@ -62,19 +62,19 @@ const ProfileDropdown = ({ user, onPasswordReset, onDeleteUser }) => {
               onClick={handleEditClick}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
             >
-              Edit User
+              Izmijeni detalje
             </button>
             <button
               onClick={onPasswordReset}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
             >
-              Password Reset
+              Resetuj lozinku
             </button>
             <button
               onClick={onDeleteUser}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
             >
-              Deactivate Account
+              Deaktiviraj profil
             </button>
           </div>
         </div>

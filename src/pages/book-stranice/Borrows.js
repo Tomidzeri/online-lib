@@ -4,6 +4,9 @@ import SearchBox from "../../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
 import IzdateKnjigeTable from "./tables/IzdateKnjigeTable";
 import VraceneKnjigeTable from "./tables/vraceneKnjigeTable";
+import PrekoraceneKnjigeTable from "./tables/PrekoraceneKnjigeTable";
+import RezervacijeKnjigaTable from "./tables/RezervisaneKnjigeTable";
+import ArhiviraneRezervacijeTable from "./tables/ArhiviraneRezervacijeTable";
 
 const Borrows = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -22,7 +25,13 @@ const Borrows = () => {
       case 0:
         return <IzdateKnjigeTable searchTerm={searchTerm} />;
       case 1:
-        return <VraceneKnjigeTable searchTerm={searchTerm} />; 
+        return <VraceneKnjigeTable searchTerm={searchTerm} />;
+      case 2: 
+        return <PrekoraceneKnjigeTable searchTerm={searchTerm} />;
+      case 3: 
+        return <RezervacijeKnjigaTable searchTerm={searchTerm} />;
+        case 4: 
+        return <ArhiviraneRezervacijeTable searchTerm={searchTerm} />;
       default:
         return null;
     }
