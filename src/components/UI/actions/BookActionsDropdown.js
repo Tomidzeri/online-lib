@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const BookActionsDropdown = ({ book, onDelete }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedBookId, setSelectedBookId] = useState(null);
+
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
@@ -44,6 +46,12 @@ const BookActionsDropdown = ({ book, onDelete }) => {
     closeDropdown();
   };
 
+  const handleReturnClick = () => {
+    setSelectedBookId(book.id);
+    navigate(`/returnbook/${book.id}`);
+    closeDropdown();
+  };  
+
   return (
     <div className={classes.dropdown} ref={dropdownRef}>
       <button
@@ -67,6 +75,9 @@ const BookActionsDropdown = ({ book, onDelete }) => {
           </button>
           <button className={classes.dropdownBtn} onClick={handleBorrowClick}>
             Izdaj knjigu
+          </button>
+          <button className={classes.dropdownBtn} onClick={handleReturnClick} selectedbookid={selectedBookId}>
+            Vrati knjigu
           </button>
           <DeleteBook book={book} onDelete={onDelete} />
         </div>

@@ -27,6 +27,7 @@ import EditBook from "../components/UI/actions/bookActions/EditBook";
 import Borrows from "../pages/book-stranice/Borrows";
 import EditProfile from "../components/UI/actions/profileActions/EditProfile";
 import BorrowBook from "../components/UI/actions/bookActions/BorrowBook";
+import ReturnBook from "../components/UI/actions/bookActions/ReturnBook";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -84,6 +85,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="editbook/:bookId" element={<EditBook />} />
         <Route path="editprofile/:bookId" element={<EditProfile />} />
         <Route path="borrowbook/:bookId" element={<BorrowBook />} />
+        <Route path="returnbook/:bookId" element={<ReturnBook />} />
       </Route>
 
       <Route path="/" element={<Navigate to="/login" />} />

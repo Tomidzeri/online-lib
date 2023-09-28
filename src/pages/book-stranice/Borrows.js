@@ -3,6 +3,7 @@ import BorrowsTab from "../../components/UI/tabs/BorrowsTab";
 import SearchBox from "../../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
 import IzdateKnjigeTable from "./tables/IzdateKnjigeTable";
+import VraceneKnjigeTable from "./tables/vraceneKnjigeTable";
 
 const Borrows = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -19,7 +20,9 @@ const Borrows = () => {
   const renderTableByActiveTab = () => {
     switch (activeTab) {
       case 0:
-        return <IzdateKnjigeTable searchTerm={searchTerm} />; 
+        return <IzdateKnjigeTable searchTerm={searchTerm} />;
+      case 1:
+        return <VraceneKnjigeTable searchTerm={searchTerm} />; 
       default:
         return null;
     }
