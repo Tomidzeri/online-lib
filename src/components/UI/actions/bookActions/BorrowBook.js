@@ -108,7 +108,7 @@ const BorrowBook = () => {
                 value={selectedUserId}
                 onChange={(e) => setSelectedUserId(e.target.value)}
               >
-                <option value="">Select User</option> {/* Add this line */}
+                <option value="">Izaberi korisnika</option> 
                 {filteredStudents.map((student) => (
                   <option key={student.id} value={student.id}>
                     {`${student.name} ${student.surname}`}

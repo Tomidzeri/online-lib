@@ -5,9 +5,18 @@ import CancelReservation from "../../../../queries/knjige/useCancelReservation";
 import { TiTick } from "react-icons/ti";
 import { GiCrossMark } from "react-icons/gi";
 
-const CancelReservationAction = ({ book, onCancel }) => {
-  const cancelReservation = CancelReservation();
+const deleteFunction = async (bookId) => {
+  try {
+    const cancelReservation = CancelReservation(); // Initialize the CancelReservation function
+    await cancelReservation(bookId);
+    toast.dismiss();
+  } catch (error) {
+    console.error("Error canceling reservation book:", error);
+    toast.error("Greška pri otkazivanju rezervacije.");
+  }
+};
 
+const CancelReservationAction = ({ book }) => {
   const handleCancel = () => {
     toast.warning(
       <>
@@ -21,16 +30,7 @@ const CancelReservationAction = ({ book, onCancel }) => {
         </div>
         <div className="flex flex-row justify-between">
           <button
-            onClick={async () => {
-              try {
-                await cancelReservation(book.id);
-                onCancel(book.id);
-                toast.dismiss();
-              } catch (error) {
-                console.error("Error canceling reservation book:", error);
-                toast.error("Greška pri otkazivanju rezervacije.");
-              }
-            }}
+            onClick={() => deleteFunction(book.id)}
             style={{ color: "red" }}
           >
             <TiTick />

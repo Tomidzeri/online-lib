@@ -15,17 +15,14 @@ const BookActionsDropdown = ({ book, onDelete }) => {
   };
 
   useEffect(() => {
-    // Function to handle clicks outside the dropdown
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         closeDropdown();
       }
     };
 
-    // Add event listener when the component mounts
     document.addEventListener("click", handleClickOutside);
 
-    // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
