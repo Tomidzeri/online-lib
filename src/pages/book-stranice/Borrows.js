@@ -38,14 +38,14 @@ const Borrows = () => {
   };
 
   return (
-    <div className="main-content mt-24 ml-20">
+    <div className="mt-16 ml-15">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full pb-2 mb-2">
-          <h2 className="text-2xl font-bold text-center">Izdavanje Knjiga</h2>
+        <div className="border-b border-gray-300 w-full pb-4 mb-4">
+          <h2 className="text-4xl font-bold text-left ml-20">Izdavanje Knjiga</h2>
         </div>
         <div className="flex items-center space-x-4">
-          <div className="flex items-center ml-80 space-x-4 mb-4 mt-2">
-            <BsSearch className="text-gray-600 text-lg" />
+          <div className="flex items-center ml-80 space-x-4 mb-4 mt-2 ml-20">
+            <BsSearch className="text-gray-600 text-lg text-right" />
             <SearchBox
               onSearch={setSearchTerm}
               className="border border-gray-300 mb-2 px-2 py-2 rounded-md"
@@ -53,7 +53,7 @@ const Borrows = () => {
           </div>
         </div>
         <div className="flex">
-          <div className="w-2/8 pr-4">
+          <div className="w-2/8 pr-4 ml-20">
             <BorrowsTab
               labels={tabLabels}
               activeTab={activeTab}

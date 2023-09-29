@@ -4,7 +4,7 @@ import fetchAuthors from "../queries/autori/fetchAuthors";
 import Pagination from "../components/UI/pagination/Pagination";
 import SearchBox from "../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
-import Button from "../components/UI/buttons/Button";
+import Button from "../components/UI/buttons/PlusButton";
 import AuthorActionsDropdown from "../components/UI/actions/AuthorActionsDropdown";
 import useDeleteAuthor from "../queries/autori/useDeleteAuthor";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -69,13 +69,13 @@ const Authors = () => {
     ]);
 
   return (
-    <div className="main-content  mt-24 ml-20">
+    <div className="mt-16 ml-15">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full pb-2 mb-2">
-          <h2 className="text-2xl font-bold text-center">Autori</h2>
+        <div className="border-b border-gray-300 w-full pb-4 mb-4">
+          <h2 className="text-4xl font-bold text-left ml-20">Autori</h2>
         </div>
         <div className="flex justify-between">
-          <div className="flex justify-between w-full mb-2">
+          <div className="flex justify-between w-full mb-2 ml-20">
             <Button
               onClick={() => (window.location.href = "/createauthor")}
               className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-2 rounded-md"
@@ -99,10 +99,12 @@ const Authors = () => {
             <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
           </div>
         ) : (
-          <ReusableTable
-            tableHead={tableHeaders}
-            tableData={visibleTableData}
-          />
+          <div className="ml-20">
+            <ReusableTable
+              tableHead={tableHeaders}
+              tableData={visibleTableData}
+            />
+          </div>
         )}
 
         <Pagination

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserActionsDropdown from "../../components/UI/actions/UserActionsDropdown";
 import ReusableTable from "../../components/UI/tables/Table";
 import useFetchLibrarians from "../../queries/korisnici/useFetchLibrarians";
-import Button from "../../components/UI/buttons/Button";
+import Button from "../../components/UI/buttons/PlusButton";
 import SearchBox from "../../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
 import Pagination from "../../components/UI/pagination/Pagination";
@@ -73,13 +73,13 @@ const Librarians = ({ userProfile }) => {
   };
 
   return (
-    <div className="main-content  mt-24 ml-20">
+    <div className="mt-16 ml-15">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full pb-2 mb-2">
-          <h2 className="text-2xl font-bold text-center">Bibliotekari</h2>
+        <div className="border-b border-gray-300 w-full pb-4 mb-4">
+          <h2 className="text-4xl font-bold text-left ml-20">Bibliotekari</h2>
         </div>
         <div className="flex justify-between">
-          <div className="flex justify-between w-full mb-2">
+        <div className="flex justify-between w-full mb-2 ml-20">
             <Button
               onClick={() =>
                 (window.location.href = "/useraddform?role=Bibliotekar")
@@ -106,10 +106,12 @@ const Librarians = ({ userProfile }) => {
           </div>
         ) : (
           <>
+            <div className="ml-20">
             <ReusableTable
               tableHead={tableHeaders}
               tableData={visibleTableData}
             />
+          </div>
             <Pagination
               currentPage={currentPage}
               totalItems={totalItems}

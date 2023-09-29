@@ -6,6 +6,15 @@
     border-radius: 0.25rem;
     border: none;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    padding-right: 30px;
+  }
+
+  .icon {
+    font-size: x-large;
+    margin-right: 10px;
+    margin-left: 5px;
   }
 
   .button:hover {
