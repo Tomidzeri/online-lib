@@ -13,11 +13,11 @@ const Librarians = ({ userProfile }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const tableHeaders = [
     "ID",
-    "Name",
+    "Ime i Prezime",
     "Email",
-    "User Role",
-    "Last Logged",
-    "Actions",
+    "Uloga",
+    "Vrijeme zadnjeg logovanja",
+    "Opcije",
   ];
 
   const [loading, setLoading] = useState(true);

@@ -34,7 +34,7 @@ const Authors = () => {
       });
   }, []);
 
-  const tableHeaders = ["ID", "Naziv Autora", "Actions"];
+  const tableHeaders = ["ID", "Ime Autora", "Opcije"];
 
   const filteredAuthors = authors.filter((author) =>
     `${author.name} ${author.surname}`

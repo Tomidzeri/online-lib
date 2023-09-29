@@ -20,11 +20,11 @@ const Students = ({ userProfile }) => {
 
   const tableHeaders = [
     "ID",
-    "Name",
+    "Ime i Prezime",
     "Email",
-    "User Role",
-    "Last Logged",
-    "Actions",
+    "Uloga",
+    "Vrijeme zadnjeg logovanja",
+    "Opcije",
   ];
 
   useEffect(() => {

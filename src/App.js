@@ -3,10 +3,13 @@ import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import ReactModal from 'react-modal';
 
 function App() {
   const storedToken = sessionStorage.getItem("token");
   const [token, setToken] = useState(storedToken || "");
+
+  ReactModal.setAppElement('#root');
 
   const handleSetToken = (newToken) => {
     sessionStorage.setItem("token", newToken);

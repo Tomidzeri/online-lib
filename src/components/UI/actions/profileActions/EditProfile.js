@@ -89,7 +89,7 @@ const EditProfile = () => {
           fields={formFields}
           formData={formData}
           setFormData={setFormData}
-          onSubmit={handleUpdateUser} // Uncomment this line
+          onSubmit={handleUpdateUser} 
         />
       </div>
       <div className="button-container">

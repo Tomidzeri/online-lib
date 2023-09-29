@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import DeleteUser from "../../UI/actions/userActions/DeleteUser";
 import classes from "./ActionsDropdown.module.css";
 import { useNavigate } from "react-router-dom";
+import { BiSolidUserDetail } from "react-icons/bi";
+import { AiFillEdit } from "react-icons/ai";
 
 const UserActionsDropdown = ({ user, onDelete }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -13,17 +15,14 @@ const UserActionsDropdown = ({ user, onDelete }) => {
   };
 
   useEffect(() => {
-    // Function to handle clicks outside the dropdown
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         closeDropdown();
       }
     };
 
-    // Add event listener when the component mounts
     document.addEventListener("click", handleClickOutside);
 
-    // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -53,9 +52,11 @@ const UserActionsDropdown = ({ user, onDelete }) => {
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
           <button className={classes.dropdownBtn} onClick={handleViewDetailsClick}>
+          <BiSolidUserDetail className="inline-block text-xl mr-4 transition-colors duration-100 hover:text-blue-600" />
             Pogledaj detalje
           </button>
           <button className={classes.dropdownBtn} onClick={handleEditClick}>
+          <AiFillEdit className="inline-block text-xl mr-4 transition-colors duration-100 hover:text-blue-600" />
             Izmijeni detalje
           </button>
           <DeleteUser user={user} onDelete={onDelete} />

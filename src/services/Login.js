@@ -6,7 +6,6 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const device = "DivajsNejm";
-
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -18,11 +17,17 @@ function Login() {
       });
 
       const { token, name } = response.data.data;
+      const formattedLoginTime = new Date().toISOString();
+      const loginCount = parseInt(sessionStorage.getItem("loginCount")) || 0;
+      
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("username", name);
+      sessionStorage.setItem("loginTime", formattedLoginTime);
+      sessionStorage.setItem("loginCount", loginCount + 1);
 
       console.log("Login successful. Token:", token);
       console.log("Name:", name);
+      console.log("Login time:", formattedLoginTime);
 
       if (username.includes("admin") || username.includes("bibliotekar")) {
         navigate("/dashboard");

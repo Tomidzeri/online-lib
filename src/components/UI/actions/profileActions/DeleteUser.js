@@ -1,30 +1,36 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom'; 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useDeleteUser from "../../../../queries/korisnici/useDeleteUser";
-import '../../userActions/DeleteUser.css';
+import { useParams, useNavigate } from "react-router-dom";
 
 const DeleteUser = ({ user, onDelete }) => {
   const deleteUser = useDeleteUser();
-  const navigate = useNavigate(); 
+  const { userId } = useParams();
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     try {
-      await deleteUser(user.id);
-      onDelete(user.id);
+      await deleteUser(userId);
+      deleteUser(userId);
 
-      sessionStorage.removeItem('token');
-      navigate('/login');
+      toast.success("Korisnik je uspješno izbrisan.", {
+        autoClose: 3000,
+      });
 
-      console.log('User deleted and logged out');
+      navigate("/dashboard");
     } catch (error) {
-      console.error('Delete user error:', error);
+      console.error("Delete user error:", error);
+
+      toast.error("Greška prilikom brisanja korisnika.", {
+        autoClose: 3000,
+      });
     }
   };
 
   return (
     <div className="delete">
-      <p>Are you sure you want to delete {user.name}?</p>
-      <button onClick={handleDelete}>Izbrisi korisnika</button>
+      <button onClick={handleDelete}>Izbriši korisnika</button>
     </div>
   );
 };

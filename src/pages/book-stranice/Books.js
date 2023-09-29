@@ -68,7 +68,7 @@ const Books = () => {
     "Rezervisano",
     "Na Raspolaganju",
     "Izdato",
-    "Actions",
+    "Opcije",
   ];
 
   const handleDeleteBook = (bookId) => {

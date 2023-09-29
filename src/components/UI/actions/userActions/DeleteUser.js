@@ -4,7 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 import useDeleteUser from "../../../../queries/korisnici/useDeleteUser";
 import { TiTick } from "react-icons/ti";
 import { GiCrossMark } from "react-icons/gi";
-import './DeleteUser.css';
+import "./DeleteUser.css";
+import { AiFillDelete } from "react-icons/ai";
 
 const DeleteUser = ({ user, onDelete }) => {
   const deleteUser = useDeleteUser();
@@ -16,7 +17,7 @@ const DeleteUser = ({ user, onDelete }) => {
           <p>Da li ste sigurni da zelite da izbrisete korisnika:</p>
           <p>
             <span style={{ fontWeight: "bold", textAlign: "center" }}>
-              {user.name} {user.surname}
+              {user?.name} {user?.surname}
             </span>
           </p>
         </div>
@@ -51,7 +52,10 @@ const DeleteUser = ({ user, onDelete }) => {
 
   return (
     <div className="delete">
-      <button onClick={handleDelete}>Izbrisi korisnika</button>
+      <button onClick={handleDelete}>
+        <AiFillDelete className="inline-block text-xl mr-4 transition-colors duration-100 hover:text-red-600" />
+        Izbrisi korisnika
+      </button>
     </div>
   );
 };
