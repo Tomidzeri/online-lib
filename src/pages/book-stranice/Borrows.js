@@ -43,14 +43,12 @@ const Borrows = () => {
         <div className="border-b border-gray-300 w-full pb-4 mb-4">
           <h2 className="text-4xl font-bold text-left ml-20">Izdavanje Knjiga</h2>
         </div>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center ml-80 space-x-4 mb-4 mt-2 ml-20">
-            <BsSearch className="text-gray-600 text-lg text-right" />
-            <SearchBox
-              onSearch={setSearchTerm}
-              className="border border-gray-300 mb-2 px-2 py-2 rounded-md"
-            />
-          </div>
+        <div className="flex justify-end space-x-4 mb-4 mt-2 ml-96">
+          <BsSearch className="text-gray-600 text-lg text-right" />
+          <SearchBox
+            onSearch={setSearchTerm}
+            className="border border-gray-300 mb-2 px-2 py-2 rounded-md"
+          />
         </div>
         <div className="flex">
           <div className="w-2/8 pr-4 ml-20">

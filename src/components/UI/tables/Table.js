@@ -11,9 +11,16 @@ import PropTypes from "prop-types";
 
 function ReusableTable({ tableHead, tableData }) {
   return (
-    <Card variant="outlined" style={{ overflow: "visible" }}>
-      <div>
-      <Table>
+    <Card
+      variant="outlined"
+      style={{
+        overflow: "hidden",
+        boxShadow: "8px 8px 12px rgba(0, 0, 0, 0.2)", 
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Table style={{ flex: 1 }}>
         <TableHead>
           <TableRow>
             {tableHead.map((head) => (
@@ -57,7 +64,6 @@ function ReusableTable({ tableHead, tableData }) {
           })}
         </TableBody>
       </Table>
-      </div>
     </Card>
   );
 }

@@ -18,6 +18,7 @@ const useFetchLibrarians = () => {
 
       const librarianList = response.data.data;
       setLibrarians(librarianList);
+      console.log(librarianList);
     } catch (error) {
       console.error("Error fetching librarians:", error);
     }

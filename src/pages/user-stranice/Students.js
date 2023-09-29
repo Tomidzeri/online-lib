@@ -59,7 +59,14 @@ const Students = ({ userProfile }) => {
     .slice(startIndex, endIndex)
     .map((student) => [
       student.id,
-      `${student.name} ${student.surname}`,
+      <div className="flex items-center">
+      <img
+        src={student.photoPath} 
+        alt="slika"
+        className="w-8 h-8 rounded-full mr-2" 
+      />
+      {`${student.name} ${student.surname}`}
+    </div>,
       student.email,
       student.role,
       student.lastLoggedTime,

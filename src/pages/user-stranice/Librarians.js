@@ -58,7 +58,14 @@ const Librarians = ({ userProfile }) => {
     .slice(startIndex, endIndex)
     .map((librarian) => [
       librarian.id,
-      `${librarian.name} ${librarian.surname}`,
+      <div className="flex items-center">
+      <img
+        src={librarian.photoPath} 
+        alt="slika"
+        className="w-8 h-8 rounded-full mr-2" 
+      />
+      {`${librarian.name} ${librarian.surname}`}
+    </div>,
       librarian.email,
       librarian.role,
       librarian.lastLoggedTime,
