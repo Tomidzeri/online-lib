@@ -10,6 +10,7 @@ import updateUserData from "../../../../queries/korisnici/useUpdateUserData";
 import ReactModal from "react-modal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GiCrossMark, GiCheckMark } from "react-icons/gi";
 
 function ViewUserDetails() {
   const navigate = useNavigate();
@@ -223,8 +224,14 @@ function ViewUserDetails() {
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
-          <button onClick={handleChangePassword}>Spremi</button>
-          <button onClick={closeModal}>Zatvori</button>
+          <div className="password-modal-buttons">
+            <button onClick={closeModal} className="cancel-button">
+              <GiCrossMark color="#f44336" />{" "}
+            </button>
+            <button onClick={handleChangePassword} className="success-button">
+              <GiCheckMark color="#007bff" />{" "}
+            </button>
+          </div>
         </div>
       </ReactModal>
     </div>
