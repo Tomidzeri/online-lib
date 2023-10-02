@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles/Layout.css";
 import Header from "./Header";
 import Sidebar from "./sidebar/Sidebar";
@@ -6,13 +6,21 @@ import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 
 function Layout({ userProfile }) {
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+
+  // Function to toggle the sidebar visibility
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+
   return (
     <div>
-      <Header className="header" />
+      <Header className="header" toggleSidebar={toggleSidebar} />
       <div className="content-area">
-        <Sidebar className="sidebar" />
+        {/* Pass sidebarVisible prop to Sidebar */}
+        <Sidebar className="sidebar" sidebarVisible={sidebarVisible} />
         <main>
-          <Outlet userProfile={userProfile} /> 
+          <Outlet userProfile={userProfile} />
         </main>
       </div>
       <Footer className="footer" />

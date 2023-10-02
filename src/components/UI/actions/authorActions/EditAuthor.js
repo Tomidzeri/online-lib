@@ -4,9 +4,8 @@ import Form from "../../forms/Form";
 import { useParams, useNavigate } from "react-router-dom";
 import updateAuthorData from "../../../../queries/autori/useUpdateAuthorData";
 import Submit from "../../buttons/Submit";
-import { Typography } from "@mui/material";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditAuthor = () => {
   const { authorId } = useParams();
@@ -72,19 +71,24 @@ const EditAuthor = () => {
   ];
 
   return (
-    <div className="main-content mt-24 ml-20 flex flex-col content-end">
+    <div className="mt-12 ml-15">
       <div className="w-full">
-        <div className="flex flex-col justify-baseline items-baseline border-b border-gray-300 mb-14 text-center">
-          <Typography variant="h4" align="center" gutterBottom>
-            {formData?.name} {formData.surname}
-          </Typography>
-          <button
-            type="button"
-            className="text-blue-500 hover:text-blue-700"
-            onClick={navigateToAuthorsPage}
-          >
-            Evidencija Autora
-          </button>
+        <div className="flex justify-between border-b border-gray-300 w-full">
+          <div className="flex flex-col">
+            <h2
+              style={{ fontFamily: "'Rubik', sans-serif" }}
+              className="text-5xl font-medium text-left ml-20"
+            >
+              {formData?.name} {formData.surname}
+            </h2>
+            <button
+              type="button"
+              className="text-blue-500 hover:text-blue-700"
+              onClick={navigateToAuthorsPage}
+            >
+              Evidencija Autora
+            </button>
+          </div>
         </div>
         <Form
           fields={formFields}

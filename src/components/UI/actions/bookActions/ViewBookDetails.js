@@ -4,7 +4,6 @@ import useBookDetails from "../../../../queries/knjige/useBookDetails";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 
 const ViewBookDetails = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -26,7 +25,7 @@ const ViewBookDetails = () => {
     {
       label: "Osnovni detalji",
       content: (
-        <div className="p-4 mt-6 py-6 flex">
+        <div className="p-4 mt-6 text-center py-6 flex">
           <div className="w-1/2 pr-4">
             <h3 className="text-xl font-semibold pb-4">Naziv: {book.title}</h3>
             <h3 className="text-lg mt-6">
@@ -66,10 +65,8 @@ const ViewBookDetails = () => {
     {
       label: "Specifikacije",
       content: (
-        <div className="p-4">
-          <h3 className="text-lg">
-            Language: {book.language.name}
-          </h3>
+        <div className="p-4  text-center ">
+          <h3 className="text-lg">Language: {book.language.name}</h3>
           <h3 className="text-lg mt-2">Broj strana: {book.pages}</h3>
           <h3 className="text-lg mt-2">ISBN: {book.isbn}</h3>
           <h3 className="text-lg mt-2">Pismo: {book.script.name}</h3>
@@ -96,24 +93,28 @@ const ViewBookDetails = () => {
   ];
 
   return (
-    <div className="main-content mt-14 ml-20">
+    <div className="mt-14 ml-15">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full text-left flex flex-row">
+        <div className="border-b border-gray-300 w-full text-left flex flex-row items-center content-center">
           <Avatar
             alt="Book Cover"
             src="https://tim2.petardev.live/img/book-cover-placeholder.png"
-            sx={{ width: 60, height: 60, marginRight: 2 }}
+            sx={{
+              width: 50,
+              height: 50,
+              marginRight: 0,
+              marginLeft: 10,
+              marginBottom: 1,
+            }}
           />
           <div className="flex flex-col">
-            <h2 className="text-3xl font-semibold">{book?.title}</h2>
-            <Button
+            <h2 className="text-2xl font-bold text-left ml-6">{book?.title}</h2>
+            <button
               onClick={handleBackClick}
-              variant="text"
-              color="primary"
-              sx={{ textTransform: "none", paddingLeft: 0 }}
+              className="text-blue-500 hover:text-blue-700 mb-2 underline-none focus:outline-none"
             >
-              Sve Knjige
-            </Button>
+              Evidencija knjiga
+            </button>
           </div>
         </div>
         <Tab

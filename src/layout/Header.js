@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logout from "../services/Logout";
-import { FaBell } from "react-icons/fa";
+import { FaBell, FaBars } from "react-icons/fa";
 import { BiCross, BiSolidUserCircle } from "react-icons/bi";
 import { MdLocalLibrary } from "react-icons/md";
 import { useNavigation } from "./navigation";
@@ -11,8 +11,14 @@ import { RiProfileLine } from "react-icons/ri";
 const Header = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showCrossDropdown, setShowCrossDropdown] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+
   const { navigateToDashboard, navigateToProfile, navigateToAddUser } =
     useNavigation();
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
 
   const toggleProfileDropdown = () => {
     setShowProfileDropdown(!showProfileDropdown);
@@ -29,18 +35,47 @@ const Header = () => {
     setShowCrossDropdown(false);
   };
 
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      setSidebarVisible(true);
+    } else {
+      setSidebarVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <header
       className="bg-blue-900 p-4 flex justify-between items-center fixed top-0 left-0 w-full z-50"
       style={{ backgroundColor: "#4558BE", height: "4rem" }}
     >
-      <div className="flex">
-        <button
-          className="flex items-center text-white"
-          onClick={navigateToDashboard}
+      <div className="flex items-center">
+        {window.innerWidth <= 768 && (
+          <button
+          className="text-white text-2xl"
+          onClick={toggleSidebar}
+          style={{ marginRight: "1rem" }}
         >
+          <FaBars />
+        </button>
+        )}
+        <button className="flex items-center text-white" onClick={navigateToDashboard}>
           <MdLocalLibrary className="text-4xl mr-2" />
-          <h1 className="text-white text-2xl">Online Biblioteka</h1>
+          <h1
+            className={`text-white text-2xl ${
+              sidebarVisible ? "hidden" : ""
+            }`}
+          >
+            Online Biblioteka
+          </h1>
         </button>
       </div>
       <div className="flex items-center text-white">

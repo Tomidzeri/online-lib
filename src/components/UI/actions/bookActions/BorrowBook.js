@@ -77,14 +77,14 @@ const BorrowBook = () => {
   };
 
   return (
-    <div className="main-content mt-24 ml-20">
+    <div className="mt-14 ml-15">
       <div className="w-full">
         <div className="flex flex-col border-b border-gray-300 w-full pb-2 mb-2">
-          <h2 className="text-2xl font-bold text-left">Izdaj Knjigu</h2>
+          <h2 className="text-2xl font-bold text-left ml-16">Izdaj Knjigu</h2>
           <div className="flex flex-row">
             <button
               type="button"
-              className="text-blue-500 hover:text-blue-700"
+              className="text-blue-500 hover:text-blue-700 ml-16"
               onClick={handleBackClick}
             >
               Evidencija Knjiga /
@@ -92,7 +92,7 @@ const BorrowBook = () => {
             <p>&nbsp;{book?.title}</p>
           </div>
         </div>
-        <div className="flex justify-baseline">
+        <div className="flex justify-baseline ml-16">
           <form className="w-1/2">
             <div className="mb-4">
               <label

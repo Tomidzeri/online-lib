@@ -76,14 +76,14 @@ const ReserveBook = () => {
   };
 
   return (
-    <div className="main-content mt-24 ml-20">
+    <div className="mt-14 ml-15">
       <div className="w-full">
         <div className="flex flex-col border-b border-gray-300 w-full pb-2 mb-2">
-          <h2 className="text-2xl font-bold text-left">Rezerviši Knjigu</h2>
+          <h2 className="text-2xl font-bold text-left ml-20">Rezerviši Knjigu</h2>
           <div className="flex flex-row">
             <button
               type="button"
-              className="text-blue-500 hover:text-blue-700"
+              className="text-blue-500 hover:text-blue-700 ml-20"
               onClick={handleBackClick}
             >
               Evidencija Knjiga /
@@ -92,7 +92,7 @@ const ReserveBook = () => {
           </div>
         </div>
         <div className="flex justify-baseline">
-          <form className="w-1/2">
+          <form className="w-1/2 ml-20">
             <div className="mb-4">
               <label
                 htmlFor="userId"

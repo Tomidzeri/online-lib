@@ -129,10 +129,12 @@ const EditBook = () => {
   };
 
   return (
-    <div className="main-content  mt-24 ml-20 mr-5 flex flex-col">
+    <div className="mt-16 ml-15">
       <div className="w-full">
-        <h2 className="text-3xl font-semibold mb-4">Edit Book</h2>
-        <form>
+        <div className="border-b border-gray-300 w-full pb-4 mb-4">
+          <h2 className="text-4xl font-bold text-left ml-20">Izmijeni podatke</h2>
+        </div>
+        <form className="ml-20">
           <Tab
             labels={["Basic Info", "Specifications", "Multimedia"]}
             activeTab={activeTab}

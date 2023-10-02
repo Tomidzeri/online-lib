@@ -14,7 +14,7 @@ export const fetchUserProfile = async (token, username) => {
 
     const user = userData.find((item) => item.username === username);
 
-    console.log(user)
+    console.log(user);
     return user;
   } catch (error) {
     throw error;

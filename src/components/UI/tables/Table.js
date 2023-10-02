@@ -29,7 +29,7 @@ function ReusableTable({ tableHead, tableData }) {
     const cellA = a[sortBy];
     const cellB = b[sortBy];
   
-    // Handle different data types
+
     if (typeof cellA === "string" && typeof cellB === "string") {
       if (sortOrder === "asc") {
         return cellA.localeCompare(cellB);
@@ -39,7 +39,7 @@ function ReusableTable({ tableHead, tableData }) {
     } else if (typeof cellA === "number" && typeof cellB === "number") {
       return sortOrder === "asc" ? cellA - cellB : cellB - cellA;
     } else {
-      // Handle other data types or fallback to no sorting
+      // 
       return 0;
     }
   });
@@ -59,11 +59,12 @@ function ReusableTable({ tableHead, tableData }) {
           <TableRow>
             {tableHead.map((head, index) => (
               <TableCell key={index} className="bg-gray-200">
-                {head.includes("Ime") || head.includes("Naziv") ? (
+                {head.includes("Ime") || head.includes("Naziv") || head.includes("Autor") || head.includes("Email") ? (
                   <TableSortLabel
                     active={sortBy === index}
                     direction={sortOrder}
                     onClick={() => handleSort(index)}
+                    style={{ color: "black", fontWeight: "bold" }}
                   >
                     <div className="font-small leading-none opacity-70">
                       {head}

@@ -1,30 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { fetchUserProfile } from "../queries/profileInfo";
+// import { fetchUserProfile } from "../queries/profileInfo";
 import photo from "../Images/photo.jpg";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Avatar, Grid, Paper, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UserActionsDropdown from "../components/UI/actions/UserActionsDropdown";
+import ReactModal from "react-modal";
+import { GiCrossMark, GiCheckMark } from "react-icons/gi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import updateUserData from "../queries/korisnici/useUpdateUserData";
+import { ProfileData } from "../queries/profileInfo/useProfileData";
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const { userId } = useParams();
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const validatePasswordConfirmation = () => {
+    if (password !== passwordConfirmation) {
+      setPasswordError("Lozinke se ne poklapaju.");
+    } else {
+      setPasswordError("");
+    }
+  };
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    const loggedInUsername = sessionStorage.getItem("username");
-
-    if (!token || !loggedInUsername) {
-      setIsLoading(false);
-      return;
-    }
-
     const fetchUserData = async () => {
       try {
-        const user = await fetchUserProfile(token, loggedInUsername);
-
-        setUserProfile(user);
+        const user = await ProfileData();
+        setUserProfile(user.data); // Access the 'data' property
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -34,6 +52,27 @@ const Profile = () => {
 
     fetchUserData();
   }, []);
+
+  const handleChangePassword = async () => {
+    validatePasswordConfirmation();
+
+    if (passwordError) {
+      return;
+    }
+
+    try {
+      const updatedData = await updateUserData(userId, {
+        password,
+        password_confirmation: passwordConfirmation,
+      });
+      console.log("Password updated:", updatedData);
+      toast.success("Lozinka uspješno izmijenjena.");
+      closeModal();
+    } catch (error) {
+      console.error("Error updating password:", error);
+      toast.error("Greška prilikom izmjene lozinke.");
+    }
+  };
 
   const navigation = () => {
     if (userProfile && userProfile.role === "Bibliotekar") {
@@ -71,11 +110,9 @@ const Profile = () => {
             <button
               type="button"
               className="text-blue-500 hover:text-blue-700"
-              onClick={() => {
-                // Logic
-              }}
+              onClick={openModal}
             >
-              Resetuj šifru
+              Promeni lozinku
             </button>
             <button
               type="button"
@@ -151,6 +188,37 @@ const Profile = () => {
           <p>Failed to load profile data.</p>
         )}
       </div>
+      <ReactModal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Change Password Modal"
+        className="password-modal"
+        overlayClassName="password-modal-overlay"
+      >
+        <div className="password-modal-content">
+          <h2>Izmijeni lozinku</h2>
+          <input
+            type="password"
+            placeholder="Nova lozinka"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Potvrdi lozinku"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+          />
+          <div className="password-modal-buttons">
+            <button onClick={closeModal} className="cancel-button">
+              <GiCrossMark color="#f44336" />{" "}
+            </button>
+            <button onClick={handleChangePassword} className="success-button">
+              <GiCheckMark color="#007bff" />{" "}
+            </button>
+          </div>
+        </div>
+      </ReactModal>
     </div>
   );
 };

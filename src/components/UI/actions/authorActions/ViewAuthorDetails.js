@@ -29,13 +29,16 @@ const ViewAuthorDetails = () => {
   };
 
   return (
-    <div className="main-content mt-24 ml-20 flex flex-col content-end">
+    <div className="mt-12 ml-15">
       <div className="w-full">
-        <div className="flex flex-row justify-between border-b border-gray-300 mb-14 text-center">
+        <div className="flex justify-between items-center border-b border-gray-300 w-full">
           <div className="flex flex-col justify-baseline items-baseline">
-            <Typography variant="h4" align="center" gutterBottom>
+            <h2
+              style={{ fontFamily: "'Rubik', sans-serif" }}
+              className="text-5xl font-medium text-left ml-20"
+            >
               {author?.name} {author.surname}
-            </Typography>
+            </h2>
             <button
               type="button"
               className="text-blue-500 hover:text-blue-700"
@@ -50,7 +53,7 @@ const ViewAuthorDetails = () => {
           />
         </div>
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} sx={{ marginLeft: "5rem", marginTop: "1.5rem" }}>
             <Paper elevation={3} sx={{ padding: "2rem", marginBottom: "2rem" }}>
               <Typography variant="h6">Ime i prezime:</Typography>
               <Typography>

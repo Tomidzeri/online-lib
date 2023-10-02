@@ -175,30 +175,28 @@ const ReturnBook = () => {
   };
 
   return (
-    <div className="mt-16 ml-20 flex flex-col content-between">
-      <div className="w-full mb-80">
+    <div className="mt-14 ml-15">
+      <div className="w-full">
         <div className="border-b border-gray-300 w-full text-left flex flex-row">
           <div className="flex flex-row">
             <Avatar
               alt="Book Cover"
               src="https://tim2.petardev.live/img/book-cover-placeholder.png"
-              sx={{ width: 60, height: 60, marginRight: 2 }}
+              sx={{ width: 60, height: 60, marginRight: 2, marginLeft: 10 }}
             />
             <div className="flex flex-col">
               <h2 className="text-3xl font-semibold">{book?.title}</h2>
-              <Button
+              <button
                 onClick={handleBackClick}
-                variant="text"
-                color="primary"
-                sx={{ textTransform: "none", paddingLeft: 0 }}
+                className="text-left text-blue-500 hover:text-blue-700 underline-none focus:outline-none mb-1"
               >
-                Sve Knjige
-              </Button>
+                Evidencija knjiga
+              </button>
             </div>
           </div>
         </div>
         <div className="flex flex-row justify-between mt-4 mb-4">
-          <h1 className="text-xl font-semibold">Vrati knjigu</h1>
+          <h1 className="text-xl font-semibold ml-20">Vrati knjigu</h1>
           <div className="flex items-center space-x-2">
             <BsSearch className="text-gray-600 text-lg" />
             <SearchBox
@@ -216,7 +214,7 @@ const ReturnBook = () => {
             <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
           </div>
         ) : (
-          <>
+          <div className="ml-20">
             <ReusableTable tableHead={customTableHead} tableData={tableData} />
             <Pagination
               currentPage={currentPage}
@@ -224,7 +222,7 @@ const ReturnBook = () => {
               totalItems={filteredBorrowedBooks.length}
               onPageChange={setCurrentPage}
             />
-          </>
+          </div>
         )}
       </div>
       <div className="mt-4 mb-4 flex flex-row items-end justify-end gap-10">

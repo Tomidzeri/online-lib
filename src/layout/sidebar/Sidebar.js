@@ -15,7 +15,7 @@ import {
   useNavigateToBorrows,
 } from "./navigation";
 
-const Sidebar = ({ className }) => {
+const Sidebar = ({ className, sidebarVisible }) => {
   const navigateToDashboard = useNavigateToDashboard();
   const navigateToLibrarians = useNavigateToLibrarians();
   const navigateToStudents = useNavigateToStudents();
@@ -25,7 +25,7 @@ const Sidebar = ({ className }) => {
   const navigateToBorrows = useNavigateToBorrows();
 
   return (
-    <div className={`${classes.list} ${className}`}>
+    <div className={`${classes.list} ${sidebarVisible ? classes.open : ""} ${className}`}>
       <div className={classes.listContent}>
         <button onClick={navigateToDashboard}>
           <FcLibrary className={classes.icon} />
