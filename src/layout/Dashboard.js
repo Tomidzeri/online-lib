@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Lottie from "react-lottie";
 import animationData from "./animation.json"; 
 import Activities from "./dashboard-content/Activities";
-import Reservations from "./dashboard-content/Reservations";
 import Statistics from "./dashboard-content/Statistics";
 import "./dashboard-content/Dashboard.css";
 
@@ -45,7 +44,6 @@ const Dashboard = () => {
             <Activities />
           </div>
           <div className="right-pane">
-            <Reservations />
             <Statistics />
           </div>
         </>

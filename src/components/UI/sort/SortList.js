@@ -1,98 +1,148 @@
 import React, { useEffect, useState } from "react";
-import { fetchBooks } from "../../../queries/knjige/fetchBooks";
 import { fetchBorrowedBooks } from "../../../queries/knjige/useBookBorrow";
-// import { useTable, useSortBy } from "react-table";
+import BookDropdown from "./BookDropdown";
+import StudentDropdown from "./StudentDropdown";
+import LibrariansDropdown from "./LibrarianDropdown";
 
 const SortList = () => {
-  const [books, setBooks] = useState([]);
-  const [selectedBook, setSelectedBook] = useState("Svi"); // Default value
+  const [selectedBook, setSelectedBook] = useState("");
+  const [selectedStudent, setSelectedStudent] = useState("");
+  const [selectedLibrarian, setSelectedLibrarian] = useState("");
+  const [selectedSortCategory, setSelectedSortCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // For filtering borrowed books
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch books and update the state when the component mounts
   useEffect(() => {
-    async function fetchBooksData() {
-      try {
-        const fetchedBooks = await fetchBooks();
-        setBooks(fetchedBooks);
-      } catch (error) {
-        console.error("Error fetching books:", error);
-      }
-    }
-    fetchBooksData();
-  }, []);
+    setLoading(true);
+    fetchBorrowedBooks()
+      .then((data) => {
+        const izdateBooks = data.izdate || [];
+        const otpisaneBooks = data.otpisane || [];
+        const vraceneBooks = data.vracene || [];
+        const prekoraceneBooks = data.prekoracene || [];
 
-  // Fetch borrowed books when the selected book changes
-  useEffect(() => {
-    if (selectedBook !== "Svi") {
-      setLoading(true);
-      fetchBorrowedBooks()
-        .then((data) => {
-          // Filter borrowed books based on the selected book's title
-          const filteredBorrowedBooks = data.izdate.filter(
-            (book) => book.knjiga.title === selectedBook
+        const allBorrowedBooks = [
+          ...izdateBooks,
+          ...otpisaneBooks,
+          ...vraceneBooks,
+          ...prekoraceneBooks,
+        ];
+
+        let filteredBorrowedBooks = [...allBorrowedBooks];
+
+        if (selectedBook) {
+          filteredBorrowedBooks = filteredBorrowedBooks.filter(
+            (book) => book.knjiga?.title === selectedBook
           );
-          setBorrowedBooks(filteredBorrowedBooks);
-          setLoading(false);
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching borrowed books:", error);
-          setLoading(false);
-        });
-    }
-  }, [selectedBook]);
+        }
 
-  // Handle dropdown selection
-  const handleDropdownChange = (event) => {
+        if (selectedStudent) {
+          filteredBorrowedBooks = filteredBorrowedBooks.filter(
+            (book) => book.student?.name === selectedStudent
+          );
+        }
+
+        if (selectedLibrarian) {
+          filteredBorrowedBooks = filteredBorrowedBooks.filter(
+            (book) => book.librarian?.name === selectedLibrarian
+          );
+        }
+
+        if (selectedSortCategory === "") {
+          // Handle the case when no sorting option is selected
+          setBorrowedBooks(allBorrowedBooks);
+        } else {
+          setBorrowedBooks(filteredBorrowedBooks);
+        }
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching borrowed books:", error);
+        setLoading(false);
+      });
+  }, [selectedBook, selectedStudent, selectedLibrarian, selectedSortCategory]);
+
+  const handleBookChange = (event) => {
     setSelectedBook(event.target.value);
   };
 
-  // Handle search input change
+  const handleStudentChange = (event) => {
+    setSelectedStudent(event.target.value);
+  };
+
+  const handleLibrarianChange = (event) => {
+    setSelectedLibrarian(event.target.value);
+  };
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  // Format borrowed book information
   const formatBorrowedBookInfo = (book) => {
-    const librarianInfo = book.bibliotekar0
-      ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}`
-      : "";
-    return `${librarianInfo} je izdao/la knjigu ${book.knjiga.title} uceniku ${book.student.name} ${book.student.surname} datuma ${book.borrow_date}`;
+    let sentence = "";
+
+    if (selectedSortCategory === "izdate") {
+      sentence = `${book.librarian?.name} ${book.librarian?.surname} je izdao/la knjigu ${book.knjiga.title} uceniku ${book.student.name} ${book.student.surname} datuma ${book.borrow_date}`;
+    } else if (selectedSortCategory === "otpisane") {
+      sentence = `${book.librarian?.name} ${book.librarian?.surname} je otpisao/la knjigu ${book.knjiga.title} koja je bila izdata uceniku ${book.student.name} ${book.student.surname} datuma ${book.borrow_date}`;
+    } else if (selectedSortCategory === "vracene") {
+      sentence = `Ucenik ${book.student.name} ${book.student.surname} je vratio/la knjigu ${book.knjiga.title} izdatu od strane ${book.librarian?.name} ${book.librarian?.surname} datuma ${book.return_date}`;
+    }
+
+    return sentence;
   };
 
-  // Filter borrowed books based on search term
   const filteredBorrowedBooks = borrowedBooks.filter((book) => {
     const searchString = formatBorrowedBookInfo(book).toLowerCase();
     return searchString.includes(searchTerm.toLowerCase());
   });
 
+  const handleSortChange = (event) => {
+    setSelectedSortCategory(event.target.value);
+  };
+
   return (
-    <div>
-      <label htmlFor="bookDropdown">Knjige:</label>
-      <select
-        id="bookDropdown"
-        value={selectedBook}
-        onChange={handleDropdownChange}
-      >
-        <option value="Svi">Svi</option>
-        {books.map((book) => (
-          <option key={book.id} value={book.title}>
-            {book.title}
-          </option>
-        ))}
-      </select>
+    <div className="flex flex-col">
+      <div className="flex">
+        <BookDropdown
+          selectedBook={selectedBook}
+          handleBookChange={handleBookChange}
+        />
 
-      {/* Search input */}
-      <input
-        type="text"
-        placeholder="Search borrowed books..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-      />
+        <StudentDropdown
+          selectedStudent={selectedStudent}
+          handleStudentChange={handleStudentChange}
+        />
 
-      {selectedBook !== "Svi" && (
+        <LibrariansDropdown
+          selectedLibrarian={selectedLibrarian}
+          handleLibrarianChange={handleLibrarianChange}
+        />
+
+        <div className="flex">
+          <label>Transakcije:</label>
+          <select value={selectedSortCategory} onChange={handleSortChange}>
+            <option value="">Sve</option>
+            <option value="izdate">Izdate</option>
+            <option value="otpisane">Otpisane</option>
+            <option value="prekoracene">Prekoracene</option>
+            <option value="vracene">Vracene</option>
+          </select>
+        </div>
+
+        <input
+          type="text"
+          placeholder="Search borrowed books..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </div>
+
+      {(selectedBook !== "Svi" ||
+        selectedStudent !== "Svi" ||
+        selectedLibrarian !== "Svi") && (
         <>
           {loading ? (
             <p>Loading borrowed books...</p>

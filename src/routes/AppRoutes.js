@@ -16,7 +16,6 @@ import EditUserForm from "../components/UI/actions/userActions/EditUserForm";
 import ViewUserDetails from "../components/UI/actions/userActions/ViewUserDetails";
 import Statistics from "../layout/dashboard-content/Statistics";
 import Activities from "../layout/dashboard-content/Activities";
-import Reservations from "../layout/dashboard-content/Reservations";
 import StoreBook from "../pages/book-stranice/StoreBook";
 import Authors from "../pages/Authors";
 import EditAuthor from "../components/UI/actions/authorActions/EditAuthor";
@@ -65,7 +64,6 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
       <Route path="/*" element={<Layout token={token} />}>
         <Route index path="dashboard" element={<Dashboard />} />
         <Route path="activities" element={<Activities />} />
-        <Route path="reservations" element={<Reservations />} />
         <Route path="statistics" element={<Statistics />} />
 
         <Route path="profile" element={<Profile />} />
