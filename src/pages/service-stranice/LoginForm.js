@@ -16,6 +16,9 @@ import Login from "../../services/Login";
 import libraryImage from "./library.jpg";
 import GoogleFontLoader from "react-google-font-loader";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Copyright(props) {
 return (
@@ -154,6 +157,7 @@ return (
         </Box>
       </Grid>
     </Grid>
+    <ToastContainer />
   </ThemeProvider>
 );
 }

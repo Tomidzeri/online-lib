@@ -93,7 +93,7 @@ const ViewBookDetails = () => {
   ];
 
   return (
-    <div className="mt-14 ml-15">
+    <div className="mt-14 ml-15 flex flex-row">
       <div className="w-full">
         <div className="border-b border-gray-300 w-full text-left flex flex-row items-center content-center">
           <Avatar
@@ -117,18 +117,46 @@ const ViewBookDetails = () => {
             </button>
           </div>
         </div>
-        <Tab
-          labels={tabsContent.map((tab) => tab.label)}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          className="mb-4"
-        >
-          {tabsContent.map((tab, index) => (
-            <div key={index} className={activeTab === index ? "" : "hidden"}>
-              {tab.content}
+        <div className="flex flex-row">
+          <div className="w-5/6">
+            <Tab
+              labels={tabsContent.map((tab) => tab.label)}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              className="mb-4"
+            >
+              {tabsContent.map((tab, index) => (
+                <div
+                  key={index}
+                  className={activeTab === index ? "" : "hidden"}
+                >
+                  {tab.content}
+                </div>
+              ))}
+            </Tab>
+          </div>
+          <div className="w-1/6 border-l border-gray-300 flex flex-col">
+            <div class="mt-6 mb-6 pl-6 pr-6 pb-6 text-center border-b border-gray-300">
+              <h3 class="text-lg bg-blue-500 text-white rounded-md p-2 mb-2">
+                Ukupna kolicina: {book.samples}
+              </h3>
+              <h3 class="text-lg bg-green-500 text-white rounded-md p-2 mb-2">
+                Rezervisano: {book.rSamples}
+              </h3>
+              <h3 class="text-lg bg-yellow-500 text-white rounded-md p-2 mb-2">
+                Izdato: {book.bSamples}
+              </h3>
+              <h3 class="text-lg bg-red-500 text-white rounded-md p-2 mb-2">
+                U prekoracenju: {book.fSamples}
+              </h3>
+              <h3 class="text-lg bg-indigo-500 text-white rounded-md p-2">
+                Na raspolaganju:{" "}
+                {book.samples - book.rSamples - book.bSamples - book.fSamples}
+              </h3>
             </div>
-          ))}
-        </Tab>
+            <div></div>
+          </div>
+        </div>
       </div>
     </div>
   );
