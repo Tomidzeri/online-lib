@@ -29,6 +29,7 @@ import BorrowBook from "../components/UI/actions/bookActions/BorrowBook";
 import ReturnBook from "../components/UI/actions/bookActions/ReturnBook";
 import WriteOffBook from "../components/UI/actions/bookActions/WriteOffBook";
 import ReserveBook from "../components/UI/actions/bookActions/ReserveBook";
+import Reservations from "../layout/dashboard-content/Reservations";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -65,6 +66,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route index path="dashboard" element={<Dashboard />} />
         <Route path="activities" element={<Activities />} />
         <Route path="statistics" element={<Statistics />} />
+        <Route path="reservations" element={<Reservations />} />
 
         <Route path="profile" element={<Profile />} />
         <Route path="books" element={<Books />} />

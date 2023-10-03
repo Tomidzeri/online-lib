@@ -1,13 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Statistics.css";
-
-const statisticsData = {
-  issuedBooks: 73,
-  reservedBooks: 44,
-  overdueBooks: 25
-};
+import { fetchBorrowedBooks } from "../../queries/knjige/useBookBorrow";
+import { AllReservations } from "../../queries/knjige/useAllReservations";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { format } from "date-fns";
 
 const Statistics = () => {
+  const [statisticsData, setStatisticsData] = useState({
+    issuedBooks: 0,
+    reservedBooks: 0,
+    overdueBooks: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+
+    fetchBorrowedBooks()
+      .then((data) => {
+        const issuedBooks = data.izdate.length;
+        const overdueBooks = data.prekoracene.length;
+
+        AllReservations()
+          .then((reservationData) => {
+            const reservedBooks = reservationData.active.length;
+
+            setStatisticsData({
+              issuedBooks,
+              reservedBooks,
+              overdueBooks,
+            });
+
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching reserved books:", error);
+            setLoading(false);
+          });
+      })
+      .catch((error) => {
+        console.error("Error fetching borrowed books:", error);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div className="statistics-container">
       <h3 className="statistics-title">Statistics</h3>

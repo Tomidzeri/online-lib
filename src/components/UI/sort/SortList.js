@@ -3,58 +3,31 @@ import { fetchBorrowedBooks } from "../../../queries/knjige/useBookBorrow";
 import BookDropdown from "./BookDropdown";
 import StudentDropdown from "./StudentDropdown";
 import LibrariansDropdown from "./LibrarianDropdown";
+import DatePicker from "react-datepicker"; 
+import "react-datepicker/dist/react-datepicker.css"; 
 
 const SortList = () => {
   const [selectedBook, setSelectedBook] = useState("");
   const [selectedStudent, setSelectedStudent] = useState("");
   const [selectedLibrarian, setSelectedLibrarian] = useState("");
   const [selectedSortCategory, setSelectedSortCategory] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null); 
   const [loading, setLoading] = useState(false);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [izdateBooks, setIzdateBooks] = useState([]);
+  const [otpisaneBooks, setOtpisaneBooks] = useState([]);
+  const [vraceneBooks, setVraceneBooks] = useState([]);
+  const [prekoraceneBooks, setPrekoraceneBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     setLoading(true);
     fetchBorrowedBooks()
       .then((data) => {
-        const izdateBooks = data.izdate || [];
-        const otpisaneBooks = data.otpisane || [];
-        const vraceneBooks = data.vracene || [];
-        const prekoraceneBooks = data.prekoracene || [];
-
-        const allBorrowedBooks = [
-          ...izdateBooks,
-          ...otpisaneBooks,
-          ...vraceneBooks,
-          ...prekoraceneBooks,
-        ];
-
-        let filteredBorrowedBooks = [...allBorrowedBooks];
-
-        if (selectedBook) {
-          filteredBorrowedBooks = filteredBorrowedBooks.filter(
-            (book) => book.knjiga?.title === selectedBook
-          );
-        }
-
-        if (selectedStudent) {
-          filteredBorrowedBooks = filteredBorrowedBooks.filter(
-            (book) => book.student?.name === selectedStudent
-          );
-        }
-
-        if (selectedLibrarian) {
-          filteredBorrowedBooks = filteredBorrowedBooks.filter(
-            (book) => book.librarian?.name === selectedLibrarian
-          );
-        }
-
-        if (selectedSortCategory === "") {
-          // Handle the case when no sorting option is selected
-          setBorrowedBooks(allBorrowedBooks);
-        } else {
-          setBorrowedBooks(filteredBorrowedBooks);
-        }
+        setIzdateBooks(data.izdate || []);
+        setOtpisaneBooks(data.otpisane || []);
+        setVraceneBooks(data.vracene || []);
+        setPrekoraceneBooks(data.prekoracene || []);
 
         setLoading(false);
       })
@@ -62,7 +35,43 @@ const SortList = () => {
         console.error("Error fetching borrowed books:", error);
         setLoading(false);
       });
-  }, [selectedBook, selectedStudent, selectedLibrarian, selectedSortCategory]);
+  }, []);
+
+  useEffect(() => {
+    let filteredBorrowedBooks = [];
+
+    if (selectedSortCategory === "izdate") {
+      filteredBorrowedBooks = izdateBooks;
+    } else if (selectedSortCategory === "otpisane") {
+      filteredBorrowedBooks = otpisaneBooks;
+    } else if (selectedSortCategory === "vracene") {
+      filteredBorrowedBooks = vraceneBooks;
+    } else if (selectedSortCategory === "prekoracene") {
+      filteredBorrowedBooks = prekoraceneBooks;
+    } else {
+      filteredBorrowedBooks = [...izdateBooks, ...otpisaneBooks, ...vraceneBooks, ...prekoraceneBooks];
+    }
+
+    if (selectedBook) {
+      filteredBorrowedBooks = filteredBorrowedBooks.filter(
+        (book) => book.knjiga?.title === selectedBook
+      );
+    }
+
+    if (selectedStudent) {
+      filteredBorrowedBooks = filteredBorrowedBooks.filter(
+        (book) => book.student?.name === selectedStudent
+      );
+    }
+
+    if (selectedLibrarian) {
+      filteredBorrowedBooks = filteredBorrowedBooks.filter(
+        (book) => book.librarian?.name === selectedLibrarian
+      );
+    }
+
+    setBorrowedBooks(filteredBorrowedBooks);
+  }, [selectedBook, selectedStudent, selectedLibrarian, selectedSortCategory, izdateBooks, otpisaneBooks, vraceneBooks, prekoraceneBooks]);
 
   const handleBookChange = (event) => {
     setSelectedBook(event.target.value);
@@ -80,15 +89,32 @@ const SortList = () => {
     setSearchTerm(event.target.value);
   };
 
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  
+    const sortedBooks = filteredBorrowedBooks.slice().sort((a, b) => {
+      const dateA = new Date(a.borrow_date);
+      const dateB = new Date(b.borrow_date);
+  
+      if (selectedDate === "asc") {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    });
+  
+    setBorrowedBooks(sortedBooks);
+  };
+
   const formatBorrowedBookInfo = (book) => {
     let sentence = "";
 
     if (selectedSortCategory === "izdate") {
-      sentence = `${book.librarian?.name} ${book.librarian?.surname} je izdao/la knjigu ${book.knjiga.title} uceniku ${book.student.name} ${book.student.surname} datuma ${book.borrow_date}`;
+      sentence = `${book.bibliotekar0?.name} ${book.bibliotekar0?.surname} je izdao/la knjigu ${book.knjiga.title} uceniku ${book.student.name} ${book.student.surname} datuma ${book.borrow_date}`;
     } else if (selectedSortCategory === "otpisane") {
-      sentence = `${book.librarian?.name} ${book.librarian?.surname} je otpisao/la knjigu ${book.knjiga.title} koja je bila izdata uceniku ${book.student.name} ${book.student.surname} datuma ${book.borrow_date}`;
+      sentence = `${book.bibliotekar0?.name} ${book.bibliotekar0?.surname} je otpisao/la knjigu ${book.knjiga.title} koja je bila izdata uceniku ${book.student.name} ${book.student.surname} datuma ${book.borrow_date}`;
     } else if (selectedSortCategory === "vracene") {
-      sentence = `Ucenik ${book.student.name} ${book.student.surname} je vratio/la knjigu ${book.knjiga.title} izdatu od strane ${book.librarian?.name} ${book.librarian?.surname} datuma ${book.return_date}`;
+      sentence = `Ucenik ${book.student.name} ${book.student.surname} je vratio/la knjigu ${book.knjiga.title} izdatu od strane ${book.bibliotekar0?.name} ${book.bibliotekar0.surname} datuma ${book.return_date}`;
     }
 
     return sentence;
@@ -105,25 +131,35 @@ const SortList = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex">
-        <BookDropdown
-          selectedBook={selectedBook}
-          handleBookChange={handleBookChange}
-        />
+      <div className="flex space-x-4 mb-4">
+        <div className="flex-1">
+          <BookDropdown
+            selectedBook={selectedBook}
+            handleBookChange={handleBookChange}
+          />
+        </div>
 
-        <StudentDropdown
-          selectedStudent={selectedStudent}
-          handleStudentChange={handleStudentChange}
-        />
+        <div className="flex-1">
+          <StudentDropdown
+            selectedStudent={selectedStudent}
+            handleStudentChange={handleStudentChange}
+          />
+        </div>
 
-        <LibrariansDropdown
-          selectedLibrarian={selectedLibrarian}
-          handleLibrarianChange={handleLibrarianChange}
-        />
+        <div className="flex-1">
+          <LibrariansDropdown
+            selectedLibrarian={selectedLibrarian}
+            handleLibrarianChange={handleLibrarianChange}
+          />
+        </div>
 
-        <div className="flex">
-          <label>Transakcije:</label>
-          <select value={selectedSortCategory} onChange={handleSortChange}>
+        <div className="flex-1">
+          <label className="text-gray-600">Transakcije:</label>
+          <select
+            value={selectedSortCategory}
+            onChange={handleSortChange}
+            className="w-full border rounded-md p-2"
+          >
             <option value="">Sve</option>
             <option value="izdate">Izdate</option>
             <option value="otpisane">Otpisane</option>
@@ -132,24 +168,43 @@ const SortList = () => {
           </select>
         </div>
 
-        <input
-          type="text"
-          placeholder="Search borrowed books..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
+        <div className="flex flex-col">
+          <label className="text-gray-600">Sort po datumu:</label>
+          <DatePicker
+            selected={selectedDate}
+            onChange={handleDateChange}
+            className="w-full border rounded-md p-2"
+            dateFormat="yyyy-MM-dd" 
+          />
+        </div>
+
+        <div className="flex justify-end items-end">
+          <input
+            type="text"
+            placeholder="Pretrazi aktivnosti..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="w-full border rounded-md p-2"
+          />
+        </div>
       </div>
 
       {(selectedBook !== "Svi" ||
         selectedStudent !== "Svi" ||
-        selectedLibrarian !== "Svi") && (
+        selectedLibrarian !== "Svi" ||
+        selectedSortCategory !== "Sve") && (
         <>
           {loading ? (
-            <p>Loading borrowed books...</p>
+            <p className="text-gray-600">Ucitavanje aktivnosti...</p>
           ) : (
             <ul>
               {filteredBorrowedBooks.map((book, index) => (
-                <li key={index}>{formatBorrowedBookInfo(book)}</li>
+                <li
+                  key={index}
+                  className="border rounded-md p-2 mt-2 text-gray-800"
+                >
+                  {formatBorrowedBookInfo(book)}
+                </li>
               ))}
             </ul>
           )}
@@ -158,5 +213,7 @@ const SortList = () => {
     </div>
   );
 };
+
+
 
 export default SortList;

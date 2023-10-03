@@ -3,6 +3,7 @@ import Lottie from "react-lottie";
 import animationData from "./animation.json"; 
 import Activities from "./dashboard-content/Activities";
 import Statistics from "./dashboard-content/Statistics";
+import Reservations from "./dashboard-content/Reservations";
 import "./dashboard-content/Dashboard.css";
 
 const Dashboard = () => {
@@ -43,7 +44,8 @@ const Dashboard = () => {
           <div className="left-pane">
             <Activities />
           </div>
-          <div className="right-pane">
+          <div className="right-pane flex flex-col">
+            <Reservations />
             <Statistics />
           </div>
         </>

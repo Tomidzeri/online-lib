@@ -11,12 +11,15 @@ const LibrariansDropdown = ({ selectedLibrarian, handleLibrarianChange }) => {
   }, [librarians]);
 
   return (
-    <div>
-      <label htmlFor="librarianDropdown">Bibliotekari:</label>
+    <div className="flex-1">
+      <label htmlFor="librarianDropdown" className="text-gray-600">
+        Bibliotekari:
+      </label>
       <select
         id="librarianDropdown"
         value={selectedLibrarian}
         onChange={handleLibrarianChange}
+        className="w-full border rounded-md p-2"
       >
         <option value="">Svi</option>
         {filteredLibrarians.map((librarian) => (

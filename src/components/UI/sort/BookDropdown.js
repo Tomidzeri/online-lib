@@ -17,12 +17,15 @@ const BookDropdown = ({ selectedBook, handleBookChange }) => {
   }, []);
 
   return (
-    <div>
-      <label htmlFor="bookDropdown">Knjige:</label>
+    <div className="flex-1">
+      <label htmlFor="bookDropdown" className="text-gray-600">
+        Knjige:
+      </label>
       <select
         id="bookDropdown"
         value={selectedBook}
         onChange={handleBookChange}
+        className="w-full border rounded-md p-2"
       >
         <option value="Svi">Svi</option>
         {books.map((book) => (
@@ -34,5 +37,6 @@ const BookDropdown = ({ selectedBook, handleBookChange }) => {
     </div>
   );
 };
+
 
 export default BookDropdown;

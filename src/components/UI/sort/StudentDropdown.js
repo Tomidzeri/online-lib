@@ -12,12 +12,15 @@ const StudentDropdown = ({ selectedStudent, handleStudentChange }) => {
   }, [students]);
 
   return (
-    <div>
-      <label htmlFor="studentDropdown">Učenici:</label>
+    <div className="flex-1">
+      <label htmlFor="studentDropdown" className="text-gray-600">
+        Učenici:
+      </label>
       <select
         id="studentDropdown"
         value={selectedStudent}
         onChange={handleStudentChange}
+        className="w-full border rounded-md p-2"
       >
         <option value="">Svi</option>
         {filteredStudents.map((student) => (
