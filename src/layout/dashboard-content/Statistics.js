@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./Statistics.css";
 import { fetchBorrowedBooks } from "../../queries/knjige/useBookBorrow";
 import { AllReservations } from "../../queries/knjige/useAllReservations";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { format } from "date-fns";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";
 
 const Statistics = () => {
-  const [statisticsData, setStatisticsData] = useState({
-    issuedBooks: 0,
-    reservedBooks: 0,
-    overdueBooks: 0,
-  });
+  const [statisticsData, setStatisticsData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  console.log(loading);
 
   useEffect(() => {
     setLoading(true);
@@ -25,11 +21,11 @@ const Statistics = () => {
           .then((reservationData) => {
             const reservedBooks = reservationData.active.length;
 
-            setStatisticsData({
-              issuedBooks,
-              reservedBooks,
-              overdueBooks,
-            });
+            setStatisticsData([
+              { category: "Izdate knjige", count: issuedBooks },
+              { category: "Rezervisane knjige", count: reservedBooks },
+              { category: "Prekoracene knjige", count: overdueBooks },
+            ]);
 
             setLoading(false);
           })
@@ -45,26 +41,16 @@ const Statistics = () => {
   }, []);
 
   return (
-    <div className="statistics-container">
-      <h3 className="statistics-title">Statistics</h3>
-      <div className="statistics-row">
-        <div className="statistics-label">Issued Books:</div>
-        <div className="bar-fill fill-1" style={{ width: `${(statisticsData.issuedBooks / 100) * 100}%` }}>
-          {statisticsData.issuedBooks}
-        </div>
-      </div>
-      <div className="statistics-row">
-        <div className="statistics-label">Reserved Books:</div>
-        <div className="bar-fill fill-2" style={{ width: `${(statisticsData.reservedBooks / 100) * 100}%` }}>
-          {statisticsData.reservedBooks}
-        </div>
-      </div>
-      <div className="statistics-row">
-        <div className="statistics-label">Overdue Books:</div>
-        <div className="bar-fill fill-3" style={{ width: `${(statisticsData.overdueBooks / 100) * 100}%` }}>
-          {statisticsData.overdueBooks}
-        </div>
-      </div>
+    <div className="mt-40 flex flex-col items-center justify-center">
+     <h2 className="text-2xl font-bold mb-4">Statistika</h2>
+      <BarChart width={500} height={300} data={statisticsData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="category" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="count" fill="#8884d8" />
+      </BarChart>
     </div>
   );
 };

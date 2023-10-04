@@ -25,7 +25,7 @@ const Reservations = () => {
 
   return (
     <div className="w-full mt-20">
-      <h2 className="text-2xl font-bold mb-4">Reserved Books</h2>
+      <h2 className="text-2xl font-bold mb-4">Rezervacije</h2>
       {loading ? (
         <div className="flex items-center justify-center h-72">
           <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />

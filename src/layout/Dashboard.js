@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Lottie from "react-lottie";
 import animationData from "./animation.json";
-import Activities from "./dashboard-content/Activities";
+import ActivityList from "./dashboard-content/ActivityList";
 import Statistics from "./dashboard-content/Statistics";
 import Reservations from "./dashboard-content/Reservations";
 import "./dashboard-content/Dashboard.css";
-import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
@@ -33,10 +31,6 @@ const Dashboard = () => {
     backgroundColor: "transparent",
   };
 
-  const navigateToActivities = () => {
-    navigate("/activities");
-  };
-
   return (
     <div className="dashboard-container">
       {isLoading ? (
@@ -48,8 +42,7 @@ const Dashboard = () => {
       ) : (
         <>
           <div className="left-pane">
-            <Activities />
-            <button onClick={navigateToActivities}>Pokazi vise</button>
+            <ActivityList />
           </div>
           <div className="right-pane flex flex-col">
             <Reservations />

@@ -197,11 +197,11 @@ const SortList = () => {
           {loading ? (
             <p className="text-gray-600">Ucitavanje aktivnosti...</p>
           ) : (
-            <ul>
+            <ul className="mt-4 space-y-2">
               {filteredBorrowedBooks.map((book, index) => (
                 <li
                   key={index}
-                  className="border rounded-md p-2 mt-2 text-gray-800"
+                  className="bg-white rounded-md shadow-md p-4"
                 >
                   {formatBorrowedBookInfo(book)}
                 </li>
