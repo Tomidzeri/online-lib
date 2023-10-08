@@ -6,12 +6,8 @@ function useUserDetails(userId) {
 
   const fetchUserDetails = useCallback(async () => {
     try {
-      const token = sessionStorage.getItem("token");
-      const response = await libraryAPI.get(`/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+       
+      const response = await libraryAPI.get(`/users/${userId}`);
       setUser(response.data.data);
     } catch (error) {
       console.error("Error fetching user details:", error);

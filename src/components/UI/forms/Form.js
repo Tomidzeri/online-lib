@@ -7,6 +7,7 @@ import "react-quill/dist/quill.snow.css";
 
 const Form = ({ fields, formData, setFormData, onSubmit }) => {
   const [errors, setErrors] = useState({});
+  const [focusedInput, setFocusedInput] = useState(null);
 
   const handleInputChange = (field, value) => {
     setFormData((prevData) => ({
@@ -58,6 +59,15 @@ const Form = ({ fields, formData, setFormData, onSubmit }) => {
     handleInputChange("biography", value);
   };
 
+  const handleInputFocus = (field) => {
+    if (focusedInput !== field) {
+      if (focusedInput) {
+        document.getElementById(focusedInput).blur();
+      }
+      setFocusedInput(field);
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const hasErrors = Object.values(errors).some((error) => error !== "");
@@ -69,19 +79,22 @@ const Form = ({ fields, formData, setFormData, onSubmit }) => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth={false}> 
       <Box
         sx={{
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+          padding: "20px",
+          marginLeft: 5,
         }}
       >
         <Box
           component="form"
           noValidate
-          sx={{ mt: 1, width: "100%" }}
+          sx={{ mt: 1, width: "40%" }}
           onSubmit={handleSubmit}
         >
           {fields.map((field) => (
@@ -90,6 +103,7 @@ const Form = ({ fields, formData, setFormData, onSubmit }) => {
                 <ReactQuill
                   value={formData[field.name]}
                   onChange={handleBioChange}
+                  onFocus={() => handleInputFocus(field.name)}
                 />
               ) : (
                 <TextField
@@ -105,6 +119,7 @@ const Form = ({ fields, formData, setFormData, onSubmit }) => {
                   onChange={(event) => handleFieldChange(event, field)}
                   error={!!errors[field.name]}
                   helperText={errors[field.name]}
+                  onFocus={() => handleInputFocus(field.name)}
                 />
               )}
             </div>

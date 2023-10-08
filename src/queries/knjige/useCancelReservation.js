@@ -3,12 +3,8 @@ import libraryAPI from "../../utils/api";
 function CancelReservation() {
   const deleteBook = async (bookId) => {
     try {
-      const token = sessionStorage.getItem("token");
-      await libraryAPI.delete(`/books/reservations/${bookId}/destroy`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+       
+      await libraryAPI.delete(`/books/reservations/${bookId}/destroy`);
     } catch (error) {
       console.error("Error canceling reservation book:", error);
     }

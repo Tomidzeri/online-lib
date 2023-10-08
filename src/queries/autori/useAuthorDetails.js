@@ -6,12 +6,8 @@ function useAuthorDetails(authorId) {
 
   const fetchAuthorDetails = useCallback(async () => {
     try {
-      const token = sessionStorage.getItem("token");
-      const response = await libraryAPI.get(`/authors/${authorId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+       
+      const response = await libraryAPI.get(`/authors/${authorId}`);
       setAuthor(response.data.data);
     } catch (error) {
       console.error("Error fetching author details:", error);

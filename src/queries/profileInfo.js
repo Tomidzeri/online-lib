@@ -2,12 +2,7 @@ import libraryAPI from "../utils/api";
 
 export const fetchUserProfile = async (token, username) => {
   try {
-    const token = sessionStorage.getItem("token");
-    const response = await libraryAPI.get(`/users`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await libraryAPI.get(`/users`);
 
     const userData = response.data.data;
 

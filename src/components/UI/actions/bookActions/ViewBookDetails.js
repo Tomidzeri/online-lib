@@ -4,7 +4,7 @@ import useBookDetails from "../../../../queries/knjige/useBookDetails";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-import { fetchBorrowedBooks } from "../../../../queries/knjige/useBookBorrow";
+// import { fetchBorrowedBooks } from "../../../../queries/knjige/useBookBorrow";
 
 const ViewBookDetails = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -137,20 +137,20 @@ const ViewBookDetails = () => {
             </Tab>
           </div>
           <div className="w-1/6 border-l border-gray-300 flex flex-col">
-            <div class="mt-6 mb-6 pl-6 pr-6 pb-6 text-center border-b border-gray-300">
-              <h3 class="text-lg bg-blue-500 text-white rounded-md p-2 mb-2">
+            <div className="mt-6 mb-6 pl-6 pr-6 pb-6 text-center border-b border-gray-300">
+              <h3 className="text-lg bg-blue-500 text-white rounded-md p-2 mb-2">
                 Ukupna kolicina: {book.samples}
               </h3>
-              <h3 class="text-lg bg-green-500 text-white rounded-md p-2 mb-2">
+              <h3 className="text-lg bg-green-500 text-white rounded-md p-2 mb-2">
                 Rezervisano: {book.rSamples}
               </h3>
-              <h3 class="text-lg bg-yellow-500 text-white rounded-md p-2 mb-2">
+              <h3 className="text-lg bg-yellow-500 text-white rounded-md p-2 mb-2">
                 Izdato: {book.bSamples}
               </h3>
-              <h3 class="text-lg bg-red-500 text-white rounded-md p-2 mb-2">
+              <h3 className="text-lg bg-red-500 text-white rounded-md p-2 mb-2">
                 U prekoracenju: {book.fSamples}
               </h3>
-              <h3 class="text-lg bg-indigo-500 text-white rounded-md p-2">
+              <h3 className="text-lg bg-indigo-500 text-white rounded-md p-2">
                 Na raspolaganju:{" "}
                 {book.samples - book.rSamples - book.bSamples - book.fSamples}
               </h3>

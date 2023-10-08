@@ -6,12 +6,8 @@ function useBookDetails(bookId) {
 
   const fetchBookDetails = useCallback(async () => {
     try {
-      const token = sessionStorage.getItem("token");
-      const response = await libraryAPI.get(`/books/${bookId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+       
+      const response = await libraryAPI.get(`/books/${bookId}`);
       setBook(response.data.data);
     } catch (error) {
       console.error("Error fetching book details:", error);

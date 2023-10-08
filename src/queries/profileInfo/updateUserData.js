@@ -2,13 +2,8 @@ import libraryAPI from "../../utils/api";
 
 export const UpdateUser = async (updatedUserData) => {
   try {
-    const token = sessionStorage.getItem("token");
-    const response = await libraryAPI.put("/users/me", updatedUserData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+     
+    const response = await libraryAPI.put("/users/me", updatedUserData);
 
     const data = response.data.data;
 

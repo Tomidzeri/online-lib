@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useUserDetails from "../../../../queries/korisnici/useUserDetails";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import photo from "../../../../Images/photo.jpg";
+import defaultPhoto from "../../../../Images/photo.jpg";
 import { Grid, Typography, Paper } from "@mui/material";
 import { format } from "date-fns";
 import ProfileDropdown from "../ProfileActionsDropdown";
@@ -20,8 +20,9 @@ function ViewUserDetails() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirmation, setNewPasswordConfirmation] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const openModal = () => {
@@ -32,8 +33,8 @@ function ViewUserDetails() {
     setIsModalOpen(false);
   };
 
-  const loginCount = sessionStorage.getItem("loginCount");
-  const lastLoginTime = sessionStorage.getItem("loginTime");
+  const loginCount =   sessionStorage.getItem("loginCount");
+  const lastLoginTime =   sessionStorage.getItem("loginTime");
   const formattedLastLoginTime = lastLoginTime
     ? format(new Date(lastLoginTime), "dd MMMM yyyy HH:mm:ss")
     : "";
@@ -64,16 +65,16 @@ function ViewUserDetails() {
     return <p>Administratori</p>;
   };
 
-  const validatePasswordConfirmation = () => {
-    if (password !== passwordConfirmation) {
-      setPasswordError("Lozinke se ne poklapaju.");
+  const validatePassword = () => {
+    if (currentPassword !== user.password) {
+      setPasswordError("Trenutna lozinka nije ispravna.");
     } else {
       setPasswordError("");
     }
   };
 
   const handleChangePassword = async () => {
-    validatePasswordConfirmation();
+    validatePassword();
 
     if (passwordError) {
       return;
@@ -81,8 +82,8 @@ function ViewUserDetails() {
 
     try {
       const updatedData = await updateUserData(userId, {
-        password,
-        password_confirmation: passwordConfirmation,
+        password: newPassword,
+        password_confirmation: newPasswordConfirmation,
       });
       console.log("Password updated:", updatedData);
       toast.success("Lozinka uspješno izmijenjena.");
@@ -189,12 +190,15 @@ function ViewUserDetails() {
                 }}
               >
                 <img
-                  src={photo}
+                  src={user.photoPath || defaultPhoto}
                   alt="Slika"
                   style={{
                     width: "30rem",
                     height: "35rem",
                     objectFit: "cover",
+                  }}
+                  onError={(e) => {
+                    e.target.src = defaultPhoto; 
                   }}
                 />
               </Paper>
@@ -212,17 +216,29 @@ function ViewUserDetails() {
       >
         <div className="password-modal-content">
           <h2>Izmijeni lozinku</h2>
+          {/* Current password input */}
+          <input
+            type="password"
+            placeholder="Trenutna lozinka"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+          />
+          {passwordError && (
+            <div className="error-message">{passwordError}</div>
+          )}
+          {/* New password input */}
           <input
             type="password"
             placeholder="Nova lozinka"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
           />
+          {/* New password confirmation input */}
           <input
             type="password"
             placeholder="Potvrdi lozinku"
-            value={passwordConfirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            value={newPasswordConfirmation}
+            onChange={(e) => setNewPasswordConfirmation(e.target.value)}
           />
           <div className="password-modal-buttons">
             <button onClick={closeModal} className="cancel-button">

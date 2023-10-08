@@ -6,15 +6,8 @@ const useFetchLibrarians = () => {
 
   const fetchLibrarians = async () => {
     try {
-      const token = sessionStorage.getItem("token");
-      const response = await libraryAPI.get("/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          role: "Bibliotekar",
-        },
-      });
+       
+      const response = await libraryAPI.get("/users");
 
       const librarianList = response.data.data;
       setLibrarians(librarianList);

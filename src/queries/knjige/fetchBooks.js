@@ -2,12 +2,8 @@ import libraryAPI from "../../utils/api";
 
 export const fetchBooks = async () => {
   try {
-    const token = sessionStorage.getItem("token");
-    const response = await libraryAPI.get("/books", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+     
+    const response = await libraryAPI.get("/books",   );
     console.log(response.data.data);
     return response.data.data;
   } catch (error) {

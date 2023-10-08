@@ -3,12 +3,8 @@ import libraryAPI from "../../utils/api";
 export const fetchUserData = async (userId) => {
   try {
 
-    const token = sessionStorage.getItem("token");
-    const response = await libraryAPI.get(`/users/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+     
+    const response = await libraryAPI.get(`/users/${userId}`,   );
     console.log(response.data.data);
     return response.data.data;
 

@@ -19,6 +19,8 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [currentPasswordError, setCurrentPasswordError] = useState("");
   const { userId } = useParams();
 
   const openModal = () => {
@@ -37,18 +39,13 @@ const Profile = () => {
     }
   };
 
+  const userData = JSON.parse(  sessionStorage.getItem("userData"));
+  console.log(userData);
+
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    const loggedInUsername = sessionStorage.getItem("username");
-
-    if (!token || !loggedInUsername) {
-      setIsLoading(false);
-      return;
-    }
-
     const fetchUserData = async () => {
       try {
-        const user = await fetchUserProfile(token, loggedInUsername);
+        const user = await fetchUserProfile();
 
         setUserProfile(user);
         setIsLoading(false);
@@ -61,8 +58,14 @@ const Profile = () => {
     fetchUserData();
   }, []);
 
-
   const handleChangePassword = async () => {
+    // Validate the current password
+    if (currentPassword !== userProfile.password) {
+      setCurrentPasswordError("Trenutna lozinka nije ispravna.");
+      return;
+    }
+
+    // Validate password confirmation
     validatePasswordConfirmation();
 
     if (passwordError) {
@@ -71,6 +74,7 @@ const Profile = () => {
 
     try {
       const updatedData = await updateUserData(userId, {
+        current_password: currentPassword,
         password,
         password_confirmation: passwordConfirmation,
       });
@@ -206,6 +210,17 @@ const Profile = () => {
       >
         <div className="password-modal-content">
           <h2>Izmijeni lozinku</h2>
+          {/* New input field for current password */}
+          <input
+            type="password"
+            placeholder="Trenutna lozinka"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+          />
+          {currentPasswordError && (
+            <div className="error-message">{currentPasswordError}</div>
+          )}
+          {/* Other input fields for new password and confirmation */}
           <input
             type="password"
             placeholder="Nova lozinka"
@@ -218,6 +233,7 @@ const Profile = () => {
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
+          {passwordError && <div className="error-message">{passwordError}</div>}
           <div className="password-modal-buttons">
             <button onClick={closeModal} className="cancel-button">
               <GiCrossMark color="#f44336" />{" "}

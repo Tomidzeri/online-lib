@@ -31,22 +31,18 @@ function Login() {
       console.log("Name:", name);
       console.log("Login time:", formattedLoginTime);
 
-      if (username.includes("admin") || username.includes("bibliotekar")) {
-        navigate("/dashboard");
-      } else {
-        navigate("/books");
-      }
+      navigate("/dashboard");
 
       toast.success("Uspešno ste se prijavili!", {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000, 
+        autoClose: 3000,
       });
     } catch (error) {
       console.error("Login error:", error);
 
       toast.error("Prijava nije uspela. Molimo proverite svoje podatke.", {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000, 
+        autoClose: 3000,
       });
     }
   };

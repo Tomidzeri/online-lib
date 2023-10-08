@@ -24,6 +24,7 @@ const EditUser = () => {
     password: "",
     password_confirmation: "",
     role: "",
+    photoPath: null,
   });
 
   const [passwordError, setPasswordError] = useState("");
@@ -41,6 +42,7 @@ const EditUser = () => {
           password: "",
           password_confirmation: "",
           role: fetchedUserData.role,
+          photoPath: fetchedUserData.photoPath,
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -60,20 +62,26 @@ const EditUser = () => {
 
   const handleUpdateUser = async () => {
     validatePasswordConfirmation();
-
+  
     if (passwordError) {
       return;
     }
-
+  
+    const updatedFormData = new FormData();
+    Object.keys(formData).forEach((key) => {
+      updatedFormData.append(key, formData[key]);
+    });
+  
     try {
-      const updatedData = await updateUserData(userId, formData);
+      const updatedData = await updateUserData(userId, updatedFormData); // Send formData to the backend
       console.log("User data updated:", updatedData);
-      toast.success("Detalji korisnika uspjesno izmjenjeni.");
+      toast.success("Detalji korisnika uspješno izmijenjeni.");
     } catch (error) {
       console.error("Error updating user data:", error);
       toast.error("Greska prilikom izmjene korisnika.");
     }
   };
+  
 
   const navigateToUserRolePage = (role) => {
     if (role === "Bibliotekar") {
@@ -135,14 +143,27 @@ const EditUser = () => {
     return <p>Admins</p>;
   };
 
+  const handlePictureChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        photoPath: URL.createObjectURL(file), 
+      });
+    }
+  };
+  
+
   return (
-    <div className="main-content mt-12 ml-20 flex flex-col">
+    <div className="mt-14 ml-15 flex flex-col">
       <div className="w-full">
-        <div className="flex flex-col border-b border-gray-300 w-full">
-          <h2 className="text-2xl font-bold text-left">Izmjena podataka</h2>
+        <div className="flex flex-col border-b border-gray-300 w-full fixed">
+          <h2 className="text-2xl font-bold text-left ml-24">
+            Izmjena podataka
+          </h2>
           <button
             type="button"
-            className="text-blue-500 hover:text-blue-700 text-left pt-2"
+            className="text-blue-500 hover:text-blue-700 text-left pt-2 ml-24 w-20"
             onClick={() => navigateToUserRolePage(formData.role)}
           >
             {roleDisplay()}
@@ -150,12 +171,27 @@ const EditUser = () => {
         </div>
       </div>
       <div>
-        <Form
-          fields={formFields}
-          formData={formData}
-          setFormData={setFormData}
-          // onSubmit={handleUpdateUser}
-        />
+        <div className="flex flex-row">
+          <Form
+            fields={formFields}
+            formData={formData}
+            setFormData={setFormData}
+          />
+          <div className="mt-20">
+            <label className="block text-sm font-medium text-gray-700">
+              Profilna slika
+            </label>
+            <div className="mt-1 flex items-center">
+              <input
+                type="file"
+                name="picture"
+                onChange={handlePictureChange}
+                className="py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="button-container">
           <Submit onClick={handleUpdateUser}>Sacuvaj</Submit>
           <Cancel onClick={() => navigateToUserRolePage(formData.role)}>

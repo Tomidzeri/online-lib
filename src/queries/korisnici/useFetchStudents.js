@@ -6,15 +6,8 @@ const useFetchStudents = () => {
 
   const fetchStudents = async () => {
     try {
-      const token = sessionStorage.getItem("token");
-      const response = await libraryAPI.get("/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          role: "Učenik",
-        },
-      });
+       
+      const response = await libraryAPI.get("/users");
 
       const studentList = response.data.data;
       setStudents(studentList);
