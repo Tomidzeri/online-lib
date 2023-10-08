@@ -3,15 +3,16 @@ import { fetchBorrowedBooks } from "../../../queries/knjige/useBookBorrow";
 import BookDropdown from "./BookDropdown";
 import StudentDropdown from "./StudentDropdown";
 import LibrariansDropdown from "./LibrarianDropdown";
-import DatePicker from "react-datepicker"; 
-import "react-datepicker/dist/react-datepicker.css"; 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Pagination from "../pagination/Pagination";
 
 const SortList = () => {
   const [selectedBook, setSelectedBook] = useState("");
   const [selectedStudent, setSelectedStudent] = useState("");
   const [selectedLibrarian, setSelectedLibrarian] = useState("");
   const [selectedSortCategory, setSelectedSortCategory] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null); 
+  const [selectedDate, setSelectedDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [izdateBooks, setIzdateBooks] = useState([]);
@@ -19,6 +20,8 @@ const SortList = () => {
   const [vraceneBooks, setVraceneBooks] = useState([]);
   const [prekoraceneBooks, setPrekoraceneBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   useEffect(() => {
     setLoading(true);
@@ -49,7 +52,12 @@ const SortList = () => {
     } else if (selectedSortCategory === "prekoracene") {
       filteredBorrowedBooks = prekoraceneBooks;
     } else {
-      filteredBorrowedBooks = [...izdateBooks, ...otpisaneBooks, ...vraceneBooks, ...prekoraceneBooks];
+      filteredBorrowedBooks = [
+        ...izdateBooks,
+        ...otpisaneBooks,
+        ...vraceneBooks,
+        ...prekoraceneBooks,
+      ];
     }
 
     if (selectedBook) {
@@ -71,7 +79,16 @@ const SortList = () => {
     }
 
     setBorrowedBooks(filteredBorrowedBooks);
-  }, [selectedBook, selectedStudent, selectedLibrarian, selectedSortCategory, izdateBooks, otpisaneBooks, vraceneBooks, prekoraceneBooks]);
+  }, [
+    selectedBook,
+    selectedStudent,
+    selectedLibrarian,
+    selectedSortCategory,
+    izdateBooks,
+    otpisaneBooks,
+    vraceneBooks,
+    prekoraceneBooks,
+  ]);
 
   const handleBookChange = (event) => {
     setSelectedBook(event.target.value);
@@ -91,19 +108,50 @@ const SortList = () => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-  
+
     const sortedBooks = filteredBorrowedBooks.slice().sort((a, b) => {
       const dateA = new Date(a.borrow_date);
       const dateB = new Date(b.borrow_date);
-  
+
       if (selectedDate === "asc") {
         return dateA - dateB;
       } else {
         return dateB - dateA;
       }
     });
-  
+
     setBorrowedBooks(sortedBooks);
+  };
+
+  const formatAdditionalInfo = (book) => {
+    let additionalInfo = "";
+    let actionType = "";
+
+    if (selectedSortCategory === "izdate") {
+      actionType = "IZDAVANJE KNJIGE";
+    } else if (selectedSortCategory === "otpisane") {
+      actionType = "OTPISANE KNJIGE";
+    } else if (selectedSortCategory === "vracene") {
+      actionType = "VRACENE KNJIGE";
+    } else if (selectedSortCategory === "prekoracene") {
+      actionType = "PREKORACENE KNJIGE";
+    }
+
+    if (actionType) {
+      additionalInfo = `${actionType} - ${getElapsedTime(
+        book.borrow_date
+      )} ago`;
+    }
+
+    return additionalInfo;
+  };
+
+  const getElapsedTime = (dateString) => {
+    const currentDate = new Date();
+    const eventDate = new Date(dateString);
+    const timeDifference = currentDate - eventDate;
+    const daysAgo = Math.floor(timeDifference / (1000 * 3600 * 24));
+    return `${daysAgo} days ago`;
   };
 
   const formatBorrowedBookInfo = (book) => {
@@ -128,6 +176,11 @@ const SortList = () => {
   const handleSortChange = (event) => {
     setSelectedSortCategory(event.target.value);
   };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const visibleBooks = filteredBorrowedBooks.slice(startIndex, endIndex);
 
   return (
     <div className="flex flex-col">
@@ -174,7 +227,7 @@ const SortList = () => {
             selected={selectedDate}
             onChange={handleDateChange}
             className="w-full border rounded-md p-2"
-            dateFormat="yyyy-MM-dd" 
+            dateFormat="yyyy-MM-dd"
           />
         </div>
 
@@ -198,11 +251,10 @@ const SortList = () => {
             <p className="text-gray-600">Ucitavanje aktivnosti...</p>
           ) : (
             <ul className="mt-4 space-y-2">
-              {filteredBorrowedBooks.map((book, index) => (
-                <li
-                  key={index}
-                  className="bg-white rounded-md shadow-md p-4"
-                >
+              {visibleBooks.map((book, index) => (
+                <li key={index} className="bg-white rounded-md shadow-md p-4">
+                  {formatAdditionalInfo(book)}
+                  <br />
                   {formatBorrowedBookInfo(book)}
                 </li>
               ))}
@@ -210,10 +262,14 @@ const SortList = () => {
           )}
         </>
       )}
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={filteredBorrowedBooks.length}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };
-
-
 
 export default SortList;

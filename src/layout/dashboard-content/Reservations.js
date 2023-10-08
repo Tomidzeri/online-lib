@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AllReservations } from "../../queries/knjige/useAllReservations";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 const Reservations = () => {
   const [reservedBooks, setReservedBooks] = useState([]);
@@ -43,13 +44,28 @@ const Reservations = () => {
             {reservedBooks.map((book) => (
               <tr key={book.id}>
                 <td className="border px-4 py-2">{`${book.student.name} ${book.student.surname}`}</td>
-                <td className="border px-4 py-2">{format(new Date(book.action_date), "yyyy-MM-dd")}</td>
+                <td className="border px-4 py-2">
+                  {format(new Date(book.action_date), "yyyy-MM-dd")}
+                </td>
                 <td className="border px-4 py-2">{book.status}</td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
+      <Link
+        to="/borrows?activeTab=3"
+        style={{
+          display: "block",
+          marginTop: "10px",
+          fontSize: "18px",
+          textDecoration: "none",
+          color: "blue", 
+          fontWeight: "bold",
+        }}
+      >
+        Prikazi sve
+      </Link>
     </div>
   );
 };

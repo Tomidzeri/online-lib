@@ -6,7 +6,6 @@ export const fetchUserProfile = async (token, username) => {
     const response = await libraryAPI.get(`/users`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json; charset=utf-8",
       },
     });
 

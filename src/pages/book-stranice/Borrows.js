@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BorrowsTab from "../../components/UI/tabs/BorrowsTab";
 import SearchBox from "../../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
@@ -7,8 +7,10 @@ import VraceneKnjigeTable from "./tables/vraceneKnjigeTable";
 import PrekoraceneKnjigeTable from "./tables/PrekoraceneKnjigeTable";
 import RezervacijeKnjigaTable from "./tables/RezervisaneKnjigeTable";
 import ArhiviraneRezervacijeTable from "./tables/ArhiviraneRezervacijeTable";
+import { useLocation } from "react-router-dom";
 
 const Borrows = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -20,17 +22,25 @@ const Borrows = () => {
     "Arhivirane rezervacije",
   ];
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const activeTabParam = queryParams.get("activeTab");
+    if (activeTabParam !== null) {
+      setActiveTab(parseInt(activeTabParam, 10)); 
+    }
+  }, [location.search]);
+
   const renderTableByActiveTab = () => {
     switch (activeTab) {
       case 0:
         return <IzdateKnjigeTable searchTerm={searchTerm} />;
       case 1:
         return <VraceneKnjigeTable searchTerm={searchTerm} />;
-      case 2: 
+      case 2:
         return <PrekoraceneKnjigeTable searchTerm={searchTerm} />;
-      case 3: 
+      case 3:
         return <RezervacijeKnjigaTable searchTerm={searchTerm} />;
-        case 4: 
+      case 4:
         return <ArhiviraneRezervacijeTable searchTerm={searchTerm} />;
       default:
         return null;
@@ -41,7 +51,9 @@ const Borrows = () => {
     <div className="mt-16 ml-15">
       <div className="w-full">
         <div className="border-b border-gray-300 w-full pb-4 mb-4">
-          <h2 className="text-4xl font-bold text-left ml-20">Izdavanje Knjiga</h2>
+          <h2 className="text-4xl font-bold text-left ml-20">
+            Izdavanje Knjiga
+          </h2>
         </div>
         <div className="flex justify-end space-x-4 mb-4 mt-2 ml-96">
           <BsSearch className="text-gray-600 text-lg text-right" />

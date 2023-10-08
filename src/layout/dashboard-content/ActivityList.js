@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 const ActivityList = () => {
   const [loading, setLoading] = useState(false);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
-  const [activityType, setActivityType] = useState("");
+  
+  // Set the initial value to 'all' to show all activities by default
+  const [activityType, setActivityType] = useState("all");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -88,7 +91,7 @@ const ActivityList = () => {
         <p>Loading...</p>
       ) : (
         <ul className="mt-4 space-y-2">
-          {borrowedBooks[activityType]?.slice(-7).map((activity, index) => (
+          {borrowedBooks[activityType === "all" ? "izdate" : activityType]?.slice(-7).map((activity, index) => (
             <li key={index} className="bg-white rounded-md shadow-md p-4">
               {renderSentence(activity)}
             </li>

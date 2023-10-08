@@ -27,7 +27,7 @@ const Signup = () => {
 
       console.log("Signup success:", response.data);
       
-      if (response.status === 200) {
+      if (response.status <= 400) {
         navigate("/login");
       }
       

@@ -30,6 +30,11 @@ import ReturnBook from "../components/UI/actions/bookActions/ReturnBook";
 import WriteOffBook from "../components/UI/actions/bookActions/WriteOffBook";
 import ReserveBook from "../components/UI/actions/bookActions/ReserveBook";
 import Reservations from "../layout/dashboard-content/Reservations";
+import ArhiviraneRezervacijeTable from "../pages/book-stranice/tables/ArhiviraneRezervacijeTable";
+import VraceneKnjigeTable from "../pages/book-stranice/tables/vraceneKnjigeTable";
+import IzdateKnjigeTable from "../pages/book-stranice/tables/IzdateKnjigeTable";
+import RezervacijeKnjigaTable from "../pages/book-stranice/tables/RezervisaneKnjigeTable";
+import PrekoraceneKnjigeTable from "../pages/book-stranice/tables/PrekoraceneKnjigeTable";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   return (
@@ -74,7 +79,23 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="students" element={<Students />} />
         <Route path="settings" element={<Settings />} />
         <Route path="authors" element={<Authors />} />
-        <Route path="borrows" element={<Borrows />} />
+        <Route path="borrows" element={<Layout token={token} />}>
+          <Route index element={<Borrows />} />
+          <Route path="izdate-knjige" element={<IzdateKnjigeTable />} />
+          <Route path="vracene-knjige" element={<VraceneKnjigeTable />} />
+          <Route
+            path="prekoracene-knjige"
+            element={<PrekoraceneKnjigeTable />}
+          />
+          <Route
+            path="aktivne-rezervacije"
+            element={<RezervacijeKnjigaTable />}
+          />
+          <Route
+            path="arhivirane-rezervacije"
+            element={<ArhiviraneRezervacijeTable />}
+          />
+        </Route>
         <Route path="useraddform" element={<UserAddForm />} />
         <Route path="createauthor" element={<CreateAuthor />} />
         <Route path="storebook" element={<StoreBook />} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { fetchUserProfile } from "../queries/profileInfo";
+import { fetchUserProfile } from "../queries/profileInfo";
 import photo from "../Images/photo.jpg";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Avatar, Grid, Paper, Typography } from "@mui/material";
@@ -10,7 +10,6 @@ import { GiCrossMark, GiCheckMark } from "react-icons/gi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import updateUserData from "../queries/korisnici/useUpdateUserData";
-import { ProfileData } from "../queries/profileInfo/useProfileData";
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -39,10 +38,19 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    const loggedInUsername = sessionStorage.getItem("username");
+
+    if (!token || !loggedInUsername) {
+      setIsLoading(false);
+      return;
+    }
+
     const fetchUserData = async () => {
       try {
-        const user = await ProfileData();
-        setUserProfile(user.data); // Access the 'data' property
+        const user = await fetchUserProfile(token, loggedInUsername);
+
+        setUserProfile(user);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -52,6 +60,7 @@ const Profile = () => {
 
     fetchUserData();
   }, []);
+
 
   const handleChangePassword = async () => {
     validatePasswordConfirmation();

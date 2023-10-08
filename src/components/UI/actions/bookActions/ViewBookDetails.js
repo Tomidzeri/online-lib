@@ -4,6 +4,7 @@ import useBookDetails from "../../../../queries/knjige/useBookDetails";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import { fetchBorrowedBooks } from "../../../../queries/knjige/useBookBorrow";
 
 const ViewBookDetails = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -154,7 +155,9 @@ const ViewBookDetails = () => {
                 {book.samples - book.rSamples - book.bSamples - book.fSamples}
               </h3>
             </div>
-            <div></div>
+            <div>
+               {/* book borrows  */}
+            </div>
           </div>
         </div>
       </div>
