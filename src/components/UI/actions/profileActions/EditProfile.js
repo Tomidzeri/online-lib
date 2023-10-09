@@ -1,50 +1,69 @@
 import React, { useState, useEffect } from "react";
-import { fetchUserData } from "../../../../queries/korisnici/fetchUserData";
 import { UpdateUser } from "../../../../queries/profileInfo/updateUserData";
-import { useParams } from "react-router-dom";
 import Form from "../../forms/Form";
 import Submit from "../../buttons/Submit";
 import Cancel from "../../buttons/Cancel";
 import { useNavigate } from "react-router-dom";
+import { ProfileData } from "../../../../queries/profileInfo/useProfileData";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditProfile = () => {
-  const { userId } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
     email: "",
     username: "",
-    imbg: "",
+    jmbg: "",
     role: "",
+    password: "",
+    password_confirmation: "",
   });
 
   useEffect(() => {
     const fetchAndSetUserData = async () => {
       try {
-        const fetchedUserData = await fetchUserData();
-        setFormData({
-          name: fetchedUserData.name,
-          surname: fetchedUserData.surname,
-          email: fetchedUserData.email,
-          username: fetchedUserData.username,
-          jmbg: fetchedUserData.jmbg,
-          role: fetchedUserData.role,
-        });
+        const response = await ProfileData();
+        
+        if (response && response.data && response.data.data) {
+          const fetchedUserData = response.data.data;
+          setFormData({
+            name: fetchedUserData.name,
+            surname: fetchedUserData.surname,
+            email: fetchedUserData.email,
+            username: fetchedUserData.username,
+            jmbg: fetchedUserData.jmbg,
+            password: "",
+            password_confirmation: "",
+            role: fetchedUserData.role,
+          });
+  
+          console.log(fetchedUserData);
+        } else {
+          console.error("Invalid user data response format");
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
-
+  
     fetchAndSetUserData();
   }, []);
+  
+  const updatedFormData = new FormData();
+    Object.keys(formData).forEach((key) => {
+      updatedFormData.append(key, formData[key]);
+    });
 
   const handleUpdateUser = async () => {
     try {
-      const updatedData = await UpdateUser(userId, formData);
+      const updatedData = await UpdateUser(updatedFormData);
       console.log("User data updated:", updatedData);
+      toast.success("Detalji korisnika uspješno izmijenjeni.");
     } catch (error) {
       console.error("Error updating user data:", error);
+      toast.error("Greska prilikom izmjene korisnika.");
     }
   };
 
@@ -79,6 +98,18 @@ const EditProfile = () => {
       placeholder: "Enter JMBG",
       pattern: "[0-9]{13}",
     },
+    {
+      name: "password",
+      label: "Password",
+      type: "password",
+      placeholder: "Enter password",
+    },
+    {
+      name: "password_confirmation",
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "Confirm password",
+    },
   ];
 
   return (
@@ -89,7 +120,7 @@ const EditProfile = () => {
           fields={formFields}
           formData={formData}
           setFormData={setFormData}
-          onSubmit={handleUpdateUser} 
+          onSubmit={handleUpdateUser}
         />
       </div>
       <div className="button-container">

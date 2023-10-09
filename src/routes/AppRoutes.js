@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import PrivateRoute from "../services/PrivateRoute";
+import RolePrivateRoute from "../services/RolePrivateRoute";
 import LoginForm from "../pages/service-stranice/LoginForm";
 import SignupForm from "../pages/service-stranice/SignupForm";
 import Logout from "../services/Logout";

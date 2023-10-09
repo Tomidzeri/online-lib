@@ -5,7 +5,7 @@ export const UpdateUser = async (updatedUserData) => {
      
     const response = await libraryAPI.put("/users/me", updatedUserData);
 
-    const data = response.data.data;
+    const data = response.data;
 
     console.log(data);
 

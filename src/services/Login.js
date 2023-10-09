@@ -3,6 +3,7 @@ import libraryAPI from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ProfileData } from "../queries/profileInfo/useProfileData";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -27,11 +28,24 @@ function Login() {
       sessionStorage.setItem("loginTime", formattedLoginTime);
       sessionStorage.setItem("loginCount", loginCount + 1);
 
-      console.log("Login successful. Token:", token);
-      console.log("Name:", name);
-      console.log("Login time:", formattedLoginTime);
+      const userDataResponse = await ProfileData();
+      const user = userDataResponse.data.data;
 
-      navigate("/dashboard");
+      console.log(user.role);
+
+      sessionStorage.setItem("libraryRole", user.role);
+
+      if (user.role === "Učenik") {
+        navigate("/profile"); 
+      } else if (user.role === "Administrator") {
+        navigate("/settings"); 
+      } else {
+        navigate("/dashboard"); 
+      }
+
+      console.log("Login successful. Token:", token);
+      console.log("Username:", name);
+      console.log("Login time:", formattedLoginTime);
 
       toast.success("Uspešno ste se prijavili!", {
         position: toast.POSITION.TOP_CENTER,

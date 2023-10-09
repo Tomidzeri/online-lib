@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { fetchUserProfile } from "../queries/profileInfo";
-import photo from "../Images/photo.jpg";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Avatar, Grid, Paper, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserActionsDropdown from "../components/UI/actions/UserActionsDropdown";
 import ReactModal from "react-modal";
 import { GiCrossMark, GiCheckMark } from "react-icons/gi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import updateUserData from "../queries/korisnici/useUpdateUserData";
+import { UpdateUser } from "../queries/profileInfo/updateUserData";
+import photo from "../Images/photo.jpg";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { ProfileData } from "../queries/profileInfo/useProfileData";
 
 const Profile = () => {
-  const [userProfile, setUserProfile] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
-  const [currentPasswordError, setCurrentPasswordError] = useState("");
-  const { userId } = useParams();
+  const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -31,23 +29,14 @@ const Profile = () => {
     setIsModalOpen(false);
   };
 
-  const validatePasswordConfirmation = () => {
-    if (password !== passwordConfirmation) {
-      setPasswordError("Lozinke se ne poklapaju.");
-    } else {
-      setPasswordError("");
-    }
-  };
-
-  const userData = JSON.parse(  sessionStorage.getItem("userData"));
-  console.log(userData);
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const user = await fetchUserProfile();
+        const userDataResponse = await ProfileData();
+        const userData = userDataResponse.data;
 
-        setUserProfile(user);
+        setUserData(userData.data);
+
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -58,14 +47,15 @@ const Profile = () => {
     fetchUserData();
   }, []);
 
-  const handleChangePassword = async () => {
-    // Validate the current password
-    if (currentPassword !== userProfile.password) {
-      setCurrentPasswordError("Trenutna lozinka nije ispravna.");
-      return;
+  const validatePasswordConfirmation = () => {
+    if (currentPassword !== userData.password) {
+      setPasswordError("Trenutna lozinka nije ispravna.");
+    } else {
+      setPasswordError("");
     }
+  };
 
-    // Validate password confirmation
+  const handlePasswordUpdate = async () => {
     validatePasswordConfirmation();
 
     if (passwordError) {
@@ -73,9 +63,8 @@ const Profile = () => {
     }
 
     try {
-      const updatedData = await updateUserData(userId, {
-        current_password: currentPassword,
-        password,
+      const updatedData = await UpdateUser({
+        password: newPassword,
         password_confirmation: passwordConfirmation,
       });
       console.log("Password updated:", updatedData);
@@ -88,28 +77,28 @@ const Profile = () => {
   };
 
   const navigation = () => {
-    if (userProfile && userProfile.role === "Bibliotekar") {
+    if (userData && userData.role === "Bibliotekar") {
       navigate("/librarians");
-    } else if (userProfile && userProfile.role === "Učenik") {
+    } else if (userData && userData.role === "Učenik") {
       navigate("/students");
     }
   };
 
   const roleDisplay = () => {
-    if (userProfile && userProfile.role === "Bibliotekar") {
+    if (userData && userData.role === "Bibliotekar") {
       return <p>Svi Bibliotekari</p>;
-    } else if (userProfile && userProfile.role === "Učenik") {
+    } else if (userData && userData.role === "Učenik") {
       return <p>Svi Ucenici</p>;
     }
   };
 
   return (
-    <div className="main-content mt-24 ml-20 flex flex-col">
+    <div className="mt-12 flex flex-col">
       <div className="w-full">
-        <div className="flex flex-row justify-between border-b border-gray-300 mb-14 text-center">
-          <div className="flex flex-col">
-            <Typography variant="h4" align="center" gutterBottom>
-              {userProfile?.name} {userProfile?.surname}
+        <div className="flex flex-row justify-between border-b border-gray-300 w-full fixed">
+          <div className="flex flex-col ml-16">
+            <Typography variant="h4" align="center" padding="3px">
+              {userData?.name} {userData?.surname}
             </Typography>
             <button
               type="button"
@@ -119,7 +108,7 @@ const Profile = () => {
               {roleDisplay()}
             </button>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center mr-8">
             <button
               type="button"
               className="text-blue-500 hover:text-blue-700"
@@ -143,12 +132,12 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="w-96">
+      <div className="w-96 mt-24 ml-16">
         {isLoading ? (
           <div className="flex items-center justify-center h-32">
             <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
           </div>
-        ) : userProfile ? (
+        ) : userData ? (
           <Grid container spacing={4}>
             <Grid item xs={4}>
               <Paper>
@@ -171,7 +160,7 @@ const Profile = () => {
               >
                 <Typography variant="h6">Ime i prezime:</Typography>
                 <Typography>
-                  {userProfile.name} {userProfile.surname}
+                  {userData.name} {userData.surname}
                 </Typography>
               </Paper>
               <Paper
@@ -179,21 +168,21 @@ const Profile = () => {
                 sx={{ padding: "2rem", marginBottom: "2rem" }}
               >
                 <Typography variant="h6">E-mail:</Typography>
-                <Typography>{userProfile.email}</Typography>
+                <Typography>{userData.email}</Typography>
               </Paper>
               <Paper
                 elevation={3}
                 sx={{ padding: "2rem", marginBottom: "2rem" }}
               >
                 <Typography variant="h6">Korisnicko ime:</Typography>
-                <Typography>{userProfile.username}</Typography>
+                <Typography>{userData.username}</Typography>
               </Paper>
               <Paper
                 elevation={3}
                 sx={{ padding: "2rem", marginBottom: "2rem" }}
               >
                 <Typography variant="h6">Tip korisnika:</Typography>
-                <Typography>{userProfile.role}</Typography>
+                <Typography>{userData.role}</Typography>
               </Paper>
             </Grid>
           </Grid>
@@ -210,22 +199,17 @@ const Profile = () => {
       >
         <div className="password-modal-content">
           <h2>Izmijeni lozinku</h2>
-          {/* New input field for current password */}
           <input
             type="password"
             placeholder="Trenutna lozinka"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
           />
-          {currentPasswordError && (
-            <div className="error-message">{currentPasswordError}</div>
-          )}
-          {/* Other input fields for new password and confirmation */}
           <input
             type="password"
             placeholder="Nova lozinka"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
           />
           <input
             type="password"
@@ -233,12 +217,14 @@ const Profile = () => {
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
-          {passwordError && <div className="error-message">{passwordError}</div>}
+          {passwordError && (
+            <div className="error-message">{passwordError}</div>
+          )}
           <div className="password-modal-buttons">
             <button onClick={closeModal} className="cancel-button">
               <GiCrossMark color="#f44336" />{" "}
             </button>
-            <button onClick={handleChangePassword} className="success-button">
+            <button onClick={handlePasswordUpdate} className="success-button">
               <GiCheckMark color="#007bff" />{" "}
             </button>
           </div>

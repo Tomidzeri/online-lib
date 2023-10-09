@@ -24,61 +24,77 @@ const Sidebar = ({ className, sidebarVisible }) => {
   const navigateToSettings = useNavigateToSettings();
   const navigateToBorrows = useNavigateToBorrows();
 
+  const userRole = sessionStorage.getItem("libraryRole");
+
   return (
-    <div className={`${classes.list} ${sidebarVisible ? classes.open : ""} ${className}`}>
+    <div
+      className={`${classes.list} ${
+        sidebarVisible ? classes.open : ""
+      } ${className}`}
+    >
       <div className={classes.listContent}>
-        <button onClick={navigateToDashboard}>
+        <button onClick={navigateToDashboard} disabled={userRole === "Učenik"}>
           <FcLibrary className={classes.icon} />
         </button>
-        <button onClick={navigateToDashboard}>
+        <button onClick={navigateToDashboard} disabled={userRole === "Učenik"}>
           <p>Dashboard</p>
         </button>
       </div>
       <div className={classes.listContent}>
-        <button onClick={navigateToLibrarians}>
+        <button onClick={navigateToLibrarians} disabled={userRole === "Učenik"}>
           <FaRegAddressBook className={classes.icon} />
         </button>
-        <button onClick={navigateToLibrarians}>
+        <button onClick={navigateToLibrarians} disabled={userRole === "Učenik"}>
           <p>Bibliotekari</p>
         </button>
       </div>
       <div className={classes.listContent}>
-        <button onClick={navigateToStudents}>
+        <button onClick={navigateToStudents} disabled={userRole === "Učenik"}>
           <PiStudentFill className={classes.icon} />
         </button>
-        <button onClick={navigateToStudents}>
+        <button onClick={navigateToStudents} disabled={userRole === "Učenik"}>
           <p>Ucenici</p>
         </button>
       </div>
       <div className={classes.listContent}>
-        <button onClick={navigateToBooks}>
+        <button
+          onClick={navigateToBooks}
+          className={`${classes.myButton} ${
+            userRole === "Ucenik" ? classes.ucenikStyle : ""
+          }`}
+        >
           <BsBook className={classes.icon} />
         </button>
-        <button onClick={navigateToBooks}>
+        <button
+          onClick={navigateToBooks}
+          className={`${classes.myButton} ${
+            userRole === "Ucenik" ? classes.ucenikStyle : ""
+          }`}
+        >
           <p>Knjige</p>
         </button>
       </div>
       <div className={classes.listContent}>
-        <button onClick={navigateToAuthors}>
+        <button onClick={navigateToAuthors} disabled={userRole === "Učenik"}>
           <FaRegAddressBook className={classes.icon} />
         </button>
-        <button onClick={navigateToAuthors}>
+        <button onClick={navigateToAuthors} disabled={userRole === "Učenik"}>
           <p>Autori</p>
         </button>
       </div>
       <div className={classes.listContent}>
-        <button onClick={navigateToBorrows}>
+        <button onClick={navigateToBorrows} disabled={userRole === "Učenik"}>
           <GoArrowSwitch className={classes.icon} />
         </button>
-        <button onClick={navigateToBorrows}>
+        <button onClick={navigateToBorrows} disabled={userRole === "Učenik"}>
           <p>Izdavanje</p>
         </button>
       </div>
       <div className={classes.listContent}>
-        <button onClick={navigateToSettings}>
+        <button onClick={navigateToSettings} disabled={userRole === "Učenik"}>
           <BsGear className={classes.icon} />
         </button>
-        <button onClick={navigateToSettings}>
+        <button onClick={navigateToSettings} disabled={userRole === "Učenik"}>
           <p>Podesavanja</p>
         </button>
       </div>

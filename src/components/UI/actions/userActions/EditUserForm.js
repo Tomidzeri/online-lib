@@ -73,7 +73,7 @@ const EditUser = () => {
     });
   
     try {
-      const updatedData = await updateUserData(userId, updatedFormData); // Send formData to the backend
+      const updatedData = await updateUserData(userId, updatedFormData); 
       console.log("User data updated:", updatedData);
       toast.success("Detalji korisnika uspješno izmijenjeni.");
     } catch (error) {
