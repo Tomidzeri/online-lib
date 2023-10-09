@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import PrivateRoute from "../services/PrivateRoute";
-import RolePrivateRoute from "../services/RolePrivateRoute";
 import LoginForm from "../pages/service-stranice/LoginForm";
 import SignupForm from "../pages/service-stranice/SignupForm";
 import Logout from "../services/Logout";
@@ -36,8 +35,22 @@ import VraceneKnjigeTable from "../pages/book-stranice/tables/vraceneKnjigeTable
 import IzdateKnjigeTable from "../pages/book-stranice/tables/IzdateKnjigeTable";
 import RezervacijeKnjigaTable from "../pages/book-stranice/tables/RezervisaneKnjigeTable";
 import PrekoraceneKnjigeTable from "../pages/book-stranice/tables/PrekoraceneKnjigeTable";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
+  const userRole = sessionStorage.getItem("libraryRole");
+
+  const isUcenik = userRole === "Učenik";
+
+  const showUnauthorizedMessage = () => {
+    toast.error("Nemate ovlašćenje za pristup ovoj stranici.", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      closeOnClick: true,
+    });
+  };
+
   return (
     <Routes>
       <Route
@@ -69,52 +82,109 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
       />
 
       <Route path="/*" element={<Layout token={token} />}>
-        <Route index path="dashboard" element={<Dashboard />} />
-        <Route path="activities" element={<Activities />} />
-        <Route path="statistics" element={<Statistics />} />
-        <Route path="reservations" element={<Reservations />} />
+        <Route
+          index
+          path="dashboard"
+          element={
+            isUcenik ? (
+              <>
+                {showUnauthorizedMessage()}
+                <Navigate to="/books" />
+              </>
+            ) : (
+              <Dashboard />
+            )
+          }
+        />
+        <Route
+          path="activities"
+          element={isUcenik ? <Navigate to="/books" /> : <Activities />}
+        />
+        <Route
+          path="statistics"
+          element={isUcenik ? <Navigate to="/books" /> : <Statistics />}
+        />
+        <Route
+          path="reservations"
+          element={isUcenik ? <Navigate to="/books" /> : <Reservations />}
+        />
 
         <Route path="profile" element={<Profile />} />
         <Route path="books" element={<Books />} />
-        <Route path="librarians" element={<Librarians />} />
-        <Route path="students" element={<Students />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="authors" element={<Authors />} />
-        <Route path="borrows" element={<Layout token={token} />}>
-          <Route index element={<Borrows />} />
-          <Route path="izdate-knjige" element={<IzdateKnjigeTable />} />
-          <Route path="vracene-knjige" element={<VraceneKnjigeTable />} />
-          <Route
-            path="prekoracene-knjige"
-            element={<PrekoraceneKnjigeTable />}
-          />
-          <Route
-            path="aktivne-rezervacije"
-            element={<RezervacijeKnjigaTable />}
-          />
-          <Route
-            path="arhivirane-rezervacije"
-            element={<ArhiviraneRezervacijeTable />}
-          />
-        </Route>
-        <Route path="useraddform" element={<UserAddForm />} />
-        <Route path="createauthor" element={<CreateAuthor />} />
-        <Route path="storebook" element={<StoreBook />} />
-        <Route path="editprofile" element={<EditProfile />} />
-
-        <Route path="viewuserdetails/:userId" element={<ViewUserDetails />} />
-        <Route path="edituserform/:userId" element={<EditUserForm />} />
-        <Route path="editauthor/:authorId" element={<EditAuthor />} />
-        <Route path="viewauthor/:authorId" element={<ViewAuthorDetails />} />
-        <Route path="viewbook/:bookId" element={<ViewBookDetails />} />
-        <Route path="editbook/:bookId" element={<EditBook />} />
-        <Route path="borrowbook/:bookId" element={<BorrowBook />} />
-        <Route path="returnbook/:bookId" element={<ReturnBook />} />
-        <Route path="writeoffbook/:bookId" element={<WriteOffBook />} />
-        <Route path="reservebook/:bookId" element={<ReserveBook />} />
+        {/* Restrict access for "Učenik" users */}
+        <Route
+          path="librarians"
+          element={isUcenik ? <Navigate to="/books" /> : <Librarians />}
+        />
+        <Route
+          path="students"
+          element={isUcenik ? <Navigate to="/books" /> : <Students />}
+        />
+        <Route
+          path="settings"
+          element={isUcenik ? <Navigate to="/books" /> : <Settings />}
+        />
+        <Route
+          path="authors"
+          element={isUcenik ? <Navigate to="/books" /> : <Authors />}
+        />
+        <Route
+          path="borrows"
+          element={
+            isUcenik ? (
+              <Navigate to="/books" />
+            ) : (
+              <Layout token={token}>
+                <Route index element={<Borrows />} />
+                <Route path="izdate-knjige" element={<IzdateKnjigeTable />} />
+                <Route path="vracene-knjige" element={<VraceneKnjigeTable />} />
+                <Route
+                  path="prekoracene-knjige"
+                  element={<PrekoraceneKnjigeTable />}
+                />
+                <Route
+                  path="aktivne-rezervacije"
+                  element={<RezervacijeKnjigaTable />}
+                />
+                <Route
+                  path="arhivirane-rezervacije"
+                  element={<ArhiviraneRezervacijeTable />}
+                />
+                <Route path="useraddform" element={<UserAddForm />} />
+                <Route path="createauthor" element={<CreateAuthor />} />
+                <Route path="storebook" element={<StoreBook />} />
+                <Route path="editprofile" element={<EditProfile />} />
+                <Route
+                  path="viewuserdetails/:userId"
+                  element={<ViewUserDetails />}
+                />
+                <Route path="edituserform/:userId" element={<EditUserForm />} />
+                <Route path="editauthor/:authorId" element={<EditAuthor />} />
+                <Route
+                  path="viewauthor/:authorId"
+                  element={<ViewAuthorDetails />}
+                />
+                <Route path="viewbook/:bookId" element={<ViewBookDetails />} />
+                <Route path="editbook/:bookId" element={<EditBook />} />
+                <Route path="borrowbook/:bookId" element={<BorrowBook />} />
+                <Route path="returnbook/:bookId" element={<ReturnBook />} />
+                <Route path="writeoffbook/:bookId" element={<WriteOffBook />} />
+                <Route
+                  path="reservebook/:bookId"
+                  element={
+                    isUcenik ? <ReserveBook /> : <Navigate to="/books" />
+                  }
+                />
+              </Layout>
+            )
+          }
+        />
       </Route>
 
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route
+        path="/"
+        element={<Navigate to={isUcenik ? "/books" : "/login"} />}
+      />
     </Routes>
   );
 };
