@@ -6,7 +6,6 @@ const ActivityList = () => {
   const [loading, setLoading] = useState(false);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   
-  // Set the initial value to 'all' to show all activities by default
   const [activityType, setActivityType] = useState("all");
 
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ const ActivityList = () => {
     } else if (activityType === "vracene") {
       sentence = `Ucenik ${activity.student.name} ${activity.student.surname} je vratio/la knjigu ${activity.knjiga.title} izdatu od strane ${activity.bibliotekar0?.name} ${activity.bibliotekar0.surname} datuma ${activity.return_date}`;
     } else if (activityType === "prekoracene") {
-      // Handle "prekoracene" case
+      //  "prekoracene" 
     }
 
     return sentence;
@@ -46,7 +45,7 @@ const ActivityList = () => {
 
   return (
     <div className="w-full mt-20">
-      <h2 className="text-2xl font-bold mb-4">Aktivnosti</h2>
+      <h2 className="text-3xl font-bold mb-4">Aktivnosti</h2>
       <div className="space-x-4">
         <button
           onClick={() => setActivityType("izdate")}

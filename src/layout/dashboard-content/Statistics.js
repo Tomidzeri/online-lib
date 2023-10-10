@@ -42,8 +42,8 @@ const Statistics = () => {
 
   return (
     <div className="mt-40 flex flex-col items-center justify-center">
-     <h2 className="text-2xl font-bold mb-4">Statistika</h2>
-      <BarChart width={500} height={300} data={statisticsData}>
+     <h2 className="text-3xl font-bold mb-4">Statistika</h2>
+      <BarChart width={550} height={350} data={statisticsData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="category" />
         <YAxis />
