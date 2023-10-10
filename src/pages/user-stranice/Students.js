@@ -77,13 +77,13 @@ const Students = ({ userProfile }) => {
     ]);
 
   return (
-    <div className="mt-16 ml-15">
+    <div className="mt-16">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full pb-4 mb-4">
+        <div className="border-b border-gray-300 w-full pb-6 mb-4 ml-4 fixed">
           <h2 className="text-4xl font-bold text-left ml-20">Ucenici</h2>
-        </div>
+          </div>
         <div className="flex justify-between">
-          <div className="flex justify-between w-full mb-2 ml-20">
+          <div className="flex justify-between w-full mt-20 mb-2 ml-24">
             <Button
               onClick={() =>
                 (window.location.href = "/useraddform?role=Učenik")
@@ -93,7 +93,7 @@ const Students = ({ userProfile }) => {
               Novi Ucenik
             </Button>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 mt-20">
             <div className="flex items-center space-x-2">
               <BsSearch className="text-gray-600 text-lg" />
               <SearchBox

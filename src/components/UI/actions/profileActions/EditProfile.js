@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Typography } from "@mui/material";
 import { UpdateUser } from "../../../../queries/profileInfo/updateUserData";
 import Form from "../../forms/Form";
 import Submit from "../../buttons/Submit";
@@ -25,9 +26,10 @@ const EditProfile = () => {
     const fetchAndSetUserData = async () => {
       try {
         const response = await ProfileData();
-        
+
         if (response && response.data && response.data.data) {
           const fetchedUserData = response.data.data;
+
           setFormData({
             name: fetchedUserData.name,
             surname: fetchedUserData.surname,
@@ -38,7 +40,7 @@ const EditProfile = () => {
             password_confirmation: "",
             role: fetchedUserData.role,
           });
-  
+
           console.log(fetchedUserData);
         } else {
           console.error("Invalid user data response format");
@@ -47,14 +49,14 @@ const EditProfile = () => {
         console.error("Error fetching user data:", error);
       }
     };
-  
+
     fetchAndSetUserData();
   }, []);
-  
+
   const updatedFormData = new FormData();
-    Object.keys(formData).forEach((key) => {
-      updatedFormData.append(key, formData[key]);
-    });
+  Object.keys(formData).forEach((key) => {
+    updatedFormData.append(key, formData[key]);
+  });
 
   const handleUpdateUser = async () => {
     try {
@@ -113,19 +115,31 @@ const EditProfile = () => {
   ];
 
   return (
-    <div className="page">
-      <div className="user-edit-form-container">
-        <h2>Edit User</h2>
+    <div className="mt-14 flex">
+      <div className="w-full">
+        <div className="border-b border-gray-300 w-full fixed">
+          <div className="ml-20">
+            <Typography variant="h4" align="left" padding="3px">
+              Korisnik
+            </Typography>
+            <button
+              type="button"
+              className="text-blue-500 hover:text-blue-700 ml-2"
+            >
+              Uloga
+            </button>
+          </div>
+        </div>
         <Form
           fields={formFields}
           formData={formData}
           setFormData={setFormData}
           onSubmit={handleUpdateUser}
         />
-      </div>
-      <div className="button-container">
-        <Submit onClick={handleUpdateUser}>Submit</Submit>
-        <Cancel onClick={() => navigateToProfile()}>Cancel</Cancel>
+        <div className="button-container">
+          <Submit onClick={handleUpdateUser}>Sacuvaj</Submit>
+          <Cancel onClick={() => navigateToProfile()}>Ponisti</Cancel>
+        </div>
       </div>
     </div>
   );

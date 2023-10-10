@@ -8,6 +8,7 @@ import PrekoraceneKnjigeTable from "./tables/PrekoraceneKnjigeTable";
 import RezervacijeKnjigaTable from "./tables/RezervisaneKnjigeTable";
 import ArhiviraneRezervacijeTable from "./tables/ArhiviraneRezervacijeTable";
 import { useLocation } from "react-router-dom";
+import { Typography } from "@mui/material";
 
 const Borrows = () => {
   const location = useLocation();
@@ -26,7 +27,7 @@ const Borrows = () => {
     const queryParams = new URLSearchParams(location.search);
     const activeTabParam = queryParams.get("activeTab");
     if (activeTabParam !== null) {
-      setActiveTab(parseInt(activeTabParam, 10)); 
+      setActiveTab(parseInt(activeTabParam, 10));
     }
   }, [location.search]);
 
@@ -48,29 +49,33 @@ const Borrows = () => {
   };
 
   return (
-    <div className="mt-16 ml-15">
+    <div className="mt-16">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full pb-4 mb-4">
-          <h2 className="text-4xl font-bold text-left ml-20">
-            Izdavanje Knjiga
-          </h2>
-        </div>
-        <div className="flex justify-end space-x-4 mb-4 mt-2 ml-96">
-          <BsSearch className="text-gray-600 text-lg text-right" />
-          <SearchBox
-            onSearch={setSearchTerm}
-            className="border border-gray-300 mb-2 px-2 py-2 rounded-md"
-          />
-        </div>
-        <div className="flex">
-          <div className="w-2/8 pr-4 ml-20">
-            <BorrowsTab
-              labels={tabLabels}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
+        <div className="flex flex-col">
+          <div className="border-b border-gray-300 w-full pb-4 mb-4 ml-4 fixed">
+            <div className="ml-20">
+              <Typography variant="h4" align="left" padding="3px">
+                Izdavanje Knjiga
+              </Typography>
+            </div>
+          </div>
+          <div className="flex items-end content-end justify-end space-x-4 mt-20 mb-4">
+            <BsSearch className="text-gray-600 text-lg text-right" />
+            <SearchBox
+              onSearch={setSearchTerm}
+              className="border border-gray-300 mb-2 px-2 py-2 rounded-md"
             />
           </div>
-          <div className="w-full">{renderTableByActiveTab()}</div>
+          <div className="flex">
+            <div className="w-2/8 pr-4 ml-20">
+              <BorrowsTab
+                labels={tabLabels}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+              />
+            </div>
+            <div className="w-full">{renderTableByActiveTab()}</div>
+          </div>
         </div>
       </div>
     </div>

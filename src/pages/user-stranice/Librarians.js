@@ -59,13 +59,13 @@ const Librarians = ({ userProfile }) => {
     .map((librarian) => [
       librarian.id,
       <div className="flex items-center">
-      <img
-        src={librarian.photoPath} 
-        alt="slika"
-        className="w-8 h-8 rounded-full mr-2" 
-      />
-      {`${librarian.name} ${librarian.surname}`}
-    </div>,
+        <img
+          src={librarian.photoPath}
+          alt="slika"
+          className="w-8 h-8 rounded-full mr-2"
+        />
+        {`${librarian.name} ${librarian.surname}`}
+      </div>,
       librarian.email,
       librarian.role,
       librarian.lastLoggedTime,
@@ -80,13 +80,13 @@ const Librarians = ({ userProfile }) => {
   };
 
   return (
-    <div className="mt-16 ml-15">
+    <div className="mt-16">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full pb-4 mb-4">
+        <div className="border-b border-gray-300 w-full pb-6 mb-4 ml-4 fixed">
           <h2 className="text-4xl font-bold text-left ml-20">Bibliotekari</h2>
         </div>
         <div className="flex justify-between">
-        <div className="flex justify-between w-full mb-2 ml-20">
+          <div className="flex justify-between w-full mt-20 mb-2 ml-24">
             <Button
               onClick={() =>
                 (window.location.href = "/useraddform?role=Bibliotekar")
@@ -96,7 +96,7 @@ const Librarians = ({ userProfile }) => {
               Novi Bibliotekar
             </Button>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 mt-20">
             <div className="flex items-center space-x-2">
               <BsSearch className="text-gray-600 text-lg" />
               <SearchBox
@@ -114,11 +114,11 @@ const Librarians = ({ userProfile }) => {
         ) : (
           <>
             <div className="ml-20">
-            <ReusableTable
-              tableHead={tableHeaders}
-              tableData={visibleTableData}
-            />
-          </div>
+              <ReusableTable
+                tableHead={tableHeaders}
+                tableData={visibleTableData}
+              />
+            </div>
             <Pagination
               currentPage={currentPage}
               totalItems={totalItems}

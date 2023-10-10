@@ -37,10 +37,9 @@ const Profile = () => {
 
         setUserData(userData.data);
 
-        // Simulate a delay to show the loading icon for a moment
         setTimeout(() => {
-          setIsLoading(false); // Set loading state to false after data is fetched
-        }, 1000); // Adjust the delay time as needed
+          setIsLoading(false); 
+        }, 1000); 
       } catch (error) {
         console.error("Error fetching user profile:", error);
         setIsLoading(false);
@@ -96,16 +95,16 @@ const Profile = () => {
   };
 
   return (
-    <div className="mt-12 flex flex-col">
+    <div className="mt-14 flex flex-col">
       <div className="w-full">
         <div className="flex flex-row justify-between border-b border-gray-300 w-full fixed">
-          <div className="flex flex-col ml-16">
+          <div className="flex flex-col ml-20">
             <Typography variant="h4" align="center" padding="3px">
               {userData?.name} {userData?.surname}
             </Typography>
             <button
               type="button"
-              className="text-blue-500 hover:text-blue-700"
+              className="text-blue-500 hover:text-blue-700 text-left ml-2"
               onClick={navigation}
             >
               {roleDisplay()}
