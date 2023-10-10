@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Grid, Paper, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import UserActionsDropdown from "../components/UI/actions/UserActionsDropdown";
+import ProfileDropdown from "../components/UI/actions/ProfileActionsDropdown";
 import ReactModal from "react-modal";
 import { GiCrossMark, GiCheckMark } from "react-icons/gi";
 import { toast } from "react-toastify";
@@ -37,7 +37,10 @@ const Profile = () => {
 
         setUserData(userData.data);
 
-        setIsLoading(false);
+        // Simulate a delay to show the loading icon for a moment
+        setTimeout(() => {
+          setIsLoading(false); // Set loading state to false after data is fetched
+        }, 1000); // Adjust the delay time as needed
       } catch (error) {
         console.error("Error fetching user profile:", error);
         setIsLoading(false);
@@ -108,7 +111,7 @@ const Profile = () => {
               {roleDisplay()}
             </button>
           </div>
-          <div className="flex items-center mr-8">
+          <div className="flex items-center mr-12">
             <button
               type="button"
               className="text-blue-500 hover:text-blue-700"
@@ -127,67 +130,58 @@ const Profile = () => {
             </button>
             <span className="mx-2 border-l border-gray-300 h-8" />
             <div className="flex flex-row justify-center items-center">
-              <UserActionsDropdown />
+              <ProfileDropdown />
             </div>
           </div>
         </div>
       </div>
-      <div className="w-96 mt-24 ml-16">
+      <div className="container mt-24">
         {isLoading ? (
-          <div className="flex items-center justify-center h-32">
+          <div className="flex justify-center items-center">
             <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
           </div>
-        ) : userData ? (
-          <Grid container spacing={4}>
-            <Grid item xs={4}>
-              <Paper>
-                <Avatar
-                  src={photo}
-                  alt="User Photo"
-                  sx={{
-                    width: "10rem",
-                    height: "10rem",
-                    margin: "0 auto",
-                    marginTop: "2rem",
-                  }}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={8}>
-              <Paper
-                elevation={3}
-                sx={{ padding: "2rem", marginBottom: "2rem" }}
-              >
-                <Typography variant="h6">Ime i prezime:</Typography>
-                <Typography>
-                  {userData.name} {userData.surname}
-                </Typography>
-              </Paper>
-              <Paper
-                elevation={3}
-                sx={{ padding: "2rem", marginBottom: "2rem" }}
-              >
-                <Typography variant="h6">E-mail:</Typography>
-                <Typography>{userData.email}</Typography>
-              </Paper>
-              <Paper
-                elevation={3}
-                sx={{ padding: "2rem", marginBottom: "2rem" }}
-              >
-                <Typography variant="h6">Korisnicko ime:</Typography>
-                <Typography>{userData.username}</Typography>
-              </Paper>
-              <Paper
-                elevation={3}
-                sx={{ padding: "2rem", marginBottom: "2rem" }}
-              >
-                <Typography variant="h6">Tip korisnika:</Typography>
-                <Typography>{userData.role}</Typography>
-              </Paper>
-            </Grid>
-          </Grid>
         ) : (
-          <p>Failed to load profile data.</p>
+          <div className="flex">
+            <div className="flex flex-col justify-center items-center">
+              <div className="bg-white rounded-lg shadow-lg ml-24">
+                <div className="relative">
+                  <img
+                    src={photo}
+                    alt="Slika"
+                    className="w-full h-auto max-h-96 object-cover rounded-t-lg"
+                  />
+                  <div className="absolute inset-0 bg-black opacity-30 rounded-t-lg"></div>{" "}
+                  {/* this code creates a shadow, pretty cool style */}
+                </div>
+                <div className="p-4">
+                  <h5 className="text-xl font-semibold">Ime i prezime:</h5>
+                  <p className="text-gray-700">
+                    {userData?.name} {userData?.surname}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col ml-4">
+              <div className="bg-white rounded-lg shadow-lg mt-4 mb-10">
+                <div className="p-4">
+                  <h5 className="text-xl font-semibold">E-mail:</h5>
+                  <p className="text-blue-500">{userData?.email}</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg mb-10">
+                <div className="p-4">
+                  <h5 className="text-xl font-semibold">Korisnicko ime:</h5>
+                  <p className="text-gray-700">{userData?.username}</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg mb-4">
+                <div className="p-4">
+                  <h5 className="text-xl font-semibold">Tip korisnika:</h5>
+                  <p className="text-gray-700">{userData?.role}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </div>
       <ReactModal

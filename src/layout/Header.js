@@ -7,13 +7,25 @@ import { MdLocalLibrary } from "react-icons/md";
 import { useNavigation } from "./navigation";
 import "./styles/header.css";
 import { RiProfileLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showCrossDropdown, setShowCrossDropdown] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
-  const { navigateToDashboard, navigateToProfile, navigateToAddUser } =
+  const navigate = useNavigate();
+  const userRole = sessionStorage.getItem("libraryRole");
+
+  const redirectToBooks = () => {
+    if (userRole === "Učenik") {
+      navigate("/books");
+    } else {
+      navigate("/dashboard");
+    }
+  };
+
+  const { navigateToProfile, navigateToAddUser } =
     useNavigation();
 
   const toggleSidebar = () => {
@@ -67,7 +79,7 @@ const Header = () => {
           <FaBars />
         </button>
         )}
-        <button className="flex items-center text-white" onClick={navigateToDashboard}>
+        <button className="flex items-center text-white" onClick={redirectToBooks}>
           <MdLocalLibrary className="text-4xl mr-2" />
           <h1
             className={`text-white text-2xl ${
