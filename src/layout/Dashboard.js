@@ -33,6 +33,9 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <div className="border-b border-gray-300 w-full fixed">
+        <h2 className="text-left ml-20 text-4xl font-bold p-4">Dashboard</h2>
+      </div>
       {isLoading ? (
         <div className="loading-animation">
           <div style={animationStyle}>

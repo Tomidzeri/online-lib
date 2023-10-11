@@ -155,15 +155,15 @@ const EditUser = () => {
   
 
   return (
-    <div className="mt-14 ml-15 flex flex-col">
+    <div className="mt-14 flex flex-col">
       <div className="w-full">
         <div className="flex flex-col border-b border-gray-300 w-full fixed">
-          <h2 className="text-2xl font-bold text-left ml-24">
+          <h2 className="text-4xl font-bold text-left ml-24">
             Izmjena podataka
           </h2>
           <button
             type="button"
-            className="text-blue-500 hover:text-blue-700 text-left pt-2 ml-24 w-20"
+            className="text-blue-500 hover:text-blue-700 text-left pt-2 ml-24 w-40"
             onClick={() => navigateToUserRolePage(formData.role)}
           >
             {roleDisplay()}

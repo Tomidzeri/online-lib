@@ -33,8 +33,8 @@ function ViewUserDetails() {
     setIsModalOpen(false);
   };
 
-  const loginCount =   sessionStorage.getItem("loginCount");
-  const lastLoginTime =   sessionStorage.getItem("loginTime");
+  const loginCount = sessionStorage.getItem("loginCount");
+  const lastLoginTime = sessionStorage.getItem("loginTime");
   const formattedLastLoginTime = lastLoginTime
     ? format(new Date(lastLoginTime), "dd MMMM yyyy HH:mm:ss")
     : "";
@@ -94,18 +94,22 @@ function ViewUserDetails() {
     }
   };
 
+  const gridItemStyle = {
+    marginTop: "3rem",
+  };
+
   return (
-    <div className="mt-12 ml-15">
+    <div className="mt-20">
       <div className="w-full">
-        <div className="flex justify-between border-b border-gray-300 w-full">
+        <div className="flex justify-between border-b border-gray-300 w-full fixed">
           <div className="flex flex-col">
             <h2
               style={{ fontFamily: "'Rubik', sans-serif" }}
-              className="text-5xl font-bold text-left ml-20"
+              className="text-5xl font-bold text-left ml-24 mt-2"
             >
               {user?.name} {user?.surname}
             </h2>
-            <div className="flex items-center ml-20">
+            <div className="flex items-center ml-24">
               <button
                 type="button"
                 className="text-blue-500 hover:text-blue-700"
@@ -116,7 +120,7 @@ function ViewUserDetails() {
               <p className="text-blue-500">&nbsp;/ ID-{user?.id}</p>
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between mr-8">
             <div className="flex items-center">
               <button
                 type="button"
@@ -142,14 +146,14 @@ function ViewUserDetails() {
           </div>
         </div>
       </div>
-      <div className="w-9/12 mt-10 ml-20">
+      <div className="w-9/12 mt-10 ml-24">
         {loading ? (
           <div className="flex items-center justify-center h-32">
             <AiOutlineLoading3Quarters className="text-red-500 text-4xl animate-spin" />
           </div>
         ) : (
           <Grid container spacing={4}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} style={gridItemStyle}>
               <Paper elevation={3} sx={{ padding: "1rem", margin: "1rem 0" }}>
                 <Typography variant="h6">Ime i prezime:</Typography>
                 <Typography>
@@ -182,7 +186,7 @@ function ViewUserDetails() {
                 elevation={3}
                 sx={{
                   marginBottom: "2rem",
-                  marginTop: "2rem",
+                  marginTop: "5rem",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -198,7 +202,7 @@ function ViewUserDetails() {
                     objectFit: "cover",
                   }}
                   onError={(e) => {
-                    e.target.src = defaultPhoto; 
+                    e.target.src = defaultPhoto;
                   }}
                 />
               </Paper>

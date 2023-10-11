@@ -94,9 +94,9 @@ const ViewBookDetails = () => {
   ];
 
   return (
-    <div className="mt-14 ml-15 flex flex-row">
+    <div className="mt-16 flex flex-row">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full text-left flex flex-row items-center content-center">
+        <div className="border-b border-gray-300 w-full text-left flex flex-row items-center content-center fixed">
           <Avatar
             alt="Book Cover"
             src="https://tim2.petardev.live/img/book-cover-placeholder.png"
@@ -136,7 +136,8 @@ const ViewBookDetails = () => {
               ))}
             </Tab>
           </div>
-          <div className="w-1/6 border-l border-gray-300 flex flex-col">
+          <div className="w-1/6 border-l border-gray-300 flex flex-col justify-center mt-2">
+            <h2 className="text-3xl text-center font-boldcy">Statistika</h2>
             <div className="mt-6 mb-6 pl-6 pr-6 pb-6 text-center border-b border-gray-300">
               <h3 className="text-lg bg-blue-500 text-white rounded-md p-2 mb-2">
                 Ukupna kolicina: {book.samples}

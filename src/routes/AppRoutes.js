@@ -52,15 +52,15 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
     redirectToBooks();
   }, []);
 
-  // useEffect(() => {
-  //   if (isUcenik) {
-  //     toast.error("Nemate ovlašćenje za pristup ovoj stranici.", {
-  //       position: toast.POSITION.TOP_CENTER,
-  //       autoClose: 3000,
-  //       closeOnClick: true,
-  //     });
-  //   }
-  // }, [isUcenik]);
+   useEffect(() => {
+     if (userRole === "Učenik") {
+       toast.error("Nemate ovlašćenje za pristup ovoj stranici.", {
+         position: toast.POSITION.TOP_CENTER,
+         autoClose: 3000,
+         closeOnClick: true,
+       });
+     }
+   }, [userRole]);
 
   return (
     <Routes>

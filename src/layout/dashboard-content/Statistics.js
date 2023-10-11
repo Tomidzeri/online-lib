@@ -22,9 +22,9 @@ const Statistics = () => {
             const reservedBooks = reservationData.active.length;
 
             setStatisticsData([
-              { category: "Izdate knjige", count: issuedBooks },
-              { category: "Rezervisane knjige", count: reservedBooks },
-              { category: "Prekoracene knjige", count: overdueBooks },
+              { category: "Izdate knjige", count: issuedBooks, color: "#8884d8" },
+              { category: "Rezervisane knjige", count: reservedBooks, color: "#82ca9d" },
+              { category: "Prekoracene knjige", count: overdueBooks, color: "#ffc658" },
             ]);
 
             setLoading(false);
@@ -43,7 +43,7 @@ const Statistics = () => {
   return (
     <div className="mt-40 flex flex-col items-center justify-center">
      <h2 className="text-3xl font-bold mb-4">Statistika</h2>
-      <BarChart width={550} height={350} data={statisticsData}>
+      <BarChart width={500} height={300} data={statisticsData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="category" />
         <YAxis />
