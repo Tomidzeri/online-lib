@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Tab from "../../tabs/Tab";
 import useBookDetails from "../../../../queries/knjige/useBookDetails";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-// import { fetchBorrowedBooks } from "../../../../queries/knjige/useBookBorrow";
+import { fetchBorrowedBooks } from "../../../../queries/knjige/useBookBorrow";
 
 const ViewBookDetails = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -12,11 +12,52 @@ const ViewBookDetails = () => {
   const book = useBookDetails(bookId);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Fetch borrowed books data
+    const fetchData = async () => {
+      try {
+        const borrowedBooksData = await fetchBorrowedBooks();
+
+        // Iterate through each array and log matching activities
+        console.log("Matching Activities:");
+        console.log("Izdate:");
+        borrowedBooksData.izdate.forEach((item) => {
+          if (item.knjiga.id === parseInt(bookId)) {
+            console.log(item);
+          }
+        });
+
+        console.log("Otpisane:");
+        borrowedBooksData.otpisane.forEach((item) => {
+          if (item.knjiga.id === parseInt(bookId)) {
+            console.log(item);
+          }
+        });
+
+        console.log("Prekoracene:");
+        borrowedBooksData.prekoracene.forEach((item) => {
+          if (item.knjiga.id === parseInt(bookId)) {
+            console.log(item);
+          }
+        });
+
+        console.log("Vracene:");
+        borrowedBooksData.vracene.forEach((item) => {
+          if (item.knjiga.id === parseInt(bookId)) {
+            console.log(item);
+          }
+        });
+      } catch (error) {
+        console.error("Error fetching borrowed books data:", error);
+      }
+    };
+
+    fetchData();
+  }, [bookId]);
+
   if (!book) {
     return <div className="loading">Loading...</div>;
   }
-
-  console.log(book);
 
   const handleBackClick = () => {
     navigate(`/books`);
@@ -26,39 +67,45 @@ const ViewBookDetails = () => {
     {
       label: "Osnovni detalji",
       content: (
-        <div className="p-4 mt-6 text-center py-6 flex">
+        <div className="p-4 ml-20 mt-6 text-left py-6 flex">
           <div className="w-1/2 pr-4">
-            <h3 className="text-xl font-semibold pb-4">Naziv: {book.title}</h3>
-            <h3 className="text-lg mt-6">
-              Autor:{" "}
-              {book.authors && book.authors.length > 0
-                ? book.authors
-                    .map((author) => `${author.name} ${author.surname}`)
-                    .join(", ")
-                : "N/A"}
-            </h3>
-            <h3 className="text-lg mt-2">
-              Kategorija:{" "}
-              {book.categories && book.categories.length > 0
-                ? book.categories.map((category) => category.name).join(", ")
-                : "N/A"}
-            </h3>
-            <h3 className="text-lg mt-2">Izdavac: {book.publisher.name}</h3>
-            <h3 className="text-lg mt-2">Kolicina: {book.samples}</h3>
-            <h3 className="text-lg mt-2">Godina izdavanja: {book.pDate}</h3>
-            <h3 className="text-lg mt-2">
-              Zanr:{" "}
-              {book.genres && book.genres.length > 0
-                ? book.genres.map((genre) => genre.name).join(", ")
-                : "N/A"}
-            </h3>
+            <div className="border p-4 rounded-lg shadow-md mb-4">
+              <h3 className="text-lg pb-6">
+                Naziv: {book.title}
+              </h3>
+              <h3 className="text-lg pb-6">
+                Autor:{" "}
+                {book.authors && book.authors.length > 0
+                  ? book.authors
+                      .map((author) => `${author.name} ${author.surname}`)
+                      .join(", ")
+                  : "N/A"}
+              </h3>
+              <h3 className="text-lg pb-6">
+                Kategorija:{" "}
+                {book.categories && book.categories.length > 0
+                  ? book.categories.map((category) => category.name).join(", ")
+                  : "N/A"}
+              </h3>
+              <h3 className="text-lg pb-6">Izdavac: {book.publisher.name}</h3>
+              <h3 className="text-lg pb-6">Kolicina: {book.samples}</h3>
+              <h3 className="text-lg pb-6">Godina izdavanja: {book.pDate}</h3>
+              <h3 className="text-lg mt-2">
+                Zanr:{" "}
+                {book.genres && book.genres.length > 0
+                  ? book.genres.map((genre) => genre.name).join(", ")
+                  : "N/A"}
+              </h3>
+            </div>
           </div>
           <div className="w-1/2">
-            <h3 className="text-xl font-semibold">Description:</h3>
-            <div
-              className="mt-2"
-              dangerouslySetInnerHTML={{ __html: book.description }}
-            />
+            <div className="border p-4 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold pb-2">Description:</h3>
+              <div
+                className="mt-2"
+                dangerouslySetInnerHTML={{ __html: book.description }}
+              />
+            </div>
           </div>
         </div>
       ),
@@ -96,7 +143,7 @@ const ViewBookDetails = () => {
   return (
     <div className="mt-16 flex flex-row">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full text-left flex flex-row items-center content-center fixed">
+        <div className="border-b border-gray-300 w-full text-left flex flex-row items-center content-center">
           <Avatar
             alt="Book Cover"
             src="https://tim2.petardev.live/img/book-cover-placeholder.png"
@@ -136,8 +183,8 @@ const ViewBookDetails = () => {
               ))}
             </Tab>
           </div>
-          <div className="w-1/6 border-l border-gray-300 flex flex-col justify-center mt-2">
-            <h2 className="text-3xl text-center font-boldcy">Statistika</h2>
+          <div className="w-1/6 border-l border-gray-300 flex flex-col justify-center">
+            <h2 className="text-3xl text-center font-bold">Statistika</h2>
             <div className="mt-6 mb-6 pl-6 pr-6 pb-6 text-center border-b border-gray-300">
               <h3 className="text-lg bg-blue-500 text-white rounded-md p-2 mb-2">
                 Ukupna kolicina: {book.samples}
@@ -156,9 +203,7 @@ const ViewBookDetails = () => {
                 {book.samples - book.rSamples - book.bSamples - book.fSamples}
               </h3>
             </div>
-            <div>
-               {/* book borrows  */}
-            </div>
+            <div>{/* book borrows  */}</div>
           </div>
         </div>
       </div>
