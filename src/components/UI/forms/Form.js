@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; 
+import "react-quill/dist/quill.snow.css";
 
 const Form = ({ fields, formData, setFormData, onSubmit }) => {
   const [errors, setErrors] = useState({});
@@ -20,23 +20,25 @@ const Form = ({ fields, formData, setFormData, onSubmit }) => {
     let error = "";
 
     switch (field.type) {
-      case "jmbg":
-        // Add your custom validation logic for "jmbg" here
-        break;
-      case "number":
-        // Add your custom validation logic for "number" here
-        break;
-      case "text":
-        // Add your custom validation logic for "text" here
-        break;
       case "email":
-        // Add your custom validation logic for "email" here
+        if (!/^\S+@\S+\.\S+$/.test(value)) {
+          error = "Invalid email address";
+        }
         break;
       case "password":
-        // Add your custom validation logic for "password" here
+        if (value.length < 8) {
+          error = "Password must be at least 8 characters long";
+        }
         break;
       case "name":
-        // Add your custom validation logic for "name" here
+        if (!/^[A-Za-z\s]+$/.test(value)) {
+          error = "Name can only contain letters and spaces";
+        }
+        break;
+      case "jmbg":
+        if (!/^\d+$/.test(value)) {
+          error = "JMBG must be a number";
+        }
         break;
       default:
         break;
@@ -79,7 +81,7 @@ const Form = ({ fields, formData, setFormData, onSubmit }) => {
   };
 
   return (
-    <Container component="main" maxWidth={false}> 
+    <Container component="main" maxWidth={false}>
       <Box
         sx={{
           marginTop: 8,

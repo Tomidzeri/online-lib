@@ -35,32 +35,41 @@ import BorrowBook from "../components/UI/actions/bookActions/BorrowBook";
 import ReturnBook from "../components/UI/actions/bookActions/ReturnBook";
 import WriteOffBook from "../components/UI/actions/bookActions/WriteOffBook";
 import ReserveBook from "../components/UI/actions/bookActions/ReserveBook";
+import PolisaTab from "../components/UI/tabs/settings/Polisa";
+import KategorijeTab from "../components/UI/tabs/settings/Kategorije";
+import ZanroviTab from "../components/UI/tabs/settings/Zanrovi";
+import IzdavacTab from "../components/UI/tabs/settings/Izdavac";
+import PovezTab from "../components/UI/tabs/settings/Povez";
+import FormatTab from "../components/UI/tabs/settings/Format";
+import PismoTab from "../components/UI/tabs/settings/Pismo";
 import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AppRoutes = ({ handleSetToken, setToken, token }) => {
   const userRole = sessionStorage.getItem("libraryRole");
   const navigate = useNavigate();
-  const redirectToBooks = () => {
+
+  const redirectToBooks = useCallback(() => {
     if (userRole === "Učenik") {
       navigate("/books");
     }
-  };
+  }, [navigate, userRole]);
 
   useEffect(() => {
     redirectToBooks();
-  }, []);
+  }, [redirectToBooks]);
 
-   useEffect(() => {
-     if (userRole === "Učenik") {
-       toast.error("Nemate ovlašćenje za pristup ovoj stranici.", {
-         position: toast.POSITION.TOP_CENTER,
-         autoClose: 3000,
-         closeOnClick: true,
-       });
-     }
-   }, [userRole]);
+  useEffect(() => {
+    if (userRole === "Učenik") {
+      toast.error("Nemate ovlašćenje za pristup ovoj stranici.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        closeOnClick: true,
+      });
+    }
+  }, [userRole]);
 
   return (
     <Routes>
@@ -117,8 +126,15 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
 
         <Route path="librarians" element={<Librarians />} />
         <Route path="students" element={<Students />} />
-        <Route path="settings" element={<Settings />} />
         <Route path="authors" element={<Authors />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="polisa" element={<PolisaTab />} />
+        <Route path="kategorije" element={<KategorijeTab />} />
+        <Route path="zanrovi" element={<ZanroviTab />} />
+        <Route path="izdavac" element={<IzdavacTab />} />
+        <Route path="povez" element={<PovezTab />} />
+        <Route path="format" element={<FormatTab />} />
+        <Route path="pismo" element={<PismoTab />} />
 
         <Route path="viewuserdetails/:userId" element={<ViewUserDetails />} />
         <Route path="edituserform/:userId" element={<EditUserForm />} />

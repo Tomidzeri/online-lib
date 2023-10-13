@@ -19,145 +19,182 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 function Copyright(props) {
-return (
-  <Typography
-    variant="body2"
-    color="text.secondary"
-    align="center"
-    {...props}
-  >
-    {"Copyright © "}
-    <Link color="inherit" href="https://mui.com/">
-      bildstudio
-    </Link>{" "}
-    {new Date().getFullYear()}
-    {"."}
-  </Typography>
-);
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        bildstudio
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
 }
 
 const defaultTheme = createTheme();
 
 export default function LoginForm() {
-const { username, password, setUsername, setPassword, handleLogin } = Login();
-const navigate = useNavigate();
+  const { username, password, setUsername, setPassword, handleLogin } = Login();
+  const navigate = useNavigate();
 
-const handleSignUpClick = () => {
-  navigate("/signup");
-};
+  const handleSignUpClick = () => {
+    navigate("/signup");
+  };
 
-return (
-  <ThemeProvider theme={defaultTheme}>
-    <Grid
-      container
-      component="main"
-      sx={{
-        height: "100vh",
-        background: "linear-gradient(to bottom, #86A8E7 30%, #ffffff 90%)",
-      }}
-    >
-      <CssBaseline />
-      <GoogleFontLoader
-        fonts={[
-          {
-            font: "Roboto",
-            weights: [400],
-          },
-        ]}
-      />
+  const [usernameError, setUsernameError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
+
+  const validateForm = () => {
+    setUsernameError("");
+    setPasswordError("");
+
+    let isValid = true;
+
+    if (!username) {
+      setUsernameError("Username is required");
+      isValid = false;
+    }
+
+    if (!password) {
+      setPasswordError("Password is required");
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
+  const handleLoginClick = () => {
+    if (validateForm()) {
+      handleLogin();
+    }
+  };
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
       <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
+        container
+        component="main"
         sx={{
-          backgroundImage: `url(${libraryImage})`,
-          backgroundRepeat: "no-repeat",
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          height: "100vh",
+          background: "linear-gradient(to bottom, #86A8E7 30%, #ffffff 90%)",
         }}
-      />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Box
+      >
+        <CssBaseline />
+        <GoogleFontLoader
+          fonts={[
+            {
+              font: "Roboto",
+              weights: [400],
+            },
+          ]}
+        />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
           sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            backgroundImage: `url(${libraryImage})`,
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              onClick={handleLogin}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box component="form" noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setUsernameError("");
+                }}
+                error={!!usernameError}
+                helperText={usernameError}
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordError("");
+                }}
+                error={!!passwordError}
+                helperText={passwordError}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                onClick={handleLoginClick}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link
+                    variant="body2"
+                    onClick={handleSignUpClick}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link
-                  variant="body2"
-                  onClick={handleSignUpClick}
-                  style={{ cursor: "pointer" }}
-                >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Copyright sx={{ mt: 5 }} />
+              <Copyright sx={{ mt: 5 }} />
+            </Box>
           </Box>
-        </Box>
+        </Grid>
       </Grid>
-    </Grid>
-    <ToastContainer />
-  </ThemeProvider>
-);
+      <ToastContainer />
+    </ThemeProvider>
+  );
 }

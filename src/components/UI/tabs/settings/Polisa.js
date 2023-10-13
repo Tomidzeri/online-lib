@@ -1,13 +1,39 @@
-// PolisaTab.js
 import React from "react";
-import ReusableTable from "../../tables/BorrowsTable";
 
 const PolisaTab = () => {
   return (
     <div>
-      <h3>Polisa</h3>
-      <ReusableTable />
-      {/* Add content specific to the Polisa tab here */}
+      <div className="border-b border-black font-bold my-10">
+        Rok za rezervaciju
+      </div>
+      <div className="flex items-center mb-5">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum eligendi
+        nihil, vel necessitatibus saepe laboriosam! Perspiciatis laboriosam
+        culpa veritatis ea voluptatum commodi tempora unde, dolorum debitis quia
+        id dicta vitae.
+        <input type="text" value="..." className="w-20 mx-2" />
+        <span>dana</span>
+      </div>
+
+      <div className="border-b border-black font-bold my-10">Rok vracanja</div>
+      <div className="flex items-center mb-5">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum eligendi
+        nihil, vel necessitatibus saepe laboriosam! Perspiciatis laboriosam
+        culpa veritatis ea voluptatum commodi tempora unde, dolorum debitis quia
+        id dicta vitae.
+        <input type="text" value="..." className="w-20 mx-2" />
+        <span>dana</span>
+      </div>
+
+      <div className="border-b border-black font-bold my-10">Rok konflikta</div>
+      <div className="flex items-center mb-5">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum eligendi
+        nihil, vel necessitatibus saepe laboriosam! Perspiciatis laboriosam
+        culpa veritatis ea voluptatum commodi tempora unde, dolorum debitis quia
+        id dicta vitae.
+        <input type="text" value="..." className="w-20 mx-2" />
+        <span>dana</span>
+      </div>
     </div>
   );
 };

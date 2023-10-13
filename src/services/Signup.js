@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import libraryAPI from "../utils/api";
+import { toast } from 'react-toastify'; 
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -29,11 +31,19 @@ const Signup = () => {
       
       if (response.status <= 400) {
         navigate("/login");
+        toast.success("Uspešno ste se prijavili!", { 
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
       
       console.log("Signup Response:", response.data);
     } catch (error) {
       console.error("Error during signup:", error);
+      toast.error("Prijava nije uspela. Molimo proverite svoje podatke.", { 
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 

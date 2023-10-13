@@ -56,12 +56,20 @@
   font-weight: bolder;
 }
 
+.listContent .myButton p {
+  padding-left: 1rem;
+}
+
+.listContent button p {
+  padding-left: 1rem;
+}
+
 .icon {
   color: rgb(3, 3, 3);
   font-size: 2rem;
   opacity: 1;
   pointer-events: auto;
-  margin-left: 0.8rem;
+  margin-left: 0.5rem;
 }
 
 .list:hover .link {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -7,7 +7,7 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import GoogleFontLoader from "react-google-font-loader"; // Import GoogleFontLoader
+import GoogleFontLoader from "react-google-font-loader";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import libraryImage from "./library.jpg";
 import Avatar from "@mui/material/Avatar";
@@ -15,17 +15,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Paper from "@mui/material/Paper";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useNavigate } from "react-router-dom";
-
 import Signup from "../../services/Signup";
 
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
@@ -36,14 +30,20 @@ function Copyright(props) {
   );
 }
 
-const defaultTheme = createTheme();
-
-export default function SignupForm() {
+function SignupForm() {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate("/login"); 
+    navigate("/login");
   };
+
+  // State variables for error messages
+  const [nameError, setNameError] = useState("");
+  const [surnameError, setSurnameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordConfirmationError, setPasswordConfirmationError] = useState("");
 
   const {
     name,
@@ -60,6 +60,66 @@ export default function SignupForm() {
     setPasswordConfirmation,
     handleSignup,
   } = Signup();
+
+  const handleFieldFocus = (errorSetter) => {
+    errorSetter(""); // Clear the error when the field gains focus
+  };
+
+  const validateForm = () => {
+    // Reset all error messages
+    setNameError("");
+    setSurnameError("");
+    setEmailError("");
+    setUsernameError("");
+    setPasswordError("");
+    setPasswordConfirmationError("");
+
+    let isValid = true;
+
+    if (!name) {
+      setNameError("Name is required");
+      isValid = false;
+    }
+
+    if (!surname) {
+      setSurnameError("Surname is required");
+      isValid = false;
+    }
+
+    const emailRegex = /^\S+@\S+\.\S+/;
+    if (!email) {
+      setEmailError("Email is required");
+      isValid = false;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Email is not valid");
+      isValid = false;
+    }
+
+    if (!username) {
+      setUsernameError("Username is required");
+      isValid = false;
+    }
+
+    if (!password) {
+      setPasswordError("Password is required");
+      isValid = false;
+    }
+
+    if (password !== passwordConfirmation) {
+      setPasswordConfirmationError("Passwords do not match");
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
+  const handleSignupClick = () => {
+    if (validateForm()) {
+      handleSignup();
+    }
+  };
+
+  const defaultTheme = createTheme();
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -112,11 +172,7 @@ export default function SignupForm() {
             <Typography component="h1" variant="h5">
               Sign Up
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -127,7 +183,9 @@ export default function SignupForm() {
                 autoComplete="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                autoFocus
+                onFocus={() => handleFieldFocus(setNameError)} // Clear the error when focused
+                error={!!nameError}
+                helperText={nameError}
               />
               <TextField
                 margin="normal"
@@ -139,6 +197,9 @@ export default function SignupForm() {
                 autoComplete="surname"
                 value={surname}
                 onChange={(e) => setSurname(e.target.value)}
+                onFocus={() => handleFieldFocus(setSurnameError)} // Clear the error when focused
+                error={!!surnameError}
+                helperText={surnameError}
               />
               <TextField
                 margin="normal"
@@ -150,6 +211,9 @@ export default function SignupForm() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onFocus={() => handleFieldFocus(setEmailError)} // Clear the error when focused
+                error={!!emailError}
+                helperText={emailError}
               />
               <TextField
                 margin="normal"
@@ -161,6 +225,9 @@ export default function SignupForm() {
                 autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                onFocus={() => handleFieldFocus(setUsernameError)} // Clear the error when focused
+                error={!!usernameError}
+                helperText={usernameError}
               />
               <TextField
                 margin="normal"
@@ -173,6 +240,9 @@ export default function SignupForm() {
                 autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => handleFieldFocus(setPasswordError)} // Clear the error when focused
+                error={!!passwordError}
+                helperText={passwordError}
               />
               <TextField
                 margin="normal"
@@ -185,6 +255,9 @@ export default function SignupForm() {
                 autoComplete="new-password"
                 value={passwordConfirmation}
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
+                onFocus={() => handleFieldFocus(setPasswordConfirmationError)} // Clear the error when focused
+                error={!!passwordConfirmationError}
+                helperText={passwordConfirmationError}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -194,7 +267,7 @@ export default function SignupForm() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={handleSignup}
+                onClick={handleSignupClick}
               >
                 Sign Up
               </Button>
@@ -205,7 +278,11 @@ export default function SignupForm() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link variant="body2" onClick={handleLoginClick} style={{ cursor: 'pointer' }}>
+                  <Link
+                    variant="body2"
+                    onClick={handleLoginClick}
+                    style={{ cursor: "pointer" }}
+                  >
                     Already have an account? Sign in
                   </Link>
                 </Grid>
@@ -218,3 +295,5 @@ export default function SignupForm() {
     </ThemeProvider>
   );
 }
+
+export default SignupForm;

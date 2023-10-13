@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Tab from "../../components/UI/tabs/Tab";
+import CustomTab from "../../components/UI/tabs/Tab";
 import Cancel from "../../components/UI/buttons/Cancel";
 import Submit from "../../components/UI/buttons/Submit";
 import ReactQuill from "react-quill";
@@ -59,29 +59,29 @@ const StoreBook = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //   const requiredFields = [
-    //     "title",
-    //     "kratki_sadrzaj",
-    //     "knjigaKolicina",
-    //     "authors",
-    //     "publisher_id",
-    //     "godinaIzdavanja",
-    //     "categories",
-    //     "genres",
-    //     "language_id",
-    //     "brStrana",
-    //     "isbn",
-    //     "script_id",
-    //     "bookbind_id",
-    //     "format_id",
-    //   ];
+        const requiredFields = [
+          "title",
+          "kratki_sadrzaj",
+          "knjigaKolicina",
+          "authors",
+          "publisher_id",
+          "godinaIzdavanja",
+          "categories",
+          "genres",
+          "language_id",
+          "brStrana",
+          "isbn",
+          "script_id",
+          "bookbind_id",
+          "format_id",
+        ];
 
-    //   const missingFields = requiredFields.filter((field) => !formData[field]);
+        const missingFields = requiredFields.filter((field) => !formData[field]);
 
-    //   if (missingFields.length > 0) {
-    //     console.error("Missing required fields:", missingFields);
-    //     return;
-    //   }
+        if (missingFields.length > 0) {
+          console.error("Missing required fields:", missingFields);
+          return;
+        }
 
     const bookData = {
       nazivKnjiga: formData.title,
@@ -116,7 +116,7 @@ const StoreBook = () => {
       <div className="w-full">
         <h2 className="text-3xl font-semibold mb-4">Nova Knjiga</h2>
         <form>
-          <Tab
+          <CustomTab
             labels={["Basic Info", "Specifications", "Multimedia"]}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
@@ -175,8 +175,8 @@ const StoreBook = () => {
                   <option value="">Select Author</option>
                   {authorOptions.map((author) => (
                     <option key={author.id} value={author.id}>
-                      {author.name}
-                    </option>
+                    {author.name} {author.surname}
+                  </option>
                   ))}
                 </select>
               </div>
@@ -338,7 +338,7 @@ const StoreBook = () => {
                 className="mt-1"
               />
             </div>
-          </Tab>
+          </CustomTab>
         </form>
       </div>
       <div className="flex justify-end items-end mt-auto p-4 mb-8">
