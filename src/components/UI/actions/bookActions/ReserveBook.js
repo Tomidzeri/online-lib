@@ -76,7 +76,7 @@ const ReserveBook = () => {
   };
 
   return (
-    <div className="mt-14 ml-15">
+    <div className="mt-16">
       <div className="w-full">
         <div className="flex flex-col border-b border-gray-300 w-full pb-2 mb-2">
           <h2 className="text-2xl font-bold text-left ml-20">Rezerviši Knjigu</h2>

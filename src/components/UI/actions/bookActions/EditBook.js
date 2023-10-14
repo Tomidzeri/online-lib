@@ -129,9 +129,9 @@ const EditBook = () => {
   };
 
   return (
-    <div className="mt-16 ml-15">
+    <div className="mt-16">
       <div className="w-full">
-        <div className="border-b border-gray-300 w-full pb-4 mb-4">
+        <div className="border-b border-gray-300 w-full pb-6 mb-4">
           <h2 className="text-4xl font-bold text-left ml-20">Izmijeni podatke</h2>
         </div>
         <form className="ml-20">
@@ -371,11 +371,11 @@ const EditBook = () => {
           </Tab>
         </form>
       </div>
-      <div className="flex justify-end items-end mt-auto p-4 mb-8">
+      <div className="flex justify-end items-end p-4 mt-28">
         <Submit onClick={handleSubmit} className="mr-2">
-          Update
+          Sacuvaj
         </Submit>
-        <Cancel onClick={() => navigate(`/books`)}>Cancel</Cancel>
+        <Cancel onClick={() => navigate(`/books`)}>Ponisti</Cancel>
       </div>
     </div>
   );

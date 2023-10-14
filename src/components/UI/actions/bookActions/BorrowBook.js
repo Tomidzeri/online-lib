@@ -77,9 +77,9 @@ const BorrowBook = () => {
   };
 
   return (
-    <div className="mt-14 ml-15">
+    <div className="mt-16">
       <div className="w-full">
-        <div className="flex flex-col border-b border-gray-300 w-full pb-2 mb-2">
+        <div className="flex flex-col border-b border-gray-300 w-full pb-2 mb-2 ml-6">
           <h2 className="text-2xl font-bold text-left ml-16">Izdaj Knjigu</h2>
           <div className="flex flex-row">
             <button
@@ -92,7 +92,7 @@ const BorrowBook = () => {
             <p>&nbsp;{book?.title}</p>
           </div>
         </div>
-        <div className="flex justify-baseline ml-16">
+        <div className="flex justify-baseline ml-20">
           <form className="w-1/2">
             <div className="mb-4">
               <label

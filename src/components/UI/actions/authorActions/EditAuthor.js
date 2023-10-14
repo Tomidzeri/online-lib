@@ -29,7 +29,6 @@ const EditAuthor = () => {
         });
       } catch (error) {
         console.error("Greška pri preuzimanju podataka o autoru:", error);
-        // Dodaj notifikaciju za grešku
         toast.error("Greška pri preuzimanju podataka o autoru.");
       }
     };
@@ -41,11 +40,9 @@ const EditAuthor = () => {
     try {
       const updatedData = await updateAuthorData(authorId, formData);
       console.log("Podaci o autoru su ažurirani:", updatedData);
-      // Dodaj notifikaciju za uspešno ažuriranje
       toast.success("Podaci o autoru su uspešno ažurirani.");
     } catch (error) {
       console.error("Greška pri ažuriranju podataka o autoru:", error);
-      // Dodaj notifikaciju za grešku pri ažuriranju
       toast.error("Greška pri ažuriranju podataka o autoru.");
     }
   };
@@ -71,7 +68,7 @@ const EditAuthor = () => {
   ];
 
   return (
-    <div className="mt-12 ml-15">
+    <div className="mt-14">
       <div className="w-full">
         <div className="flex justify-between border-b border-gray-300 w-full">
           <div className="flex flex-col">
@@ -96,7 +93,7 @@ const EditAuthor = () => {
           setFormData={setFormData}
         />
       </div>
-      <div className="flex flex-row justify-end items-end">
+      <div className="flex justify-end mt-72">
         <Submit onClick={handleUpdateAuthor}>Sačuvaj</Submit>
       </div>
     </div>

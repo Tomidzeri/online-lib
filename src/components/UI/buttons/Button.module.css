@@ -30,6 +30,7 @@
     border-radius: 0.25rem;
     border: none;
     cursor: pointer;
+    margin-right: 1rem;
   }
 
   .submit:hover {

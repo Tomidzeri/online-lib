@@ -2,7 +2,7 @@
   position: relative;
   display: inline-block;
   border-radius: 10px;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1rem;
 }
 
 .dropdownBtn {
@@ -64,4 +64,12 @@
   font-weight: bold;
   background-color: #ffffff; 
   color: #000000; 
+}
+
+.verticalDots {
+  width: 5px;
+  height: 5px;
+  background-color: #000;
+  border-radius: 50%;
+  margin: 3px auto; 
 }

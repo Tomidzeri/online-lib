@@ -11,7 +11,7 @@ import useBookDetails from "../../../../queries/knjige/useBookDetails";
 import { useNavigate } from "react-router-dom";
 import SearchBox from "../../search/SearchBox";
 import { BsSearch } from "react-icons/bs";
-import { writeOffBook } from "../../../../queries/knjige/useWriteOffBook"; // Import the writeOffBook function
+import { writeOffBook } from "../../../../queries/knjige/useWriteOffBook"; 
 import { toast } from "react-toastify";
 
 const WriteOffBook = () => {
@@ -180,7 +180,7 @@ const WriteOffBook = () => {
   };
 
   return (
-    <div className="mt-14 ml-15">
+    <div className="mt-16">
       <div className="w-full mb-80">
         <div className="border-b border-gray-300 w-full text-left flex flex-row">
           <div className="flex flex-row ml-20">

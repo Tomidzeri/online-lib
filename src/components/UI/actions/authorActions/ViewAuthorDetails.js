@@ -29,7 +29,7 @@ const ViewAuthorDetails = () => {
   };
 
   return (
-    <div className="mt-12 ml-15">
+    <div className="mt-14">
       <div className="w-full">
         <div className="flex justify-between items-center border-b border-gray-300 w-full">
           <div className="flex flex-col justify-baseline items-baseline">
@@ -47,21 +47,42 @@ const ViewAuthorDetails = () => {
               Evidencija Autora
             </button>
           </div>
-          <AuthorDropdownList
-            author={author}
-            onDelete={() => handleDeleteAuthor(author.id)}
-          />
+          <div>
+            <div className="flex">
+              <div className="border-l h-10 border-gray-400 mr-8"></div>
+              <AuthorDropdownList
+                author={author}
+                onDelete={() => handleDeleteAuthor(author.id)}
+              />
+            </div>
+          </div>
         </div>
         <Grid container spacing={4}>
-        <Grid item xs={12} sm={6} sx={{ marginLeft: "5rem", marginTop: "1.5rem" }}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            sx={{ marginLeft: "5rem", marginTop: "1.5rem" }}
+          >
             <Paper elevation={3} sx={{ padding: "2rem", marginBottom: "2rem" }}>
-              <Typography variant="h6">Ime i prezime:</Typography>
+              <Typography
+                variant="h6"
+                style={{ opacity: 0.5, fontSize: "16px" }}
+              >
+                Ime i prezime:
+              </Typography>
+
               <Typography>
                 {author.name} {author.surname}
               </Typography>
             </Paper>
             <Paper elevation={3} sx={{ padding: "2rem", marginBottom: "2rem" }}>
-              <Typography variant="h6">Biografija:</Typography>
+              <Typography
+                variant="h6"
+                style={{ opacity: 0.5, fontSize: "16px" }}
+              >
+                Biografija:
+              </Typography>
               <div dangerouslySetInnerHTML={{ __html: author.bio }} />
             </Paper>
           </Grid>

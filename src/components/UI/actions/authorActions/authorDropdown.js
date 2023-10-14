@@ -38,8 +38,11 @@ const AuthorDropdownList = ({ author, onDelete, showEditAndDeleteButtons }) => {
           showDropdown ? classes.active : ""
         }`}
         onClick={() => setShowDropdown(!showDropdown)}
+        style={{ display: "flex", flexDirection: "column" }}
       >
-        ...
+        <div className={classes.verticalDots}></div>
+        <div className={classes.verticalDots}></div>
+        <div className={classes.verticalDots}></div>
       </button>
       {showDropdown && (
         <div className={`${classes.dropdownContent} ${classes.show}`}>
