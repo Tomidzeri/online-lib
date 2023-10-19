@@ -6,12 +6,14 @@ import LibrariansDropdown from "./LibrarianDropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Pagination from "../pagination/Pagination";
+import { Link } from "react-router-dom";
+import "./styles.css";
 
 const SortList = () => {
   const [selectedBook, setSelectedBook] = useState("");
   const [selectedStudent, setSelectedStudent] = useState("");
   const [selectedLibrarian, setSelectedLibrarian] = useState("");
-  const [selectedSortCategory, setSelectedSortCategory] = useState("");
+  const [selectedSortCategory, setSelectedSortCategory] = useState("izdate");
   const [selectedDate, setSelectedDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
@@ -25,19 +27,22 @@ const SortList = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchBorrowedBooks()
-      .then((data) => {
+
+    const fetchData = async () => {
+      try {
+        const data = await fetchBorrowedBooks();
         setIzdateBooks(data.izdate || []);
         setOtpisaneBooks(data.otpisane || []);
         setVraceneBooks(data.vracene || []);
         setPrekoraceneBooks(data.prekoracene || []);
-
-        setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching borrowed books:", error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -74,9 +79,11 @@ const SortList = () => {
 
     if (selectedLibrarian) {
       filteredBorrowedBooks = filteredBorrowedBooks.filter(
-        (book) => book.librarian?.name === selectedLibrarian
+        (book) => book.bibliotekar0?.name === selectedLibrarian
       );
     }
+
+    console.log(filteredBorrowedBooks);
 
     setBorrowedBooks(filteredBorrowedBooks);
   }, [
@@ -154,22 +161,75 @@ const SortList = () => {
     return `${daysAgo} days ago`;
   };
 
-  const formatBorrowedBookInfo = (book) => {
-    let sentence = "";
-
-    if (selectedSortCategory === "izdate") {
-      sentence = `${book.bibliotekar0?.name} ${book.bibliotekar0?.surname} je izdao/la knjigu ${book.knjiga.title} uceniku ${book.student.name} ${book.student.surname} datuma ${book.borrow_date}`;
-    } else if (selectedSortCategory === "otpisane") {
-      sentence = `${book.bibliotekar0?.name} ${book.bibliotekar0?.surname} je otpisao/la knjigu ${book.knjiga.title} koja je bila izdata uceniku ${book.student.name} ${book.student.surname} datuma ${book.borrow_date}`;
-    } else if (selectedSortCategory === "vracene") {
-      sentence = `Ucenik ${book.student.name} ${book.student.surname} je vratio/la knjigu ${book.knjiga.title} izdatu od strane ${book.bibliotekar0?.name} ${book.bibliotekar0.surname} datuma ${book.return_date}`;
-    }
-
-    return sentence;
+  const formatDate = (date) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(date).toLocaleDateString(undefined, options);
   };
 
+  const formatBorrowedBookInfo = (book) => {
+    let sentence = "";
+  
+    if (selectedSortCategory === "izdate") {
+      sentence = (
+        <span>
+          <Link to={`/viewuserdetails/${book.bibliotekar0.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {book.bibliotekar0?.name} {book.bibliotekar0?.surname}
+          </Link>{" "}
+          je izdao/la knjigu{" "}
+          <Link to={`/viewbook/${book.knjiga.id}`} style={{ textDecoration: 'none', fontWeight: 'bold', color: 'black' }}>
+            {book.knjiga.title}
+          </Link>{" "}
+          uceniku{" "}
+          <Link to={`/viewuserdetails/${book.student.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {book.student.name} {book.student.surname}
+          </Link>{" "}
+          datuma {formatDate(book.borrow_date)}
+        </span>
+      );
+    } else if (selectedSortCategory === "otpisane") {
+      sentence = (
+        <span>
+          <Link to={`/viewuserdetails/${book.bibliotekar0.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {book.bibliotekar0?.name} {book.bibliotekar0?.surname}
+          </Link>{" "}
+          je otpisao/la knjigu{" "}
+          <Link to={`/viewbook/${book.knjiga.id}`} style={{ textDecoration: 'none', fontWeight: 'bold', color: 'black' }}>
+            {book.knjiga.title}
+          </Link>{" "}
+          koja je bila izdata uceniku{" "}
+          <Link to={`/viewuserdetails/${book.student.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {book.student.name} {book.student.surname}
+          </Link>{" "}
+          datuma {formatDate(book.borrow_date)}
+        </span>
+      );
+    } else if (selectedSortCategory === "vracene") {
+      sentence = (
+        <span>
+          Ucenik{" "}
+          <Link to={`/viewuserdetails/${book.student.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {book.student.name} {book.student.surname}
+          </Link>{" "}
+          je vratio/la knjigu{" "}
+          <Link to={`/viewbook/${book.knjiga.id}`} style={{ textDecoration: 'none', fontWeight: 'bold', color: 'black' }}>
+            {book.knjiga.title}
+          </Link>{" "}
+          izdatu od strane{" "}
+          <Link to={`/viewuserdetails/${book.bibliotekar0.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {book.bibliotekar0?.name} {book.bibliotekar0.surname}
+          </Link>{" "}
+          datuma {formatDate(book.borrow_date)}
+        </span>
+      );
+    }
+  
+    return sentence;
+  };
+  
+
   const filteredBorrowedBooks = borrowedBooks.filter((book) => {
-    const searchString = formatBorrowedBookInfo(book).toLowerCase();
+    const info = formatBorrowedBookInfo(book);
+    const searchString = info ? info.toString().toLowerCase() : "";
     return searchString.includes(searchTerm.toLowerCase());
   });
 

@@ -1,43 +1,94 @@
 import React, { useEffect, useState } from "react";
 import { fetchBorrowedBooks } from "../../queries/knjige/useBookBorrow";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ActivityList = () => {
   const [loading, setLoading] = useState(false);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
-  
-  const [activityType, setActivityType] = useState("all");
+
+  const [activityType, setActivityType] = useState("izdate");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
-    fetchBorrowedBooks()
-      .then((data) => {
-        setBorrowedBooks(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching borrowed books:", error);
-        setLoading(false);
-      });
+    const fetchData = async () => {
+      const borrowedBooksData = await fetchBorrowedBooks();
+
+      setBorrowedBooks(borrowedBooksData);
+      setLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   const navigateToActivities = () => {
     navigate("/activities");
   };
 
+  const formatDate = (date) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(date).toLocaleDateString(undefined, options);
+  };
+
   const renderSentence = (activity) => {
     let sentence = "";
 
     if (activityType === "izdate") {
-      sentence = `${activity.bibliotekar0?.name} ${activity.bibliotekar0?.surname} je izdao/la knjigu ${activity.knjiga.title} uceniku ${activity.student.name} ${activity.student.surname} datuma ${activity.borrow_date}`;
+      sentence = (
+        <span>
+          <Link to={`/viewuserdetails/${activity.bibliotekar0.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {activity.bibliotekar0?.name} {activity.bibliotekar0?.surname}
+          </Link>{" "}
+          je izdao/la knjigu{" "}
+          <Link to={`/viewbook/${activity.knjiga.id}`} style={{ textDecoration: 'none', fontWeight: 'bold', color: 'black' }}>
+            {activity.knjiga.title}
+          </Link>{" "}
+          uceniku{" "}
+          <Link to={`/viewuserdetails/${activity.student.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {activity.student.name} {activity.student.surname}
+          </Link>{" "}
+          datuma {formatDate(activity.borrow_date)}
+        </span>
+      );
     } else if (activityType === "otpisane") {
-      sentence = `${activity.bibliotekar0?.name} ${activity.bibliotekar0?.surname} je otpisao/la knjigu ${activity.knjiga.title} koja je bila izdata uceniku ${activity.student.name} ${activity.student.surname} datuma ${activity.borrow_date}`;
+      sentence = (
+        <span>
+          <Link to={`/viewuserdetails/${activity.bibliotekar0.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {activity.bibliotekar0?.name} {activity.bibliotekar0?.surname}
+          </Link>{" "}
+          je otpisao/la knjigu{" "}
+          <Link to={`/viewbook/${activity.knjiga.id}`} style={{ textDecoration: 'none', fontWeight: 'bold', color: 'black' }}>
+            {activity.knjiga.title}
+          </Link>{" "}
+          koja je bila izdata uceniku{" "}
+          <Link to={`/viewuserdetails/${activity.student.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {activity.student.name} {activity.student.surname}
+          </Link>{" "}
+          datuma {formatDate(activity.borrow_date)}
+        </span>
+      );
     } else if (activityType === "vracene") {
-      sentence = `Ucenik ${activity.student.name} ${activity.student.surname} je vratio/la knjigu ${activity.knjiga.title} izdatu od strane ${activity.bibliotekar0?.name} ${activity.bibliotekar0.surname} datuma ${activity.return_date}`;
+      sentence = (
+        <span>
+          Ucenik{" "}
+          <Link to={`/viewuserdetails/${activity.student.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {activity.student.name} {activity.student.surname}
+          </Link>{" "}
+          je vratio/la knjigu{" "}
+          <Link to={`/viewbook/${activity.knjiga.id}`} style={{ textDecoration: 'none', fontWeight: 'bold', color: 'black' }}>
+            {activity.knjiga.title}
+          </Link>{" "}
+          izdatu od strane{" "}
+          <Link to={`/viewuserdetails/${activity.bibliotekar0.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
+            {activity.bibliotekar0?.name} {activity.bibliotekar0.surname}
+          </Link>{" "}
+          datuma {formatDate(activity.borrow_date)}
+        </span>
+      );
     } else if (activityType === "prekoracene") {
-      //  "prekoracene" 
+      //  "prekoracene"
     }
 
     return sentence;
@@ -89,12 +140,14 @@ const ActivityList = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <ul className="mt-4 space-y-2">
-          {borrowedBooks[activityType === "all" ? "izdate" : activityType]?.slice(-7).map((activity, index) => (
-            <li key={index} className="bg-white rounded-md shadow-md p-4">
-              {renderSentence(activity)}
-            </li>
-          ))}
+        <ul className="mt-4 space-y-2 text-left">
+          {borrowedBooks[activityType === "all" ? "izdate" : activityType]
+            ?.slice(-7)
+            .map((activity, index) => (
+              <li key={index} className="bg-white rounded-md shadow-md p-4">
+                {renderSentence(activity)}
+              </li>
+            ))}
         </ul>
       )}
       <button

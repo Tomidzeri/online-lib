@@ -31,7 +31,7 @@ function Login() {
       const userDataResponse = await ProfileData();
       const user = userDataResponse.data.data;
 
-      console.log(user.role);
+    console.log(user.role);
 
       sessionStorage.setItem("libraryRole", user.role);
 

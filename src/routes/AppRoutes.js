@@ -55,7 +55,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
     if (userRole === "Učenik") {
       navigate("/books");
     }
-  }, [navigate, userRole]);
+  }, [userRole]);
 
   useEffect(() => {
     redirectToBooks();
