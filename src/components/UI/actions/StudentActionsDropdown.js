@@ -29,7 +29,7 @@ const UserActionsDropdown = ({ user, onDelete }) => {
   }, []);
 
   const handleViewDetailsClick = () => {
-    navigate(`/viewuserdetails/${user.id}`); 
+    navigate(`/viewstudentdetails/${user.id}`); 
     closeDropdown();
   };
 

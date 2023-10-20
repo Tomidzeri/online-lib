@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserActionsDropdown from "../../components/UI/actions/UserActionsDropdown";
+import StudentActionsDropdown from "../../components/UI/actions/StudentActionsDropdown";
 import ReusableTable from "../../components/UI/tables/Table";
 import useFetchStudents from "../../queries/korisnici/useFetchStudents";
 import Button from "../../components/UI/buttons/PlusButton";
@@ -60,17 +60,17 @@ const Students = ({ userProfile }) => {
     .map((student) => [
       student.id,
       <div className="flex items-center">
-      <img
-        src={student.photoPath} 
-        alt="slika"
-        className="w-8 h-8 rounded-full mr-2" 
-      />
-      {`${student.name} ${student.surname}`}
-    </div>,
+        <img
+          src={student.photoPath}
+          alt="slika"
+          className="w-8 h-8 rounded-full mr-2"
+        />
+        {`${student.name} ${student.surname}`}
+      </div>,
       student.email,
       student.role,
       student.lastLoggedTime,
-      <UserActionsDropdown
+      <StudentActionsDropdown
         user={student}
         onDelete={() => handleDeleteUser(student.id)}
       />,
@@ -81,7 +81,7 @@ const Students = ({ userProfile }) => {
       <div className="w-full">
         <div className="border-b border-gray-300 w-full pb-6 mb-4 ml-4 fixed">
           <h2 className="text-4xl font-bold text-left ml-20">Ucenici</h2>
-          </div>
+        </div>
         <div className="flex justify-between">
           <div className="flex justify-between w-full mt-20 mb-2 ml-24">
             <Button

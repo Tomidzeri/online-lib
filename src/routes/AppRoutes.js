@@ -14,6 +14,7 @@ import Settings from "../pages/Settings";
 import UserAddForm from "../components/UI/actions/userActions/UserAddForm";
 import EditUserForm from "../components/UI/actions/userActions/EditUserForm";
 import ViewUserDetails from "../components/UI/actions/userActions/ViewUserDetails";
+import ViewStudentDetails from "../components/UI/actions/userActions/studentPage/ViewStudentDetails.js";
 import Statistics from "../layout/dashboard-content/Statistics";
 import Activities from "../layout/dashboard-content/Activities";
 import Reservations from "../layout/dashboard-content/Reservations";
@@ -137,6 +138,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="pismo" element={<PismoTab />} />
 
         <Route path="viewuserdetails/:userId" element={<ViewUserDetails />} />
+        <Route path="viewstudentdetails/:userId" element={<ViewStudentDetails />} />
         <Route path="edituserform/:userId" element={<EditUserForm />} />
         <Route path="useraddform" element={<UserAddForm />} />
 
