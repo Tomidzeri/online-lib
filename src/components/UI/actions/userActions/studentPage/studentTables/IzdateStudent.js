@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import BorrowsActionsDropdown from "../../../BorrowsActionsDropdown";
+import IzdateActionsDropdown from "../../../borrowActions/IzdateActions";
 import { fetchBorrowedBooks } from "../../../../../../queries/knjige/useBookBorrow";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { formatDistance, parseISO, isAfter, format } from "date-fns";
@@ -55,21 +55,20 @@ const IzdateKnjigeTable = ({ searchTerm }) => {
   }, []);
 
   const filteredBorrowedBooks = borrowedBooks
-  .filter((book) => book.student.id === parseInt(userId, 10))
-  .filter((book) => {
-    const searchString = `${book.knjiga.title} ${book.student.name} ${
-      book.student.surname
-    } ${book.borrow_date} ${book.return_date} ${calculateDuration(
-      book.borrow_date,
-      book.return_date
-    )} ${
-      book.bibliotekar0
-        ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}`
-        : ""
-    }`.toLowerCase();
-    return searchString.includes(searchTerm.toLowerCase());
-  });
-
+    .filter((book) => book.student.id === parseInt(userId, 10))
+    .filter((book) => {
+      const searchString = `${book.knjiga.title} ${book.student.name} ${
+        book.student.surname
+      } ${book.borrow_date} ${book.return_date} ${calculateDuration(
+        book.borrow_date,
+        book.return_date
+      )} ${
+        book.bibliotekar0
+          ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}`
+          : ""
+      }`.toLowerCase();
+      return searchString.includes(searchTerm.toLowerCase());
+    });
 
   const formatDate = (date) => {
     return date ? format(parseISO(date), "yyyy-MM-dd") : "";
@@ -88,7 +87,7 @@ const IzdateKnjigeTable = ({ searchTerm }) => {
       book.bibliotekar0
         ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}`
         : "",
-      <BorrowsActionsDropdown book={book} />,
+      <IzdateActionsDropdown book={book} id={book.id} />,
     ]);
 
   const customTableHead = [

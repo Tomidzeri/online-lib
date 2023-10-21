@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ReusableTable from "../../../components/UI/tables/Table";
-import BorrowsActionsDropdown from "../../../components/UI/actions/BorrowsActionsDropdown";
 import { fetchBorrowedBooks } from "../../../queries/knjige/useBookBorrow";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { formatDistance, parseISO, isAfter, format } from "date-fns";
 import Pagination from "../../../components/UI/pagination/Pagination";
+import IzdateActionsDropdown from "../../../components/UI/actions/borrowActions/IzdateActions";
 
 const IzdateKnjigeTable = ({ searchTerm }) => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
@@ -84,7 +84,7 @@ const IzdateKnjigeTable = ({ searchTerm }) => {
       book.bibliotekar0
         ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}`
         : "",
-      <BorrowsActionsDropdown book={book} />,
+      <IzdateActionsDropdown book={book} id={book.id}  />,
     ]);
 
   const customTableHead = [

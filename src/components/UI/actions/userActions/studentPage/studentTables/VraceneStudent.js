@@ -5,6 +5,7 @@ import { formatDistance, parseISO, format } from "date-fns";
 import Pagination from "../../../../pagination/Pagination";
 import ReusableTable from "../../../../tables/Table";
 import { useParams } from "react-router-dom";
+import VraceneActionsDropdown from "../../../borrowActions/VraceneActions";
 
 const VraceneKnjigeTable = ({ searchTerm }) => {
   const [returnedBooks, setReturnedBooks] = useState([]);
@@ -74,6 +75,7 @@ const VraceneKnjigeTable = ({ searchTerm }) => {
       book.bibliotekar0
         ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}`
         : "",
+        <VraceneActionsDropdown book={book} id={book.id}  />,
     ]);
 
   const customTableHead = [
@@ -83,6 +85,7 @@ const VraceneKnjigeTable = ({ searchTerm }) => {
     "Datum vraćanja",
     "Zadrzavanje knjige",
     "Knjigu primio",
+    "Opcije",
   ];
 
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReusableTable from "../../../../tables/Table";
-import BorrowsActionsDropdown from "../../../BorrowsActionsDropdown";
+import ArhiviraneActionsDropdown from "../../../borrowActions/ArhiviraneActions";
 import { AllReservations } from "../../../../../../queries/knjige/useAllReservations";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { parseISO, addDays, format } from "date-fns";
@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 
 const ArhiviraneRezervacijeTable = ({ searchTerm }) => {
   const [archivedBooks, setArchivedBooks] = useState([]);
-
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -87,7 +86,7 @@ const ArhiviraneRezervacijeTable = ({ searchTerm }) => {
       ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}`
       : "",
     book.status,
-    <BorrowsActionsDropdown book={book} />,
+    <ArhiviraneActionsDropdown book={book} id={book.knjiga.id} />,
   ]);
 
   const customTableHead = [

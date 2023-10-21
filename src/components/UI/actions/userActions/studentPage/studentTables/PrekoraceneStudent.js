@@ -4,7 +4,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { formatDistance, parseISO, isAfter, format, differenceInDays } from "date-fns";
 import Pagination from "../../../../pagination/Pagination";
 import ReusableTable from "../../../../tables/Table";
-import BorrowsActionsDropdown from "../../../BorrowsActionsDropdown";
+import PrekoraceneActionsDropdown from "../../../borrowActions/PrekoraceneActions";
 import { useParams } from "react-router-dom";
 
 const PrekoraceneKnjigeTable = ({ searchTerm }) => {
@@ -102,7 +102,7 @@ const PrekoraceneKnjigeTable = ({ searchTerm }) => {
       `${book.student.name} ${book.student.surname}`,
       calculateOverdueDays(book.return_date),
       calculateDuration(book.borrow_date, book.return_date),
-      <BorrowsActionsDropdown book={book} />,
+      <PrekoraceneActionsDropdown book={book} id={book.id}  />,
     ]);
 
   const customTableHead = [

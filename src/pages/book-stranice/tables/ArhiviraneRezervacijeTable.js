@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReusableTable from "../../../components/UI/tables/Table";
-import BorrowsActionsDropdown from "../../../components/UI/actions/BorrowsActionsDropdown";
+import ArhiviraneActionsDropdown from "../../../components/UI/actions/borrowActions/ArhiviraneActions";
 import { AllReservations } from "../../../queries/knjige/useAllReservations";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { parseISO, addDays, format } from "date-fns";
@@ -80,7 +80,7 @@ const ArhiviraneRezervacijeTable = ({ searchTerm }) => {
         ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}`
         : "",
       book.status,
-      <BorrowsActionsDropdown book={book} />,
+      <ArhiviraneActionsDropdown book={book} id={book.knjiga.id} />,
     ]);
 
   const customTableHead = [

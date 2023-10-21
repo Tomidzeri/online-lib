@@ -43,6 +43,9 @@ import IzdavacTab from "../components/UI/tabs/settings/Izdavac";
 import PovezTab from "../components/UI/tabs/settings/Povez";
 import FormatTab from "../components/UI/tabs/settings/Format";
 import PismoTab from "../components/UI/tabs/settings/Pismo";
+import ViewIzdateInfo from "../components/UI/actions/bookActions/viewTransactions/ViewIzdate";
+import ViewPrekoraceneInfo from "../components/UI/actions/bookActions/viewTransactions/ViewPrekoracene";
+import ViewVraceneInfo from "../components/UI/actions/bookActions/viewTransactions/ViewVracene";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
@@ -138,7 +141,10 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="pismo" element={<PismoTab />} />
 
         <Route path="viewuserdetails/:userId" element={<ViewUserDetails />} />
-        <Route path="viewstudentdetails/:userId" element={<ViewStudentDetails />} />
+        <Route
+          path="viewstudentdetails/:userId"
+          element={<ViewStudentDetails />}
+        />
         <Route path="edituserform/:userId" element={<EditUserForm />} />
         <Route path="useraddform" element={<UserAddForm />} />
 
@@ -153,6 +159,10 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="returnbook/:bookId" element={<ReturnBook />} />
         <Route path="writeoffbook/:bookId" element={<WriteOffBook />} />
         <Route path="reservebook/:bookId" element={<ReserveBook />} />
+
+        <Route path="viewizdate/:id" element={<ViewIzdateInfo />} />
+        <Route path="viewprekoracene/:id" element={<ViewPrekoraceneInfo />} />
+        <Route path="viewvracene/:id" element={<ViewVraceneInfo />} />
       </Route>
 
       <Route path="/" element={<Navigate to="/login" />} />

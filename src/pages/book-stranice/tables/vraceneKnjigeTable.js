@@ -4,6 +4,7 @@ import { fetchBorrowedBooks } from '../../../queries/knjige/useBookBorrow';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { formatDistance, parseISO, format } from 'date-fns';
 import Pagination from '../../../components/UI/pagination/Pagination';
+import VraceneActionsDropdown from '../../../components/UI/actions/borrowActions/VraceneActions';
 
 const VraceneKnjigeTable = ({ searchTerm }) => {
   const [returnedBooks, setReturnedBooks] = useState([]);
@@ -61,6 +62,7 @@ const VraceneKnjigeTable = ({ searchTerm }) => {
     formatDate(book.return_date),
     calculateDuration(book.return_date),
     book.bibliotekar0 ? `${book.bibliotekar0.name} ${book.bibliotekar0.surname}` : '',
+    <VraceneActionsDropdown book={book} id={book.id}  />,
   ]);
 
 const customTableHead = [
@@ -70,6 +72,7 @@ const customTableHead = [
   'Datum vraćanja',
   'Zadrzavanje knjige',
   'Knjigu primio',
+  'Opcije',
 ];
 
   return (
