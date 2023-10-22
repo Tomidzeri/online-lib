@@ -4,7 +4,7 @@ import PrivateRoute from "../services/PrivateRoute";
 import LoginForm from "../pages/service-stranice/LoginForm";
 import SignupForm from "../pages/service-stranice/SignupForm";
 import Logout from "../services/Logout";
-import LayoutApp from "../layout/Layout";
+import LayoutApp from "../layout/LayoutPage";
 import Dashboard from "../layout/Dashboard";
 import Profile from "../pages/Profile";
 import Books from "../pages/book-stranice/Books";
