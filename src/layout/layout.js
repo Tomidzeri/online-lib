@@ -5,7 +5,7 @@ import Sidebar from "./sidebar/Sidebar";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 
-function Layout({ userProfile }) {
+function LayoutApp({ userProfile }) {
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
   // Function to toggle the sidebar visibility
@@ -28,4 +28,4 @@ function Layout({ userProfile }) {
   );
 }
 
-export default Layout;
+export default LayoutApp;
