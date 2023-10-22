@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const ArhiviraneActionsDropdown = ({ id }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedBookId, setSelectedBookId] = useState(null);
 
   const navigate = useNavigate();
   const dropdownRef = useRef(null);

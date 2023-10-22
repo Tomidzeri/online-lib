@@ -1,15 +1,23 @@
-// PolisaTab.js
 import React from "react";
-import ReusableTable from "../../tables/BorrowsTable";
+import SettTable from "../../tables/SettingsTable";
 
 const IzdavacTab = () => {
+  const tableHeader = ["Naziv izdavaca"];
+  const dataTable = [
+    ["Izdavac 1"],
+    ["Izdavac 2"],
+    ["Izdavac 3"],
+    ["Izdavac 4"],
+    ["Izdavac 5"],
+    ["Izdavac 6"],
+  ];
+
   return (
-    <div>
-      <h3>Izdavac</h3>
-      <ReusableTable />
-      {/* Add content specific to the Polisa tab here */}
+    <div className="w-full">
+       <SettTable tableHead={tableHeader} tableData={dataTable} />
     </div>
   );
 };
 
 export default IzdavacTab;
+

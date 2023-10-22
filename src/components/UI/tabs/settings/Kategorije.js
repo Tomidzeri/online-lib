@@ -14,8 +14,8 @@ const KategorijeTab = () => {
   ];
 
   return (
-    <div>
-      <SettTable tableHeader={tableHeader} dataTable={dataTable} />
+    <div className="w-full">
+       <SettTable tableHead={tableHeader} tableData={dataTable} />
     </div>
   );
 };

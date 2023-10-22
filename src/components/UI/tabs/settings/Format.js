@@ -1,15 +1,23 @@
-// PolisaTab.js
 import React from "react";
-import ReusableTable from "../../tables/BorrowsTable";
+import SettTable from "../../tables/SettingsTable";
 
 const FormatTab = () => {
+  const tableHeader = ["Naziv formata"];
+  const dataTable = [
+    ["A1"],
+    ["A2"],
+    ["A3"],
+    ["A4"],
+    ["A5"],
+    ["A6"],
+  ];
+
   return (
-    <div>
-      <h3>Format</h3>
-      <ReusableTable />
-      {/* Add content specific to the Polisa tab here */}
+    <div className="w-full">
+       <SettTable tableHead={tableHeader} tableData={dataTable} />
     </div>
   );
 };
+
 
 export default FormatTab;

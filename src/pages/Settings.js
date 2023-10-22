@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CustomTab from "../components/UI/tabs/Tab";
+import SettingsReusableTab from "../components/UI/tabs/SettingsTab";
 import PolisaTab from "../components/UI/tabs/settings/Polisa";
 import KategorijeTab from "../components/UI/tabs/settings/Kategorije";
 import ZanroviTab from "../components/UI/tabs/settings/Zanrovi";
@@ -66,13 +66,13 @@ const Settings = () => {
       </div>
       <div>
         <div className="mt-24 flex justify-baseline">
-          <CustomTab
+          <SettingsReusableTab
             labels={tabLabels}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
         </div>
-        <div className="ml-24 w-2/4">{renderTabByActiveTab()}</div>
+        <div className="ml-24 w-full">{renderTabByActiveTab()}</div>
       </div>
     </div>
   );

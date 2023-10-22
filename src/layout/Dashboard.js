@@ -33,7 +33,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="border-b border-gray-300 w-full fixed">
+      <div className="border-b border-gray-300 w-full fixed overflow-hidden">
         <h2 className="text-left text-4xl font-bold p-4">Dashboard</h2>
       </div>
       {isLoading ? (

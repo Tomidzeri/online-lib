@@ -1,13 +1,20 @@
-// PolisaTab.js
 import React from "react";
-import ReusableTable from "../../tables/BorrowsTable";
+import SettTable from "../../tables/SettingsTable";
 
 const ZanroviTab = () => {
+  const tableHeader = ["Naziv zanra"];
+  const dataTable = [
+    ["Poezija"],
+    ["Strucna literatura"],
+    ["Poezija"],
+    ["Strucna literatura"],
+    ["Poezija"],
+    ["Strucna literatura"],
+  ];
+
   return (
     <div>
-      <h3>Zanrovi</h3>
-      <ReusableTable />
-      {/* Add content specific to the Polisa tab here */}
+      <SettTable tableHead={tableHeader} tableData={dataTable} />
     </div>
   );
 };

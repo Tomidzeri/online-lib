@@ -1,13 +1,20 @@
-// PolisaTab.js
 import React from "react";
-import ReusableTable from "../../tables/BorrowsTable";
+import SettTable from "../../tables/SettingsTable";
 
 const PismoTab = () => {
+  const tableHeader = ["Naziv pisma"];
+  const dataTable = [
+    ["Cirilica"],
+    ["Latinica"],
+    ["Cirilica"],
+    ["Latinica"],
+    ["Cirilica"],
+    ["Latinica"],
+  ];
+
   return (
-    <div>
-      <h3>Pismo</h3>
-      <ReusableTable />
-      {/* Add content specific to the Polisa tab here */}
+    <div className="w-full">
+       <SettTable tableHead={tableHeader} tableData={dataTable} />
     </div>
   );
 };

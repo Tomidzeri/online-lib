@@ -2,7 +2,7 @@ import React from "react";
 
 const PolisaTab = () => {
   return (
-    <div>
+    <div className="w-1/2">
       <div className="border-b border-black font-bold my-10">
         Rok za rezervaciju
       </div>
