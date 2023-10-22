@@ -4,7 +4,7 @@ import PrivateRoute from "../services/PrivateRoute";
 import LoginForm from "../pages/service-stranice/LoginForm";
 import SignupForm from "../pages/service-stranice/SignupForm";
 import Logout from "../services/Logout";
-import LayoutApp from "../layout/LayoutPage";
+import Layout from "../layout/LayoutPage";
 import Dashboard from "../layout/Dashboard";
 import Profile from "../pages/Profile";
 import Books from "../pages/book-stranice/Books";
@@ -105,7 +105,7 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         }
       />
 
-      <Route path="/*" element={<LayoutApp token={token} />}>
+      <Route path="/*" element={<Layout token={token} />}>
         <Route index path="dashboard" element={<Dashboard />} />
         <Route path="activities" element={<Activities />} />
         <Route path="reservations" element={<Reservations />} />
