@@ -9,8 +9,25 @@ import FormatTab from "../components/UI/tabs/settings/Format";
 import PismoTab from "../components/UI/tabs/settings/Pismo";
 import { useLocation } from "react-router-dom";
 import { Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Settings = () => {
+  const userRole = sessionStorage.getItem("libraryRole");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userRole === "Bibliotekar") {
+      navigate("/books"); 
+      toast.error("Nemate ovlašćenje za pristup ovoj stranici.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        closeOnClick: true,
+      });
+    }
+  }, [userRole, navigate]);
+
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(0);
 

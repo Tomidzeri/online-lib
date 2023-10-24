@@ -7,8 +7,25 @@ import SearchBox from "../../components/UI/search/SearchBox";
 import { BsSearch } from "react-icons/bs";
 import Pagination from "../../components/UI/pagination/Pagination";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Librarians = ({ userProfile }) => {
+  const userRole = sessionStorage.getItem("libraryRole");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userRole === "Bibliotekar") {
+      navigate("/books"); 
+      toast.error("Nemate ovlašćenje za pristup ovoj stranici.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        closeOnClick: true,
+      });
+    }
+  }, [userRole, navigate]);
+
   const { librarians, setLibrarians } = useFetchLibrarians();
   const [searchTerm, setSearchTerm] = useState("");
   const tableHeaders = [

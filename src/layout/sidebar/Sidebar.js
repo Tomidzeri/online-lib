@@ -41,10 +41,16 @@ const Sidebar = ({ className, sidebarVisible }) => {
         </button>
       </div>
       <div className={classes.listContent}>
-        <button onClick={navigateToLibrarians} disabled={userRole === "Učenik"}>
+        <button
+          onClick={navigateToLibrarians}
+          disabled={userRole === "Učenik" || userRole === "Bibliotekar"}
+        >
           <FaRegAddressBook className={classes.icon} />
         </button>
-        <button onClick={navigateToLibrarians} disabled={userRole === "Učenik"}>
+        <button
+          onClick={navigateToLibrarians}
+          disabled={userRole === "Učenik" || userRole === "Bibliotekar"}
+        >
           <p>Bibliotekari</p>
         </button>
       </div>
@@ -91,10 +97,10 @@ const Sidebar = ({ className, sidebarVisible }) => {
         </button>
       </div>
       <div className={classes.listContent}>
-        <button onClick={navigateToSettings} disabled={userRole === "Učenik"}>
+        <button onClick={navigateToSettings} disabled={userRole === "Učenik" || userRole === "Bibliotekar"}>
           <BsGear className={classes.icon} />
         </button>
-        <button onClick={navigateToSettings} disabled={userRole === "Učenik"}>
+        <button onClick={navigateToSettings} disabled={userRole === "Učenik" || userRole === "Bibliotekar"}>
           <p>Podesavanja</p>
         </button>
       </div>
