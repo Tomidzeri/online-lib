@@ -46,6 +46,7 @@ import PismoTab from "../components/UI/tabs/settings/Pismo";
 import ViewIzdateInfo from "../components/UI/actions/bookActions/viewTransactions/ViewIzdate";
 import ViewPrekoraceneInfo from "../components/UI/actions/bookActions/viewTransactions/ViewPrekoracene";
 import ViewVraceneInfo from "../components/UI/actions/bookActions/viewTransactions/ViewVracene";
+import NotFoundPage from "./HandleNotFound";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
@@ -163,6 +164,8 @@ const AppRoutes = ({ handleSetToken, setToken, token }) => {
         <Route path="viewizdate/:id" element={<ViewIzdateInfo />} />
         <Route path="viewprekoracene/:id" element={<ViewPrekoraceneInfo />} />
         <Route path="viewvracene/:id" element={<ViewVraceneInfo />} />
+
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
 
       <Route path="/" element={<Navigate to="/login" />} />
