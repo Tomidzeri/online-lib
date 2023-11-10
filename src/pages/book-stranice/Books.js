@@ -7,6 +7,7 @@ import { BsSearch } from "react-icons/bs";
 import Pagination from "../../components/UI/pagination/Pagination";
 import BookActionsDropdown from "../../components/UI/actions/BookActionsDropdown";
 import useDeleteBook from "../../queries/knjige/useDeleteBook";
+import useBulkDeleteBooks from "../../queries/knjige/useBulkDeleteBooks";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
@@ -16,12 +17,45 @@ const Books = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
   const deleteBook = useDeleteBook();
+  const bulkDeleteBooks = useBulkDeleteBooks(); // Use the bulk delete function
+
+  // State to store the selected book IDs
+  const [selectedBooks, setSelectedBooks] = useState([]);
+
+  // Function to toggle the selection of a book
+  const toggleBookSelection = (bookId) => {
+    if (selectedBooks.includes(bookId)) {
+      setSelectedBooks(selectedBooks.filter((id) => id !== bookId));
+    } else {
+      setSelectedBooks([...selectedBooks, bookId]);
+    }
+  };
+
+  // Function to handle bulk book deletion
+  const handleBulkDeleteBooks = () => {
+    // Ensure at least one book is selected
+    if (selectedBooks.length === 0) {
+      return;
+    }
+
+    // Call the bulk delete function with selected book IDs
+    bulkDeleteBooks(selectedBooks)
+      .then(() => {
+        // Remove the selected books from the displayed list
+        const updatedBooks = books.filter(
+          (book) => !selectedBooks.includes(book.id)
+        );
+        setBooks(updatedBooks);
+        setSelectedBooks([]); // Clear the selection
+      })
+      .catch((error) => {
+        console.error("Error deleting books in bulk:", error);
+      });
+  };
 
   useEffect(() => {
     setLoading(true);
-
     fetchBooks()
       .then((data) => {
         setTimeout(() => {
@@ -46,21 +80,31 @@ const Books = () => {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const tableData = filteredBooks.slice(startIndex, endIndex).map((book) => [
-    book.title,
-    book.authors.map((author) => `${author.name} ${author.surname}`).join(", "), // izbrisati nakon brisanja prve dvije knjige, jer koriste dva autora
-    book.categories.map((category) => category.name).join(", "),
-    book.samples,
-    book.rSamples,
-    book.samples - book.bSamples,
-    book.bSamples,
-    <BookActionsDropdown
-      book={book}
-      onDelete={() => handleDeleteBook(book.id)}
-    />,
-  ]);
+  const tableData = filteredBooks
+    .slice(startIndex, endIndex)
+    .map((book) => [
+      <input
+        type="checkbox"
+        onChange={() => toggleBookSelection(book.id)}
+        checked={selectedBooks.includes(book.id)}
+      />,
+      book.title,
+      book.authors
+        .map((author) => `${author.name} ${author.surname}`)
+        .join(", "),
+      book.categories.map((category) => category.name).join(", "),
+      book.samples,
+      book.rSamples,
+      book.samples - book.bSamples,
+      book.bSamples,
+      <BookActionsDropdown
+        book={book}
+        onDelete={() => handleDeleteBook(book.id)}
+      />,
+    ]);
 
   const customTableHead = [
+    "Select",
     "Naziv Knjige",
     "Autor",
     "Kategorija",
@@ -112,7 +156,17 @@ const Books = () => {
             <ReusableTable tableHead={customTableHead} tableData={tableData} />
           </div>
         )}
-
+        <div className="ml-20 mt-4">
+          <button
+            onClick={handleBulkDeleteBooks}
+            disabled={selectedBooks.length === 0} 
+            className={`ml-4 bg-red-500 hover-bg-red-600 text-white px-2 py-2 rounded-md ${
+              selectedBooks.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            Izbrisi knjige
+          </button>
+        </div>
         <Pagination
           currentPage={currentPage}
           totalItems={totalItems}

@@ -372,7 +372,7 @@ const EditBook = () => {
         </form>
       </div>
       <div className="flex justify-end items-end p-4 mt-28">
-        <Submit onClick={handleSubmit} className="mr-2">
+        <Submit onClick={handleSubmit}>
           Sacuvaj
         </Submit>
         <Cancel onClick={() => navigate(`/books`)}>Ponisti</Cancel>

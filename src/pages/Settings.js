@@ -19,7 +19,7 @@ const Settings = () => {
 
   useEffect(() => {
     if (userRole === "Bibliotekar") {
-      navigate("/books"); 
+      navigate("/books");
       toast.error("Nemate ovlašćenje za pristup ovoj stranici.", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
@@ -37,7 +37,7 @@ const Settings = () => {
     if (activeTabParam !== null) {
       setActiveTab(parseInt(activeTabParam, 10));
     } else {
-      setActiveTab(0); 
+      setActiveTab(0);
     }
   }, [location.search]);
 

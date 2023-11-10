@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classes from "./Button.module.css"; 
 
 const Submit = ({ children, onClick }) => {
   return (
-    <button className={classes.submit} onClick={onClick}>
+    <button
+      className="mt-24 mr-4 bg-blue-500 hover-bg-blue-600 text-white px-2 py-2 rounded-md"
+      onClick={onClick}
+    >
       {children}
     </button>
   );
